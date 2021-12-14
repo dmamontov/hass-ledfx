@@ -56,6 +56,11 @@ ledfx:
 3. Add new Lovelace card before that replacing `<your_device_id>`: [example](https://gist.github.com/dmamontov/34d252351d9eda98f53b2d6180771f12)
 
 ## Screenshots
+#### LedFx objects
 ![](settings.png)
-![](device.png)
+
+#### Device objects
+![](device-part1.png)
+
+![](device-part2.png)
 
