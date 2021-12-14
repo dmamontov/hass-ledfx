@@ -1,0 +1,42 @@
+{
+  "config": {
+    "abort": {
+      "updated": "Данные обновлены, перезапустите Home Assistant"
+    },
+    "error": {
+      "ip_address.not_matched": "Неверный ip адрес или порт",
+      "connection": "Не удалось установить соединение"
+    },
+    "step": {
+      "auth": {
+        "description": "Введите ip адрес и порт сервера LedFx",
+        "data": {
+          "ip_address": "IP адрес",
+          "port": "Порт"
+        }
+      }
+    }
+  },
+  "options": {
+    "abort": {
+      "updated": "Данные обновлены, перезапустите Home Assistant"
+    },
+    "error": {
+      "ip_address.not_matched": "Неверный ip адрес или порт",
+      "connection": "Не удалось установить соединение"
+    },
+    "step": {
+      "settings": {
+        "description": "Введите ip адрес и порт сервера LedFx",
+        "data": {
+          "ip_address": "IP адрес",
+          "port": "Порт",
+          "ext_effect_settings": "Расширенные настройки эффектов [PRO]",
+          "ext_sensors": "Добавить сенсоры настроек устройства [PRO]",
+          "scan_interval": "Интервал сканирования в секундах [PRO]",
+          "timeout": "Тайм-аут запросов в секундах [PRO]"
+        }
+      }
+    }
+  }
+}
