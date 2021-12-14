@@ -44,7 +44,7 @@ from .common import (
 
 _LOGGER = logging.getLogger(__name__)
 
-class Worker:
+class Worker(object):
     def __init__(self, hass: HomeAssistant, config_entry: ConfigEntry):
         self.hass = hass
         self.config_entry = config_entry
@@ -62,6 +62,7 @@ class Worker:
         self.unsub_timer = None
 
         self._available = False
+        self.is_block = False
 
         self.devices = Devices()
         self._scenes = []
@@ -94,6 +95,10 @@ class Worker:
         return self.config_entry.options.get(CONF_SCAN_INTERVAL, SCAN_INTERVAL)
 
     async def async_update(self) -> None:
+        if self.is_block:
+            return
+
+        self.is_block = True
         devices = {}
 
         try:
@@ -150,6 +155,8 @@ class Worker:
         _LOGGER.debug("LedFx updated ({}:{})".format(self.ip, self.port))
 
         async_dispatcher_send(self.hass, DATA_UPDATED)
+
+        self.is_block = False
 
     async def async_setup_device(
             self,
@@ -212,6 +219,10 @@ class Worker:
 
         for code in schema["effects"]:
             for property in schema["effects"][code]["schema"]["properties"]:
+                prop = schema["effects"][code]["schema"]["properties"][property]
+
+                device.add_effect_property(code, property, prop["default"])
+
                 if property == "brightness":
                     continue
 
@@ -221,8 +232,6 @@ class Worker:
 
                     continue
 
-                prop = schema["effects"][code]["schema"]["properties"][property]
-
                 entity = None
                 entity_data = {}
                 if prop["type"] == "boolean":
@@ -230,7 +239,8 @@ class Worker:
                     entity_data = {
                         "is_on": is_on and property in data["effect"]["config"] \
                             and data["effect"]["config"][property],
-                        "is_available": is_on
+                        "is_available": is_on,
+                        "support_effects": [code]
                     }
                 elif prop["type"] in ["integer", "number"]:
                     entity = EffectNumber(device, property, prop["title"])
@@ -239,7 +249,8 @@ class Worker:
                             else None,
                         "minimum": prop["minimum"] if "minimum" in prop else None,
                         "maximum": prop["maximum"] if "maximum" in prop else None,
-                        "is_available": is_on
+                        "is_available": is_on,
+                        "support_effects": [code]
                     }
                 elif prop["type"] == "string":
                     entity = EffectSelect(device, property, prop["title"])
@@ -247,8 +258,14 @@ class Worker:
                         "current_option": data["effect"]["config"][property] if is_on and \
                             property in data["effect"]["config"] else None,
                         "options": prop["enum"] if "enum" in prop else [],
-                        "is_available": is_on
+                        "is_available": is_on,
+                        "support_effects": [code]
                     }
+
+                if is_on and property in data["effect"]["config"]:
+                    device.add_effect_property(
+                        code, property, data["effect"]["config"][property], True
+                    )
 
                 if entity is not None:
                     await device.async_append_entity(entity, entity_data)

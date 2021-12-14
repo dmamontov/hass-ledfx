@@ -41,6 +41,8 @@ class Device(object):
         self._entities = {}
         self._entities_data = {}
 
+        self._effect_properties = {}
+
         self._last_effect = effects.first if effects is not None else None
 
     @property
@@ -109,6 +111,11 @@ class Device(object):
         if entity.id not in self._entities:
             self._entities[entity.id] = entity
 
+        if entity.id in self._entities_data and "support_effects" in options:
+            options["support_effects"] = list(set(
+                self._entities_data[entity.id]["support_effects"] + options["support_effects"]
+            ))
+
         self._entities_data[entity.id] = options
 
     async def set_effect(self, effect: Effect) -> None:
@@ -128,6 +135,16 @@ class Device(object):
             return None
 
         return self._entities[id]
+
+    def add_effect_property(self, effect: str, code: str, value, is_update: bool = False) -> None:
+        if effect not in self._effect_properties:
+            self._effect_properties[effect] = {"active": True}
+
+        if not code in self._effect_properties[effect] or is_update:
+            self._effect_properties[effect][code] = value
+
+    def get_effect_property(self, effect: str) -> dict:
+        return self._effect_properties[effect] if effect in self._effect_properties else {}
 
 class Devices(object):
     def __init__(self) -> None:

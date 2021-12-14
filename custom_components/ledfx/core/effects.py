@@ -54,7 +54,7 @@ class Effect(object):
         return self._support_entities
 
     def is_support_entity(self, id: str) -> bool:
-        return id in self._support_entities
+        return id in self.support_entities
 
     async def async_brightness_enable(self) -> None:
         self._is_brightness = True

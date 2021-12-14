@@ -1,11 +1,12 @@
 import logging
+import inspect
 
 from typing import Optional
 
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.dispatcher import async_dispatcher_connect
+from homeassistant.helpers.dispatcher import async_dispatcher_connect, async_dispatcher_send
 from homeassistant.components.light import (
     LightEntity,
     SUPPORT_EFFECT,
@@ -132,18 +133,38 @@ class LedFxEntity(Entity):
     def disable(self) -> None:
         self._is_available = False
 
-    async def async_send(self, value) -> None:
+    async def async_force_update(self) -> None:
+        async_dispatcher_send(self._device.hass, DATA_UPDATED)
+
+    async def async_send(self, value = None, code: Optional[str] = None) -> None:
         if not self.available:
             return
+
+        if code is None:
+            code = self._id
+
+        if value is not None:
+            self._device.add_effect_property(
+                self._device.last_effect.code,
+                code, value, True
+            )
 
         try:
             await self._device.api.effect(
                 self._device.id,
                 self._device.last_effect.code,
-                {"active": True, self._id: value}
+                self._device.get_effect_property(self._device.last_effect.code)
             )
         except Exception as e:
             _LOGGER.error("ERROR LedFx send command %r", e)
+
+    def get_option(self, code: str):
+        options = self._device.get_entity_data(self._id)
+
+        if options is None or code not in options:
+            return None
+
+        return options[code]
 
 class LedFxSensor(SensorEntity, LedFxEntity):
     @property
@@ -152,7 +173,7 @@ class LedFxSensor(SensorEntity, LedFxEntity):
 
     @property
     def native_value(self) -> Optional[str]:
-        return self._device.get_entity_data(self._id)["value"]
+        return self.get_option("value")
 
 class LedFxBinarySensor(BinarySensorEntity, LedFxEntity):
     @property
@@ -161,12 +182,12 @@ class LedFxBinarySensor(BinarySensorEntity, LedFxEntity):
 
     @property
     def is_on(self) -> bool:
-        return self._device.get_entity_data(self._id)["is_on"]
+        return self.get_option("is_on")
 
 class LedFxSwitch(SwitchEntity, LedFxEntity):
     @property
     def is_on(self) -> bool:
-        return self._device.get_entity_data(self._id)["is_on"]
+        return self.get_option("is_on")
 
 class LedFxSelect(SelectEntity, LedFxEntity):
     @property
@@ -175,30 +196,30 @@ class LedFxSelect(SelectEntity, LedFxEntity):
 
     @property
     def current_option(self) -> Optional[str]:
-        return self._device.get_entity_data(self._id)["current_option"]
+        return self.get_option("current_option")
 
     @property
     def options(self) -> list:
-        return self._device.get_entity_data(self._id)["options"]
+        return self.get_option("options")
 
 class LedFxLight(LightEntity, LedFxEntity):
     @property
     def icon(self) -> Optional[str]:
-        return self._device.get_entity_data(self._id)["icon"]
+        return self.get_option("icon")
 
     @property
     def is_on(self) -> bool:
-        return self._device.get_entity_data(self._id)["is_on"]
+        return self.get_option("is_on")
 
     @property
     def brightness(self) -> float:
-        brightness = self._device.get_entity_data(self._id)["brightness"]
+        brightness = self.get_option("brightness")
 
         return 255 if brightness > 255 else brightness
 
     @property
     def effect(self) -> Optional[str]:
-        return self._device.get_entity_data(self._id)["effect"] if self.is_on else None
+        return self.get_option("effect") if self.is_on else None
 
     @property
     def effect_list(self) -> list:
@@ -215,6 +236,12 @@ class LedFxLight(LightEntity, LedFxEntity):
             supports |= SUPPORT_BRIGHTNESS
 
         return supports
+
+    @property
+    def extra_state_attributes(self) -> dict:
+        return {
+            "last_effect": self._device.last_effect.name,
+        }
 
     async def async_turn_on(self, **kwargs) -> None:
         is_preset = False
@@ -233,21 +260,25 @@ class LedFxLight(LightEntity, LedFxEntity):
         try:
             if is_preset:
                 await self._device.api.preset(self._id, effect.category, self._device.last_effect.code, effect.code)
-            else:
+            elif not self.is_on or effect is not None:
                 await self._device.api.on(self._id, self._device.last_effect.code)
+
+                if ATTR_BRIGHTNESS not in kwargs:
+                    await self.async_send()
 
             if ATTR_BRIGHTNESS in kwargs and self._device.last_effect.is_brightness:
                 brightness = float(kwargs[ATTR_BRIGHTNESS] / 100 / 2.55)
 
-                await self._device.api.effect(
-                    self._id,
-                    self._device.last_effect.code,
-                    {"active": True, "brightness": 1.0 if brightness > 1.0 else brightness}
+                await self.async_send(
+                    1.0 if brightness > 1.0 else brightness,
+                    "brightness"
                 )
 
             self._device.update_entity_data(self._id, "is_on", True)
         except Exception as e:
             _LOGGER.error("ERROR turn_on LedFx %r", e)
+
+        await self.async_force_update()
 
     async def async_turn_off(self, **kwargs) -> None:
         try:
@@ -255,6 +286,8 @@ class LedFxLight(LightEntity, LedFxEntity):
             self._device.update_entity_data(self._id, "is_on", False)
         except Exception as e:
             _LOGGER.error("ERROR turn_off LedFx %r", e)
+
+        await self.async_force_update()
 
 class Scene(LedFxSwitch):
     @property
@@ -274,18 +307,33 @@ class Scene(LedFxSwitch):
         except Exception as e:
             _LOGGER.error("ERROR LedFx send command %r", e)
 
+        await self.async_force_update()
         self.async_schedule_update_ha_state(True)
 
 class EffectEntity(Entity):
+    @property
+    def extra_state_attributes(self) -> dict:
+        return {
+            "device": self._device.id,
+            "support_effects": self.get_option("support_effects"),
+        }
+
     @property
     def entity_category(self) -> str:
         return ENTITY_CATEGORY_CONFIG
 
     @property
     def available(self) -> bool:
-        return self._device.is_available and self._is_available \
+        if not self._device.is_available:
+            return False
+
+        # Hack for setting attributes
+        if "_async_write_ha_state" == inspect.stack()[1].function:
+            return True
+
+        return self._is_available \
                and self._device.last_effect.is_support_entity(self._id) \
-               and self._device.get_entity_data(self._id)["is_available"]
+               and self.get_option("is_available")
 
 class EffectSwitch(EffectEntity, LedFxSwitch):
     async def async_turn_on(self, **kwargs) -> None:
@@ -299,21 +347,21 @@ class EffectSwitch(EffectEntity, LedFxSwitch):
 class EffectNumber(NumberEntity, EffectEntity, LedFxEntity):
     @property
     def value(self) -> Optional[float]:
-        return self._device.get_entity_data(self._id)["value"]
+        return self.get_option("value")
 
     @property
     def min_value(self) -> float:
-        if not self.available or self._device.get_entity_data(self._id)["minimum"] is None:
+        if not self.available or self.get_option("minimum") is None:
             return DEFAULT_MIN_VALUE
 
-        return self._device.get_entity_data(self._id)["minimum"]
+        return self.get_option("minimum")
 
     @property
     def max_value(self) -> float:
-        if not self.available or self._device.get_entity_data(self._id)["maximum"] is None:
+        if not self.available or self.get_option("maximum") is None:
             return DEFAULT_MAX_VALUE
 
-        return self._device.get_entity_data(self._id)["maximum"]
+        return self.get_option("maximum")
 
     @property
     def step(self) -> float:
@@ -337,7 +385,5 @@ class AudioInput(LedFxSelect):
 
         try:
             await self._device.api.set_audio_device(self.options.index(value) + 1)
-
-            self._device.get_entity_data(self._id)["current_option"] = value
         except Exception as e:
             _LOGGER.error("ERROR LedFx send command %r", e)
