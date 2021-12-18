@@ -10,7 +10,7 @@ from homeassistant.const import (
     CONF_SCAN_INTERVAL,
     CONF_TIMEOUT
 )
-from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from homeassistant.helpers.httpx_client import get_async_client
 
 from .core.const import (
     DOMAIN,
@@ -44,9 +44,7 @@ class LedFxFlowHandler(ConfigFlow, domain = DOMAIN):
         if user_input is None:
             return self.cur_step
 
-        session = async_get_clientsession(self.hass, False)
-
-        client = LedFx(self.hass.loop, session, user_input[CONF_IP_ADDRESS], user_input[CONF_PORT])
+        client = LedFx(get_async_client(self.hass, False), user_input[CONF_IP_ADDRESS], user_input[CONF_PORT])
 
         try:
             await client.info()
@@ -106,9 +104,7 @@ class OptionsFlowHandler(OptionsFlow):
         })
 
         if user_input:
-            session = async_get_clientsession(self.hass, False)
-
-            client = LedFx(self.hass.loop, session, user_input[CONF_IP_ADDRESS], user_input[CONF_PORT])
+            client = LedFx(get_async_client(self.hass, False), user_input[CONF_IP_ADDRESS], user_input[CONF_PORT])
 
             try:
                 await client.info()
