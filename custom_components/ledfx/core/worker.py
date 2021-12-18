@@ -12,7 +12,7 @@ from homeassistant.const import (
     CONF_TIMEOUT
 )
 
-from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from homeassistant.helpers.httpx_client import get_async_client
 from homeassistant.helpers.event import async_track_time_interval
 from homeassistant.helpers.dispatcher import async_dispatcher_send
 
@@ -49,11 +49,8 @@ class Worker(object):
         self.hass = hass
         self.config_entry = config_entry
 
-        session = async_get_clientsession(hass, False)
-
         self.api = LedFx(
-            hass.loop,
-            session,
+            get_async_client(hass, False),
             self.ip,
             self.port,
             {"timeout": self.timeout}

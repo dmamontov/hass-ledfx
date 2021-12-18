@@ -1,9 +1,6 @@
 import logging
 
-import asyncio
 import json
-import aiohttp
-import async_timeout
 
 from . import exceptions
 from .const import (
@@ -18,8 +15,7 @@ _LOGGER = logging.getLogger(__name__)
 class LedFx(object):
     def __init__(
         self,
-        loop,
-        session,
+        httpx_client,
         ip: str,
         port: str,
         options: dict = {}
@@ -27,8 +23,7 @@ class LedFx(object):
         if ip.endswith("/"):
             ip = ip[:-1]
 
-        self._loop = loop
-        self._session = session
+        self.httpx_client = httpx_client
 
         self.base_url = BASE_RESOURCE.format(ip = ip, port = port)
         _LOGGER.debug("Debug LedFx: Init {}".format(self.base_url))
@@ -37,16 +32,14 @@ class LedFx(object):
 
     async def get(self, path: str, is_check_status: bool = True):
         try:
-            with async_timeout.timeout(self.timeout, loop = self._loop):
-                response = await self._session.get(
+            async with self.httpx_client as client:
+                response = await client.get(
                     "{}/{}".format(self.base_url, path),
+                    timeout = self.timeout
                 )
 
-            data = json.loads(await response.read())
-        except asyncio.TimeoutError as e:
-            _LOGGER.debug("ERROR LedFx: Timeout connection error %r", e)
-            raise exceptions.LedFxConnectionError()
-        except aiohttp.ClientError as e:
+            data = json.loads(response.content)
+        except Exception as e:
             _LOGGER.debug("ERROR LedFx: Connection error %r", e)
             raise exceptions.LedFxConnectionError()
 
@@ -58,17 +51,15 @@ class LedFx(object):
 
     async def post(self, path: str, data: dict, is_check_status: bool = True):
         try:
-            with async_timeout.timeout(POST_TIMEOUT, loop = self._loop):
-                response = await self._session.post(
+            async with self.httpx_client as client:
+                response = await client.post(
                     "{}/{}".format(self.base_url, path),
-                    json = data
+                    json = data,
+                    timeout = POST_TIMEOUT
                 )
 
-            data = json.loads(await response.read())
-        except asyncio.TimeoutError as e:
-            _LOGGER.debug("ERROR LedFx: Timeout connection error %r", e)
-            raise exceptions.LedFxConnectionError()
-        except aiohttp.ClientError as e:
+            data = json.loads(response.content)
+        except Exception as e:
             _LOGGER.debug("ERROR LedFx: Connection error %r", e)
             raise exceptions.LedFxConnectionError()
 
@@ -80,17 +71,15 @@ class LedFx(object):
 
     async def put(self, path: str, data: dict, is_check_status: bool = True):
         try:
-            with async_timeout.timeout(POST_TIMEOUT, loop = self._loop):
-                response = await self._session.put(
+            async with self.httpx_client as client:
+                response = await client.put(
                     "{}/{}".format(self.base_url, path),
-                    json = data
+                    json = data,
+                    timeout = POST_TIMEOUT
                 )
 
-            data = json.loads(await response.read())
-        except asyncio.TimeoutError as e:
-            _LOGGER.debug("ERROR LedFx: Timeout connection error %r", e)
-            raise exceptions.LedFxConnectionError()
-        except aiohttp.ClientError as e:
+            data = json.loads(response.content)
+        except Exception as e:
             _LOGGER.debug("ERROR LedFx: Connection error %r", e)
             raise exceptions.LedFxConnectionError()
 
@@ -102,16 +91,14 @@ class LedFx(object):
 
     async def delete(self, path: str, is_check_status: bool = True):
         try:
-            with async_timeout.timeout(POST_TIMEOUT, loop = self._loop):
-                response = await self._session.delete(
-                    "{}/{}".format(self.base_url, path)
+            async with self.httpx_client as client:
+                response = await client.delete(
+                    "{}/{}".format(self.base_url, path),
+                    timeout = POST_TIMEOUT
                 )
 
-            data = json.loads(await response.read())
-        except asyncio.TimeoutError as e:
-            _LOGGER.debug("ERROR LedFx: Timeout connection error %r", e)
-            raise exceptions.LedFxConnectionError()
-        except aiohttp.ClientError as e:
+            data = json.loads(response.content)
+        except Exception as e:
             _LOGGER.debug("ERROR LedFx: Connection error %r", e)
             raise exceptions.LedFxConnectionError()
 
