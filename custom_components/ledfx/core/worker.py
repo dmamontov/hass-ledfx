@@ -96,7 +96,13 @@ class Worker(object):
             return
 
         self.is_block = True
+
         devices = {}
+        info = {}
+        audio_devices = {}
+        scenes = {}
+        schema = {}
+        config = {}
 
         try:
             info = await self.api.info()
@@ -113,7 +119,12 @@ class Worker(object):
             self._available = False
 
         current_devices = []
-        if "devices" in devices and len(devices["devices"]) > 0:
+        if "devices" in devices and len(devices["devices"]) > 0 and \
+                len(info) > 0 and \
+                len(audio_devices) > 0 and \
+                len(scenes) > 0 and \
+                len(schema) > 0 and \
+                len(config) > 0:
             effects = await async_parse_effects(schema, config)
 
             current_devices.append(DOMAIN)
