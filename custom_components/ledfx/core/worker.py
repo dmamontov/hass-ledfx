@@ -44,6 +44,7 @@ from .common import (
 
 _LOGGER = logging.getLogger(__name__)
 
+
 class Worker(object):
     def __init__(self, hass: HomeAssistant, config_entry: ConfigEntry):
         self.hass = hass
@@ -114,8 +115,8 @@ class Worker(object):
             config = await self.api.config()
 
             self._available = True
-        except exceptions.LedFxConnectionError:
-            _LOGGER.debug("ERROR LedFx connection error ({}:{})".format(self.ip, self.port))
+        except Exception as e:
+            _LOGGER.error("ERROR LedFx connection error ({}:{}) %r".format(self.ip, self.port), e)
             self._available = False
 
         current_devices = []
@@ -133,7 +134,7 @@ class Worker(object):
                 if not self.devices.has(DOMAIN) else self.devices.get(DOMAIN)
 
             await self.async_setup_general_device(device, audio_devices, config, scenes)
-            
+
             await self.devices.async_append(device)
 
             for code in devices["devices"]:
@@ -154,7 +155,6 @@ class Worker(object):
                 await self.async_setup_device(device, data, schema)
 
                 await self.devices.async_append(device)
-
 
         for id in self.devices.list:
             if id not in current_devices:
@@ -215,7 +215,7 @@ class Worker(object):
                     entity = LedFxSensor(device, property, prop["title"])
                     entity_data = {
                         "value": data["config"][property] if "config" in data and property in data["config"] \
-                                 else None
+                            else None
                     }
 
                 await device.async_append_entity(entity, entity_data)
@@ -246,14 +246,15 @@ class Worker(object):
                     entity = EffectSwitch(device, property, prop["title"])
                     entity_data = {
                         "is_on": is_on and property in data["effect"]["config"] \
-                            and data["effect"]["config"][property],
+                                 and data["effect"]["config"][property],
                         "is_available": is_on,
                         "support_effects": [code]
                     }
                 elif prop["type"] in ["integer", "number"]:
                     entity = EffectNumber(device, property, prop["title"])
                     entity_data = {
-                        "value": float(data["effect"]["config"][property]) if is_on and property in data["effect"]["config"] \
+                        "value": float(data["effect"]["config"][property]) if is_on and property in data["effect"][
+                            "config"] \
                             else None,
                         "minimum": prop["minimum"] if "minimum" in prop else None,
                         "maximum": prop["maximum"] if "maximum" in prop else None,
@@ -264,7 +265,8 @@ class Worker(object):
                     entity = EffectSelect(device, property, prop["title"])
                     entity_data = {
                         "current_option": data["effect"]["config"][property] if is_on and \
-                            property in data["effect"]["config"] else None,
+                                                                                property in data["effect"][
+                                                                                    "config"] else None,
                         "options": prop["enum"] if "enum" in prop else [],
                         "is_available": is_on,
                         "support_effects": [code]
@@ -308,7 +310,7 @@ class Worker(object):
 
         if "audio" in config["config"]:
             if "devices" in audio_devices and len(audio_devices["devices"]) > 0 \
-                and "device_name" in config["config"]["audio"]:
+                    and "device_name" in config["config"]["audio"]:
                 await device.async_append_entity(
                     AudioInput(device, "audio_input", "Audio input"),
                     {
@@ -343,7 +345,7 @@ class Worker(object):
 
             self._available = True
         except Exception as e:
-            _LOGGER.error("LedFx Connect call failed ({}:{}) %r".format(self.ip, self.port), e)
+            _LOGGER.error("LedFx connection error ({}:{}) %r".format(self.ip, self.port), e)
 
         self.set_scan_interval()
         self.config_entry.add_update_listener(self.async_options_updated)
@@ -363,7 +365,7 @@ class Worker(object):
             self.unsub_timer()
 
         self.unsub_timer = async_track_time_interval(
-            self.hass, refresh, timedelta(seconds = self.scan_interval)
+            self.hass, refresh, timedelta(seconds=self.scan_interval)
         )
 
     @staticmethod
