@@ -343,8 +343,7 @@ class Worker(object):
 
             self._available = True
         except Exception as e:
-            _LOGGER.debug("LedFx Incorrect config ({}:{}) %r".format(self.ip, self.port), e)
-            raise ConfigEntryNotReady
+            _LOGGER.error("LedFx Connect call failed ({}:{}) %r".format(self.ip, self.port), e)
 
         self.set_scan_interval()
         self.config_entry.add_update_listener(self.async_options_updated)
