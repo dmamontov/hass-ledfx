@@ -116,7 +116,9 @@ class Worker(object):
 
             self._available = True
         except Exception as e:
-            _LOGGER.error("ERROR LedFx connection error ({}:{}) %r".format(self.ip, self.port), e)
+            if self._available:
+                _LOGGER.error("ERROR LedFx connection error ({}:{}) %r".format(self.ip, self.port), e)
+
             self._available = False
 
         current_devices = []
