@@ -12,7 +12,9 @@
         "description": "Введите ip адрес и порт сервера LedFx",
         "data": {
           "ip_address": "IP адрес",
-          "port": "Порт"
+          "port": "Порт",
+          "username": "Пользователь BasicAuth [OPTIONAL]",
+          "password": "Пароль BasicAuth [OPTIONAL]"
         }
       }
     }
@@ -31,6 +33,8 @@
         "data": {
           "ip_address": "IP адрес",
           "port": "Порт",
+          "username": "Пользователь BasicAuth [OPTIONAL]",
+          "password": "Пароль BasicAuth [OPTIONAL]",
           "ext_effect_settings": "Расширенные настройки эффектов [PRO]",
           "ext_sensors": "Добавить сенсоры настроек устройства [PRO]",
           "scan_interval": "Интервал сканирования в секундах [PRO]",

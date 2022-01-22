@@ -1,6 +1,7 @@
 import logging
-
 import json
+
+from httpx._client import USE_CLIENT_DEFAULT
 
 from . import exceptions
 from .const import (
@@ -18,6 +19,7 @@ class LedFx(object):
         httpx_client,
         ip: str,
         port: str,
+        auth = USE_CLIENT_DEFAULT,
         options: dict = {}
     ) -> None:
         if ip.endswith("/"):
@@ -26,6 +28,8 @@ class LedFx(object):
         self.httpx_client = httpx_client
 
         self.base_url = BASE_RESOURCE.format(ip = ip, port = port)
+        self.auth = auth
+
         _LOGGER.debug("Debug LedFx: Init {}".format(self.base_url))
 
         self.timeout = options["timeout"] if "timeout" in options else DEFAULT_TIMEOUT
@@ -35,7 +39,8 @@ class LedFx(object):
             async with self.httpx_client as client:
                 response = await client.get(
                     "{}/{}".format(self.base_url, path),
-                    timeout = self.timeout
+                    timeout = self.timeout,
+                    auth = self.auth
                 )
 
             data = json.loads(response.content)
@@ -55,7 +60,8 @@ class LedFx(object):
                 response = await client.post(
                     "{}/{}".format(self.base_url, path),
                     json = data,
-                    timeout = POST_TIMEOUT
+                    timeout = POST_TIMEOUT,
+                    auth = self.auth
                 )
 
             data = json.loads(response.content)
@@ -75,7 +81,8 @@ class LedFx(object):
                 response = await client.put(
                     "{}/{}".format(self.base_url, path),
                     json = data,
-                    timeout = POST_TIMEOUT
+                    timeout = POST_TIMEOUT,
+                    auth = self.auth
                 )
 
             data = json.loads(response.content)
@@ -94,7 +101,8 @@ class LedFx(object):
             async with self.httpx_client as client:
                 response = await client.delete(
                     "{}/{}".format(self.base_url, path),
-                    timeout = POST_TIMEOUT
+                    timeout = POST_TIMEOUT,
+                    auth = self.auth
                 )
 
             data = json.loads(response.content)

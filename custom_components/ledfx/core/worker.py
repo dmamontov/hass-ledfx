@@ -8,10 +8,13 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (
     CONF_IP_ADDRESS,
     CONF_PORT,
+    CONF_USERNAME,
+    CONF_PASSWORD,
     CONF_SCAN_INTERVAL,
     CONF_TIMEOUT
 )
 
+from httpx._client import USE_CLIENT_DEFAULT
 from homeassistant.helpers.httpx_client import get_async_client
 from homeassistant.helpers.event import async_track_time_interval
 from homeassistant.helpers.dispatcher import async_dispatcher_send
@@ -54,6 +57,7 @@ class Worker(object):
             get_async_client(hass, False),
             self.ip,
             self.port,
+            self.auth,
             {"timeout": self.timeout}
         )
 
@@ -83,6 +87,16 @@ class Worker(object):
     @property
     def port(self) -> str:
         return self.config_entry.options[CONF_PORT]
+
+    @property
+    def auth(self):
+        username = self.config_entry.options.get(CONF_USERNAME, None)
+        password = self.config_entry.options.get(CONF_PASSWORD, None)
+
+        if username and len(username) > 0 and password and len(password) > 0:
+            return (username, password)
+
+        return USE_CLIENT_DEFAULT
 
     @property
     def timeout(self) -> int:

@@ -7,9 +7,12 @@ from homeassistant.config_entries import ConfigFlow, OptionsFlow, ConfigEntry
 from homeassistant.const import (
     CONF_IP_ADDRESS,
     CONF_PORT,
+    CONF_USERNAME,
+    CONF_PASSWORD,
     CONF_SCAN_INTERVAL,
     CONF_TIMEOUT
 )
+from httpx._client import USE_CLIENT_DEFAULT
 from homeassistant.helpers.httpx_client import get_async_client
 
 from .core.const import (
@@ -27,7 +30,9 @@ _LOGGER = logging.getLogger(__name__)
 
 AUTH_SCHEMA = vol.Schema({
     vol.Required(CONF_IP_ADDRESS): str,
-    vol.Required(CONF_PORT): str
+    vol.Required(CONF_PORT): str,
+    vol.Optional(CONF_USERNAME): str,
+    vol.Optional(CONF_PASSWORD): str,
 })
 
 class LedFxFlowHandler(ConfigFlow, domain = DOMAIN):
@@ -44,7 +49,21 @@ class LedFxFlowHandler(ConfigFlow, domain = DOMAIN):
         if user_input is None:
             return self.cur_step
 
-        client = LedFx(get_async_client(self.hass, False), user_input[CONF_IP_ADDRESS], user_input[CONF_PORT])
+        auth = USE_CLIENT_DEFAULT
+        if (
+            user_input[CONF_USERNAME]
+            and len(user_input[CONF_USERNAME]) > 0
+            and user_input[CONF_PASSWORD]
+            and len(user_input[CONF_PASSWORD]) > 0
+        ):
+            auth = (user_input[CONF_USERNAME], user_input[CONF_PASSWORD])
+
+        client = LedFx(
+            get_async_client(self.hass, False),
+            user_input[CONF_IP_ADDRESS],
+            user_input[CONF_PORT],
+            auth
+        )
 
         try:
             await client.info()
@@ -85,6 +104,8 @@ class OptionsFlowHandler(OptionsFlow):
         options_schema = vol.Schema({
             vol.Required(CONF_IP_ADDRESS, default = self.config_entry.options.get(CONF_IP_ADDRESS, "")): str,
             vol.Required(CONF_PORT, default = self.config_entry.options.get(CONF_PORT, "")): str,
+            vol.Optional(CONF_USERNAME, default = self.config_entry.options.get(CONF_USERNAME, "")): str,
+            vol.Optional(CONF_PASSWORD, default = self.config_entry.options.get(CONF_PASSWORD, "")): str,
             vol.Optional(
                 CONF_EXT_EFFECT_SETTINGS,
                 default=self.config_entry.options.get(CONF_EXT_EFFECT_SETTINGS, False)
@@ -104,7 +125,21 @@ class OptionsFlowHandler(OptionsFlow):
         })
 
         if user_input:
-            client = LedFx(get_async_client(self.hass, False), user_input[CONF_IP_ADDRESS], user_input[CONF_PORT])
+            auth = USE_CLIENT_DEFAULT
+            if (
+                    user_input[CONF_USERNAME]
+                    and len(user_input[CONF_USERNAME]) > 0
+                    and user_input[CONF_PASSWORD]
+                    and len(user_input[CONF_PASSWORD]) > 0
+            ):
+                auth = (user_input[CONF_USERNAME], user_input[CONF_PASSWORD])
+
+            client = LedFx(
+                get_async_client(self.hass, False),
+                user_input[CONF_IP_ADDRESS],
+                user_input[CONF_PORT],
+                auth
+            )
 
             try:
                 await client.info()

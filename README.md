@@ -25,6 +25,10 @@ Component for deep integration [LedFx](https://github.com/LedFx/LedFx) from [Hom
 
 **A.** You can, for this, enable the appropriate mode from the [PRO] section. The required objects will only be available when supported by the effect.
 
+**Q. Is Basic Auth supported?**
+
+**A.** Yes, [OPTIONAL] support.
+
 ## Install
 Installed through the custom repository [HACS](https://hacs.xyz/) - `dmamontov/hass-ledfx`
 
@@ -42,6 +46,8 @@ For authorization, enter the ip address and port ledfx
 ledfx:
   ip_address: 127.0.0.1
   port: 8888
+  username: test # Username BasicAuth [OPTIONAL]
+  password: test # Password BasicAuth [OPTIONAL]
   scan_interval: 10 # Refresh rate in seconds [PRO]
   timeout: 5 # Request timeout in seconds [PRO]
   ext_effect_settings: False # Advanced effect settings [PRO]
