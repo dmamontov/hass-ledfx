@@ -51,7 +51,9 @@ class LedFxFlowHandler(ConfigFlow, domain = DOMAIN):
 
         auth = USE_CLIENT_DEFAULT
         if (
-            user_input[CONF_USERNAME]
+            CONF_USERNAME in user_input
+            and CONF_PASSWORD in user_input
+            and user_input[CONF_USERNAME]
             and len(user_input[CONF_USERNAME]) > 0
             and user_input[CONF_PASSWORD]
             and len(user_input[CONF_PASSWORD]) > 0
@@ -127,7 +129,9 @@ class OptionsFlowHandler(OptionsFlow):
         if user_input:
             auth = USE_CLIENT_DEFAULT
             if (
-                    user_input[CONF_USERNAME]
+                    CONF_USERNAME in user_input
+                    and CONF_PASSWORD in user_input
+                    and user_input[CONF_USERNAME]
                     and len(user_input[CONF_USERNAME]) > 0
                     and user_input[CONF_PASSWORD]
                     and len(user_input[CONF_PASSWORD]) > 0
