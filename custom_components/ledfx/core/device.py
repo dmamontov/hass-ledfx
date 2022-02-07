@@ -1,4 +1,6 @@
 import logging
+import hashlib
+import json
 
 from typing import Optional
 
@@ -92,6 +94,22 @@ class Device(object):
     @property
     def entities(self) -> dict:
         return self._entities
+
+    @property
+    def md5(self) -> str:
+        return hashlib.md5(
+            json.dumps({
+                "id": self._id,
+                "name": self._name,
+                "version": self._version,
+                "model": self._model,
+                "effects": dict(self._effects) if self._effects is not None else None,
+                "is_available": self._is_available,
+                "entities_data": self._entities_data,
+                "effect_properties": self._effect_properties,
+                "last_effect": dict(self._last_effect) if self._last_effect is not None else None
+            }).encode('utf-8')
+        ).hexdigest()
 
     async def async_update_available(self, is_available: bool) -> None:
         self._is_available = is_available

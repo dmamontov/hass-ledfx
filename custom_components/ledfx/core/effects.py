@@ -1,6 +1,36 @@
-from typing import Optional
+import logging
 
-class Effect(object):
+from typing import Optional
+import datetime
+import decimal
+
+_LOGGER = logging.getLogger(__name__)
+
+class Jsonable(object):
+    def __iter__(self):
+        for attr, value in self.__dict__.items():
+            if isinstance(value, datetime.datetime):
+                iso = value.isoformat()
+                yield attr, iso
+            elif isinstance(value, decimal.Decimal):
+                yield attr, str(value)
+            elif hasattr(value, '__iter__'):
+                if hasattr(value, 'pop'):
+                    a = []
+                    for subval in value:
+                        if hasattr(subval, '__iter__') and not isinstance(subval, str):
+                            a.append(dict(subval))
+                        else:
+                            a.append(subval)
+                    yield attr, a
+                elif isinstance(value, str):
+                    yield attr, value
+                else:
+                    yield attr, dict(value)
+            else:
+                yield attr, value
+
+class Effect(Jsonable):
     def __init__(
         self,
         code: str,
@@ -62,7 +92,7 @@ class Effect(object):
     async def async_append_entity(self, entity: str) -> None:
         self._support_entities.append(entity)
 
-class Effects(object):
+class Effects(Jsonable):
     def __init__(self) -> None:
         self._effects = {}
 

@@ -366,7 +366,7 @@ class Worker(object):
         self.set_scan_interval()
         self.config_entry.add_update_listener(self.async_options_updated)
 
-        for domain in ['light', 'sensor', 'binary_sensor', 'number', 'select', 'switch']:
+        for domain in ['light', 'sensor', 'binary_sensor', 'number', 'select', 'button', 'switch']:
             self.hass.async_create_task(
                 self.hass.config_entries.async_forward_entry_setup(self.config_entry, domain)
             )

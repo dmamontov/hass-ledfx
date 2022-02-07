@@ -17,6 +17,7 @@ from homeassistant.components.light import (
 from homeassistant.components.number import NumberEntity
 from homeassistant.components.number.const import DEFAULT_MAX_VALUE, DEFAULT_MIN_VALUE
 from homeassistant.components.select import SelectEntity
+from homeassistant.components.button import ButtonEntity
 from homeassistant.components.switch import SwitchEntity
 from homeassistant.components.binary_sensor import BinarySensorEntity
 from homeassistant.components.sensor import SensorEntity
@@ -70,6 +71,7 @@ class LedFxEntity(Entity):
             name: str
     ) -> None:
         self._device = device
+        self._hash = device.md5
         self._id = id
         self._name = name
         self._is_new = True
@@ -116,7 +118,10 @@ class LedFxEntity(Entity):
 
     @callback
     def _schedule_immediate_update(self) -> None:
-        self.async_schedule_update_ha_state(True)
+        _hash = self._device.md5
+        if _hash != self._hash:
+            self._hash = _hash
+            self.async_schedule_update_ha_state(True)
 
     async def will_remove_from_hass(self) -> None:
         if self.unsub_update:
@@ -289,16 +294,12 @@ class LedFxLight(LightEntity, LedFxEntity):
 
         await self.async_force_update()
 
-class Scene(LedFxSwitch):
+class Scene(ButtonEntity, LedFxEntity):
     @property
     def icon(self) -> Optional[str]:
         return "mdi:image"
 
-    @property
-    def is_on(self) -> bool:
-        return False
-
-    async def async_turn_on(self, **kwargs) -> None:
+    async def async_press(self) -> None:
         if not self.available:
             return
 
