@@ -5,6 +5,7 @@ from typing import Optional
 
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect, async_dispatcher_send
 from homeassistant.components.light import (
@@ -22,7 +23,6 @@ from homeassistant.components.switch import SwitchEntity
 from homeassistant.components.binary_sensor import BinarySensorEntity
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.helpers.entity import Entity
-from homeassistant.const import ENTITY_CATEGORY_CONFIG, ENTITY_CATEGORY_DIAGNOSTIC
 
 from .const import DATA_UPDATED, DOMAIN, ICONS
 from .device import Device
@@ -174,7 +174,7 @@ class LedFxEntity(Entity):
 class LedFxSensor(SensorEntity, LedFxEntity):
     @property
     def entity_category(self) -> str:
-        return ENTITY_CATEGORY_DIAGNOSTIC
+        return EntityCategory.DIAGNOSTIC
 
     @property
     def native_value(self) -> Optional[str]:
@@ -183,7 +183,7 @@ class LedFxSensor(SensorEntity, LedFxEntity):
 class LedFxBinarySensor(BinarySensorEntity, LedFxEntity):
     @property
     def entity_category(self) -> str:
-        return ENTITY_CATEGORY_DIAGNOSTIC
+        return EntityCategory.DIAGNOSTIC
 
     @property
     def is_on(self) -> bool:
@@ -197,7 +197,7 @@ class LedFxSwitch(SwitchEntity, LedFxEntity):
 class LedFxSelect(SelectEntity, LedFxEntity):
     @property
     def entity_category(self) -> str:
-        return ENTITY_CATEGORY_CONFIG
+        return EntityCategory.CONFIG
 
     @property
     def current_option(self) -> Optional[str]:
@@ -321,7 +321,7 @@ class EffectEntity(Entity):
 
     @property
     def entity_category(self) -> str:
-        return ENTITY_CATEGORY_CONFIG
+        return EntityCategory.CONFIG
 
     @property
     def available(self) -> bool:
