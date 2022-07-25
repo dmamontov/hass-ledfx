@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 from typing import Any
 
 from homeassistant import config_entries
@@ -14,6 +15,8 @@ from httpx import USE_CLIENT_DEFAULT, codes
 from .const import DEFAULT_TIMEOUT, DOMAIN
 from .enum import EffectCategory
 from .updater import LedFxUpdater
+
+_LOGGER = logging.getLogger(__name__)
 
 
 def get_config_value(

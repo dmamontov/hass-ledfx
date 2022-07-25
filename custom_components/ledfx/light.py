@@ -123,8 +123,8 @@ class LedFxLight(LedFxEntity, LightEntity):
         )
         self._attr_effect_list = build_effects(
             updater.data.get(ATTR_LIGHT_EFFECTS, []),
-            updater.data.get(ATTR_LIGHT_DEFAULT_PRESETS, []),
-            updater.data.get(ATTR_LIGHT_CUSTOM_PRESETS, []),
+            updater.data.get(ATTR_LIGHT_DEFAULT_PRESETS, {}),
+            updater.data.get(ATTR_LIGHT_CUSTOM_PRESETS, {}),
         )
         self._attr_effect = updater.data.get(
             f"{self._attr_device_code}_{ATTR_LIGHT_EFFECT}"
@@ -149,8 +149,8 @@ class LedFxLight(LedFxEntity, LightEntity):
         )
         effect_list = build_effects(
             self._updater.data.get(ATTR_LIGHT_EFFECTS, []),
-            self._updater.data.get(ATTR_LIGHT_DEFAULT_PRESETS, []),
-            self._updater.data.get(ATTR_LIGHT_CUSTOM_PRESETS, []),
+            self._updater.data.get(ATTR_LIGHT_DEFAULT_PRESETS, {}),
+            self._updater.data.get(ATTR_LIGHT_CUSTOM_PRESETS, {}),
         )
         effect: str | None = self._updater.data.get(
             f"{self._attr_device_code}_{ATTR_LIGHT_EFFECT}"
