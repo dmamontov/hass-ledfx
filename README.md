@@ -8,6 +8,10 @@ Component for deep integration [LedFx](https://github.com/LedFx/LedFx) from [Hom
 ## Requirements
 * LedFx version [0.10.7](https://github.com/LedFx/LedFx/releases/tag/v0.10.7)
 
+## Important information
+* ❗ Effect controls (number, switch, select) are disabled by default. They must be enabled manually.
+* ❗ Controls (number, switch, select) if enabled, have the status `UNAVAILABLE` by default. After enabling the effect on the device, the status will be changed by those that are supported by this effect.
+
 ## More info
 
 - [Install](https://github.com/dmamontov/hass-ledfx/wiki/Install)
