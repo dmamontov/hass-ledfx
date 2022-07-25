@@ -234,6 +234,49 @@ async def test_devices(hass: HomeAssistant) -> None:
         assert state.state == STATE_UNAVAILABLE
 
 
+async def test_devices_without_custom_preset(hass: HomeAssistant) -> None:
+    """Test devices without custom preset.
+
+    :param hass: HomeAssistant
+    """
+
+    with patch("custom_components.ledfx.updater.LedFxClient") as mock_client:
+        await async_mock_client(mock_client)
+
+        mock_client.return_value.config = AsyncMock(
+            return_value=json.loads(
+                load_fixture("config_empty_custom_presets_data.json")
+            )
+        )
+
+        _, config_entry = await async_setup(hass)
+
+        assert await hass.config_entries.async_setup(config_entry.entry_id)
+        await hass.async_block_till_done()
+
+        updater: LedFxUpdater = hass.data[DOMAIN][config_entry.entry_id][UPDATER]
+
+        assert updater.last_update_success
+
+        unique_id: str = _generate_id("wled", updater.ip)
+
+        state: State = hass.states.get(unique_id)
+        assert state.state == STATE_ON
+        assert len(state.attributes["effect_list"]) == len(EFFECT_LIST) - 2
+
+        unique_id = _generate_id("garland_2", updater.ip)
+
+        state = hass.states.get(unique_id)
+        assert state.state == STATE_OFF
+        assert len(state.attributes["effect_list"]) == len(EFFECT_LIST) - 2
+
+        unique_id = _generate_id("ambi", updater.ip)
+
+        state = hass.states.get(unique_id)
+        assert state.state == STATE_OFF
+        assert len(state.attributes["effect_list"]) == len(EFFECT_LIST) - 2
+
+
 async def test_new_devices(hass: HomeAssistant) -> None:
     """Test new_devices.
 
