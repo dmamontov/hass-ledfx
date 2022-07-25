@@ -40,4 +40,4 @@ To connect, enter the ip address and port. And also if you use basic auth, enter
 
 1. Install [lovelace-auto-entities](https://github.com/thomasloven/lovelace-auto-entities) from HACS
 2. Install [light-entity-card](https://github.com/ljmerza/light-entity-card) from HACS
-3. Add new Lovelace card before that replacing `<your_device_id>`: [example](https://gist.github.com/dmamontov/34d252351d9eda98f53b2d6180771f12)
+3. Add new Lovelace card before that replacing `device`: [example](https://gist.github.com/dmamontov/34d252351d9eda98f53b2d6180771f12)
