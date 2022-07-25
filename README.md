@@ -1,7 +1,7 @@
 # LedFX for Home Assistant
-[![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/custom-components/hacs)
-[![donate paypal](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://paypal.me/dslonyara)
-[![donate tinkoff](https://img.shields.io/badge/Donate-Tinkoff-yellow.svg)](https://www.tinkoff.ru/sl/3FteV5DtBOV)
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
+[![CodeQL](https://img.shields.io/badge/CODEQL-Passing-30C854.svg?style=for-the-badge)](https://github.com/dmamontov/hass-miwifi/actions?query=CodeQL)
+[![Telegram](https://img.shields.io/badge/Telegram-channel-34ABDF.svg?style=for-the-badge)](https://t.me/hass_miwifi)
 
 Component for deep integration [LedFx](https://github.com/LedFx/LedFx) from [Home Assistant](https://www.home-assistant.io/).
 
@@ -10,7 +10,6 @@ Component for deep integration [LedFx](https://github.com/LedFx/LedFx) from [Hom
 - [Install](#install)
 - [Config](#config)
 - [Performance](#performance)
-- [Screenshots](#screenshots)
 
 ## FAQ
 **Q. What versions were tested on?**
@@ -30,43 +29,21 @@ Component for deep integration [LedFx](https://github.com/LedFx/LedFx) from [Hom
 **A.** Yes, [OPTIONAL] support.
 
 ## Install
-Installed through the custom repository [HACS](https://hacs.xyz/) - `dmamontov/hass-ledfx`
+The easiest way to install the `LedFx` integration is with [HACS](https://hacs.xyz/). First install [HACS](https://hacs.xyz/) if you don’t have it yet. After installation you can find this integration in the [HACS](https://hacs.xyz/) store under integrations.
 
-Or by copying the `ledfx` folder from [the latest release](https://github.com/dmamontov/ledfx/releases/latest) to the custom_components folder (create if necessary) of the configs directory.
-
+Alternatively, you can install it manually. Just copy and paste the content of the hass-ledfx/custom_components folder in your config/custom_components directory. As example, you will get the sensor.py file in the following path: /config/custom_components/ledfx/sensor.py. The disadvantage of a manual installation is that you won’t be notified about updates.
 ## Config
-**Via GUI (Recommended)**
+**Via GUI**
 
-`Settings` > `Integrations` > `Plus` > `LedFx`
+`Settings` > `Integrations` > `Plus` > `MiWiFi`
 
-For authorization, enter the ip address and port ledfx
+For authorization, use the ip of your router and its password
 
-**Via YAML (legacy way)**
-```yaml
-ledfx:
-  ip_address: 127.0.0.1
-  port: 8888
-  username: test # Username BasicAuth [OPTIONAL]
-  password: test # Password BasicAuth [OPTIONAL]
-  scan_interval: 10 # Refresh rate in seconds [PRO]
-  timeout: 5 # Request timeout in seconds [PRO]
-  ext_effect_settings: False # Advanced effect settings [PRO]
-  ext_sensors: False # Additional sensors for device settings [PRO]
-```
+❗ Via YAML (legacy way) not supported
 
 ## Performance
-![](example-performance.gif)
+![](/images/performance.gif)
 
 1. Install [lovelace-auto-entities](https://github.com/thomasloven/lovelace-auto-entities) from HACS
 2. Install [light-entity-card](https://github.com/ljmerza/light-entity-card) from HACS
 3. Add new Lovelace card before that replacing `<your_device_id>`: [example](https://gist.github.com/dmamontov/34d252351d9eda98f53b2d6180771f12)
-
-## Screenshots
-#### LedFx objects
-![](settings.png)
-
-#### Device objects
-![](device-part1.png)
-
-![](device-part2.png)
-

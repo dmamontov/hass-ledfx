@@ -1,0 +1,17 @@
+{
+  "status": "success",
+  "effect": {
+    "config": {
+      "blur": 8.587469069357562,
+      "brightness": 1.0,
+      "flip": true,
+      "gradient_name": "Sunset",
+      "gradient_roll": 4,
+      "mirror": false,
+      "gradient_repeat": 1,
+      "background_color": "black"
+    },
+    "name": "Wavelength",
+    "type": "wavelength(Reactive)"
+  }
+}

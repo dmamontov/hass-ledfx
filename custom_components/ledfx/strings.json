@@ -1,5 +1,4 @@
 {
-  "title": "LedFx",
   "config": {
     "error": {
       "request.error": "Failed to complete the request. Check if the data is correct.",
@@ -10,11 +9,11 @@
         "title": "LedFx settings",
         "description": "Enter the IP address and port of your LedFx",
         "data": {
-          "ip_address": "IP address",
-          "port": "Port",
+          "ip_address": "[%key:common::config_flow::data::ip_address%]",
+          "port": "[%key:common::config_flow::data::port%]",
           "basic_auth": "Basic Auth",
-          "username": "Username",
-          "password": "Password",
+          "username": "[%key:common::config_flow::data::username%]",
+          "password": "[%key:common::config_flow::data::password%]",
           "scan_interval": "Scan interval in seconds [PRO]",
           "timeout": "Timeout of requests in seconds [PRO]"
         }
@@ -31,11 +30,11 @@
         "title": "LedFx settings",
         "description": "Enter the IP address and port of your LedFx",
         "data": {
-          "ip_address": "IP address",
-          "port": "Port",
+          "ip_address": "[%key:common::config_flow::data::ip_address%]",
+          "port": "[%key:common::config_flow::data::port%]",
           "basic_auth": "Basic Auth",
-          "username": "Username",
-          "password": "Password",
+          "username": "[%key:common::config_flow::data::username%]",
+          "password": "[%key:common::config_flow::data::password%]",
           "scan_interval": "Scan interval in seconds [PRO]",
           "timeout": "Timeout of requests in seconds [PRO]"
         }

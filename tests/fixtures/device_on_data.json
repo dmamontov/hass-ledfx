@@ -1,0 +1,46 @@
+{
+  "status": "success",
+  "effect": {
+    "config": {
+      "config": {
+        "config": {
+          "active": true,
+          "gradient_repeat": 1,
+          "flip": false,
+          "blur": 3,
+          "background_color": "black",
+          "gradient_name": "Rainbow",
+          "gradient_roll": 0,
+          "brightness": 1,
+          "mirror": false
+        },
+        "name": "Wavelength",
+        "type": "wavelength(Reactive)",
+        "active": true,
+        "isProcessing": false,
+        "gradient_repeat": 1,
+        "flip": false,
+        "blur": 3,
+        "background_color": "black",
+        "gradient_name": "Rainbow",
+        "gradient_roll": 0,
+        "brightness": 1,
+        "mirror": false
+      },
+      "name": "Wavelength",
+      "type": "wavelength(Reactive)",
+      "active": true,
+      "isProcessing": false,
+      "gradient_repeat": 1,
+      "flip": false,
+      "blur": 3.0,
+      "background_color": "black",
+      "gradient_name": "Rainbow",
+      "gradient_roll": 0,
+      "brightness": 1.0,
+      "mirror": false
+    },
+    "name": "Wavelength",
+    "type": "wavelength(Reactive)"
+  }
+}

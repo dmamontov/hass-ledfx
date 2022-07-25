@@ -1,46 +1,50 @@
 {
+  "title": "LedFx",
   "config": {
-    "abort": {
-      "updated": "Данные обновлены, перезапустите Home Assistant"
-    },
     "error": {
-      "ip_address.not_matched": "Неверный ip адрес или порт",
-      "connection": "Не удалось установить соединение"
+      "request.error": "Не удалось выполнить запрос. Проверьте правильность данных.",
+      "connection.error": "Нет подключения. Проверьте правильность данных."
     },
     "step": {
-      "auth": {
-        "description": "Введите ip адрес и порт сервера LedFx",
+      "user": {
+        "title": "Настройки LedFx",
+        "description": "Введите IP-адрес и порт вашего LedFx",
         "data": {
-          "ip_address": "IP адрес",
+          "ip_address": "IP-адрес",
           "port": "Порт",
-          "username": "Пользователь BasicAuth [OPTIONAL]",
-          "password": "Пароль BasicAuth [OPTIONAL]"
+          "basic_auth": "Basic Auth",
+          "username": "Имя пользователя",
+          "password": "Пароль",
+          "scan_interval": "Интервал сканирования в секундах [PRO]",
+          "timeout": "Время ожидания запросов в секундах [PRO]"
         }
       }
     }
   },
   "options": {
-    "abort": {
-      "updated": "Данные обновлены, перезапустите Home Assistant"
-    },
     "error": {
-      "ip_address.not_matched": "Неверный ip адрес или порт",
-      "connection": "Не удалось установить соединение"
+      "request.error": "Не удалось выполнить запрос. Проверьте правильность данных.",
+      "connection.error": "Нет подключения. Проверьте правильность данных."
     },
     "step": {
-      "settings": {
-        "description": "Введите ip адрес и порт сервера LedFx",
+      "init": {
+        "title": "Настройки LedFx",
+        "description": "Введите IP-адрес и порт вашего LedFx",
         "data": {
-          "ip_address": "IP адрес",
+          "ip_address": "IP-адрес",
           "port": "Порт",
-          "username": "Пользователь BasicAuth [OPTIONAL]",
-          "password": "Пароль BasicAuth [OPTIONAL]",
-          "ext_effect_settings": "Расширенные настройки эффектов [PRO]",
-          "ext_sensors": "Добавить сенсоры настроек устройства [PRO]",
+          "basic_auth": "Basic Auth",
+          "username": "Имя пользователя",
+          "password": "Пароль",
           "scan_interval": "Интервал сканирования в секундах [PRO]",
-          "timeout": "Тайм-аут запросов в секундах [PRO]"
+          "timeout": "Время ожидания запросов в секундах [PRO]"
         }
       }
+    }
+  },
+  "system_health": {
+    "info": {
+      "version": "Версия"
     }
   }
 }

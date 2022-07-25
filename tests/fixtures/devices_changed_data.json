@@ -1,0 +1,114 @@
+{
+  "status": "success",
+  "devices": {
+    "new_device": {
+      "config": {
+        "center_offset": 0,
+        "channel_count": 150,
+        "channel_offset": 0,
+        "e131_Packet_Priority": 100,
+        "force_refresh": false,
+        "icon_name": "mdi:string-lights",
+        "ip_address": "192.168.31.111",
+        "max_brightness": 1.0,
+        "name": "New device",
+        "pixel_count": 50,
+        "preview_only": false,
+        "refresh_rate": 60,
+        "type": "e131",
+        "universe": 1,
+        "universe_end": 1,
+        "universe_size": 510
+      },
+      "id": "garland-2",
+      "type": "e131",
+      "effect": {}
+    },
+    "wled": {
+      "config": {
+        "center_offset": 0,
+        "channel_count": 300,
+        "channel_offset": 0,
+        "e131_Packet_Priority": 100,
+        "force_refresh": false,
+        "icon_name": "mdi:string-lights",
+        "ip_address": "192.168.31.50",
+        "max_brightness": 1.0,
+        "name": "Garland #1",
+        "pixel_count": 100,
+        "preview_only": false,
+        "refresh_rate": 60,
+        "type": "e131",
+        "universe": 1,
+        "universe_end": 1,
+        "universe_size": 512
+      },
+      "id": "wled",
+      "type": "e131",
+      "effect": {
+        "config": {
+          "background_color": "black",
+          "modulation_effect": "sine",
+          "gradient_name": "Rainbow",
+          "brightness": 1.0,
+          "mirror": false,
+          "modulation_speed": 0.5,
+          "modulate": false,
+          "gradient_repeat": 1,
+          "flip": false,
+          "gradient_roll": 0,
+          "speed": 1.0,
+          "blur": 0.0
+        },
+        "name": "Gradient",
+        "type": "gradient"
+      }
+    },
+    "ambi": {
+      "config": {
+        "center_offset": 0,
+        "channel_count": 471,
+        "channel_offset": 0,
+        "e131_Packet_Priority": 100,
+        "force_refresh": false,
+        "icon_name": "mdi:string-lights",
+        "ip_address": "192.168.31.118",
+        "max_brightness": 1.0,
+        "name": "Ambilight",
+        "pixel_count": 157,
+        "preview_only": false,
+        "refresh_rate": 60,
+        "type": "e131",
+        "universe": 1,
+        "universe_end": 1,
+        "universe_size": 510
+      },
+      "id": "ambi",
+      "type": "e131",
+      "effect": {}
+    },
+    "garland-2": {
+      "config": {
+        "center_offset": 0,
+        "channel_count": 150,
+        "channel_offset": 0,
+        "e131_Packet_Priority": 100,
+        "force_refresh": false,
+        "icon_name": "mdi:string-lights",
+        "ip_address": "192.168.31.164",
+        "max_brightness": 1.0,
+        "name": "Garland #2",
+        "pixel_count": 50,
+        "preview_only": false,
+        "refresh_rate": 60,
+        "type": "e131",
+        "universe": 1,
+        "universe_end": 1,
+        "universe_size": 510
+      },
+      "id": "garland-2",
+      "type": "e131",
+      "effect": {}
+    }
+  }
+}

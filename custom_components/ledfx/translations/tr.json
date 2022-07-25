@@ -1,0 +1,50 @@
+{
+  "title": "LedFx",
+  "config": {
+    "error": {
+      "request.error": "İstek tamamlanamadı. Verilerin doğru olup olmadığını kontrol edin.",
+      "connection.error": "Bağlantı yok. Verilerin doğru olup olmadığını kontrol edin."
+    },
+    "step": {
+      "user": {
+        "title": "LedFx ayarları",
+        "description": "LedFx'inizin IP adresini ve portunu girin",
+        "data": {
+          "ip_address": "IP address",
+          "port": "Port",
+          "basic_auth": "Basic Auth",
+          "username": "Username",
+          "password": "Password",
+          "scan_interval": "Saniye cinsinden tarama aralığı [PRO]",
+          "timeout": "İsteklerin saniye cinsinden zaman aşımı [PRO]"
+        }
+      }
+    }
+  },
+  "options": {
+    "error": {
+      "request.error": "İstek tamamlanamadı. Verilerin doğru olup olmadığını kontrol edin.",
+      "connection.error": "Bağlantı yok. Verilerin doğru olup olmadığını kontrol edin."
+    },
+    "step": {
+      "init": {
+        "title": "LedFx ayarları",
+        "description": "LedFx'inizin IP adresini ve portunu girin",
+        "data": {
+          "ip_address": "IP address",
+          "port": "Port",
+          "basic_auth": "Basic Auth",
+          "username": "Username",
+          "password": "Password",
+          "scan_interval": "Saniye cinsinden tarama aralığı [PRO]",
+          "timeout": "İsteklerin saniye cinsinden zaman aşımı [PRO]"
+        }
+      }
+    }
+  },
+  "system_health": {
+    "info": {
+      "version": "Version"
+    }
+  }
+}
