@@ -1,0 +1,50 @@
+{
+  "title": "LedFx",
+  "config": {
+    "error": {
+      "request.error": "Impossible de terminer la demande. Vérifiez si les données sont correctes.",
+      "connection.error": "Il n'y a pas de connexion. Vérifiez si les données sont correctes."
+    },
+    "step": {
+      "user": {
+        "title": "Paramètres LedFx",
+        "description": "Entrez l'adresse IP et le port de votre LedFx",
+        "data": {
+          "ip_address": "IP address",
+          "port": "Port",
+          "basic_auth": "Basic Auth",
+          "username": "Username",
+          "password": "Password",
+          "scan_interval": "Intervalle d'analyse en secondes [PRO]",
+          "timeout": "Délai d'expiration des requêtes en secondes [PRO]"
+        }
+      }
+    }
+  },
+  "options": {
+    "error": {
+      "request.error": "Impossible de terminer la demande. Vérifiez si les données sont correctes.",
+      "connection.error": "Il n'y a pas de connexion. Vérifiez si les données sont correctes."
+    },
+    "step": {
+      "init": {
+        "title": "Paramètres LedFx",
+        "description": "Entrez l'adresse IP et le port de votre LedFx",
+        "data": {
+          "ip_address": "IP address",
+          "port": "Port",
+          "basic_auth": "Basic Auth",
+          "username": "Username",
+          "password": "Password",
+          "scan_interval": "Intervalle d'analyse en secondes [PRO]",
+          "timeout": "Délai d'expiration des requêtes en secondes [PRO]"
+        }
+      }
+    }
+  },
+  "system_health": {
+    "info": {
+      "version": "Version"
+    }
+  }
+}

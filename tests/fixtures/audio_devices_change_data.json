@@ -1,0 +1,10 @@
+{
+  "devices": {
+    "0": "USB PnP Sound Device: Audio (hw:0,0)",
+    "3": "sysdefault",
+    "4": "spdif",
+    "5": "samplerate"
+  },
+  "active_device_index": 0,
+  "active_host_api": 0
+}

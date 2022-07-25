@@ -1,164 +1,258 @@
-import logging
-import voluptuous as vol
-import homeassistant.helpers.config_validation as cv
+"""Configuration flows."""
 
-from homeassistant.core import callback
-from homeassistant.config_entries import ConfigFlow, OptionsFlow, ConfigEntry
+from __future__ import annotations
+
+import logging
+
+import homeassistant.helpers.config_validation as cv
+import voluptuous as vol
+from homeassistant import config_entries
 from homeassistant.const import (
     CONF_IP_ADDRESS,
-    CONF_PORT,
-    CONF_USERNAME,
     CONF_PASSWORD,
+    CONF_PORT,
     CONF_SCAN_INTERVAL,
-    CONF_TIMEOUT
+    CONF_TIMEOUT,
+    CONF_USERNAME,
 )
-from httpx._client import USE_CLIENT_DEFAULT
-from homeassistant.helpers.httpx_client import get_async_client
+from homeassistant.core import callback
+from homeassistant.data_entry_flow import FlowResult
+from homeassistant.helpers.typing import ConfigType
+from httpx import codes
 
-from .core.const import (
-    DOMAIN,
-    SCAN_INTERVAL,
+from .const import (
+    CONF_BASIC_AUTH,
+    DEFAULT_SCAN_INTERVAL,
     DEFAULT_TIMEOUT,
-    CONF_EXT_EFFECT_SETTINGS,
-    CONF_EXT_SENSORS
+    DOMAIN,
+    OPTION_IS_FROM_FLOW,
 )
-
-from .core import exceptions
-from .core.ledfx import LedFx
+from .helper import async_verify_access, clean_flow_user_input
 
 _LOGGER = logging.getLogger(__name__)
 
-AUTH_SCHEMA = vol.Schema({
-    vol.Required(CONF_IP_ADDRESS): str,
-    vol.Required(CONF_PORT): str,
-    vol.Optional(CONF_USERNAME): str,
-    vol.Optional(CONF_PASSWORD): str,
-})
 
-class LedFxFlowHandler(ConfigFlow, domain = DOMAIN):
-    async def async_step_import(self, data: dict):
-        await self.async_set_unique_id(data[CONF_IP_ADDRESS])
-        self._abort_if_unique_id_configured()
-
-        return self.async_create_entry(title = "{}:{}".format(data[CONF_IP_ADDRESS], data[CONF_PORT]), data = data)
-
-    async def async_step_user(self, user_input = None):
-        return self.async_show_form(step_id = 'auth', data_schema = AUTH_SCHEMA)
-
-    async def async_step_auth(self, user_input):
-        if user_input is None:
-            return self.cur_step
-
-        auth = USE_CLIENT_DEFAULT
-        if (
-            CONF_USERNAME in user_input
-            and CONF_PASSWORD in user_input
-            and user_input[CONF_USERNAME]
-            and len(user_input[CONF_USERNAME]) > 0
-            and user_input[CONF_PASSWORD]
-            and len(user_input[CONF_PASSWORD]) > 0
-        ):
-            auth = (user_input[CONF_USERNAME], user_input[CONF_PASSWORD])
-
-        client = LedFx(
-            get_async_client(self.hass, False),
-            user_input[CONF_IP_ADDRESS],
-            user_input[CONF_PORT],
-            auth
-        )
-
-        try:
-            await client.info()
-        except exceptions.LedFxConnectionError as e:
-            return await self._prepare_error('ip_address.not_matched', e)
-
-        entry = await self.async_set_unique_id(user_input[CONF_IP_ADDRESS])
-
-        if entry:
-            self.hass.config_entries.async_update_entry(entry, data = user_input)
-
-            return self.async_abort(reason = 'account_updated')
-
-        return self.async_create_entry(title = "{}:{}".format(user_input[CONF_IP_ADDRESS], user_input[CONF_PORT]), data = user_input)
+class LedFxConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore
+    """First time set up flow."""
 
     @staticmethod
     @callback
-    def async_get_options_flow(config_entry: ConfigEntry) -> OptionsFlow:
-        return OptionsFlowHandler(config_entry)
+    def async_get_options_flow(
+        config_entry: config_entries.ConfigEntry,
+    ) -> LedFxOptionsFlow:
+        """Get the options flow for this handler.
 
-    async def _prepare_error(self, code: str, err):
-        _LOGGER.error("Error setting up LedFx API: %r", err)
+        :param config_entry: config_entries.ConfigEntry: Config Entry object
+        :return LedFxOptionsFlow: Options Flow object
+        """
 
-        return self.async_show_form(
-            step_id = 'auth',
-            data_schema = AUTH_SCHEMA,
-            errors = {'base': code}
-        )
+        return LedFxOptionsFlow(config_entry)
 
-class OptionsFlowHandler(OptionsFlow):
-    def __init__(self, config_entry: ConfigEntry) -> None:
-        self.config_entry = config_entry
+    async def async_step_user(
+        self, user_input: ConfigType | None = None, errors: dict[str, str] | None = None
+    ) -> FlowResult:
+        """Handle a flow initialized by the user.
 
-    async def async_step_init(self, user_input = None):
-        return await self.async_step_settings()
+        :param user_input: ConfigType | None: User data
+        :param errors: dict | None: Errors list
+        :return FlowResult: Result object
+        """
 
-    async def async_step_settings(self, user_input = None):
-        options_schema = vol.Schema({
-            vol.Required(CONF_IP_ADDRESS, default = self.config_entry.options.get(CONF_IP_ADDRESS, "")): str,
-            vol.Required(CONF_PORT, default = self.config_entry.options.get(CONF_PORT, "")): str,
-            vol.Optional(CONF_USERNAME, default = self.config_entry.options.get(CONF_USERNAME, "")): str,
-            vol.Optional(CONF_PASSWORD, default = self.config_entry.options.get(CONF_PASSWORD, "")): str,
-            vol.Optional(
-                CONF_EXT_EFFECT_SETTINGS,
-                default=self.config_entry.options.get(CONF_EXT_EFFECT_SETTINGS, False)
+        if user_input is None:
+            user_input = {}
+
+        if errors is None:
+            errors = {}
+
+        schema: dict = {
+            vol.Required(
+                CONF_IP_ADDRESS, default=user_input.get(CONF_IP_ADDRESS, vol.UNDEFINED)
+            ): str,
+            vol.Required(
+                CONF_PORT, default=user_input.get(CONF_PORT, vol.UNDEFINED)
+            ): str,
+            vol.Required(
+                CONF_BASIC_AUTH, default=user_input.get(CONF_BASIC_AUTH, False)
             ): cv.boolean,
-            vol.Optional(
-                CONF_EXT_SENSORS,
-                default=self.config_entry.options.get(CONF_EXT_SENSORS, False)
-            ): cv.boolean,
-            vol.Optional(
-                CONF_SCAN_INTERVAL,
-                default = self.config_entry.options.get(CONF_SCAN_INTERVAL, SCAN_INTERVAL)
-            ): cv.positive_int,
-            vol.Optional(
-                CONF_TIMEOUT,
-                default = self.config_entry.options.get(CONF_TIMEOUT, DEFAULT_TIMEOUT)
-            ): cv.positive_int
-        })
+        }
 
-        if user_input:
-            auth = USE_CLIENT_DEFAULT
-            if (
-                    CONF_USERNAME in user_input
-                    and CONF_PASSWORD in user_input
-                    and user_input[CONF_USERNAME]
-                    and len(user_input[CONF_USERNAME]) > 0
-                    and user_input[CONF_PASSWORD]
-                    and len(user_input[CONF_PASSWORD]) > 0
-            ):
-                auth = (user_input[CONF_USERNAME], user_input[CONF_PASSWORD])
+        supports_basic_auth: bool = user_input.get(CONF_BASIC_AUTH, False)
 
-            client = LedFx(
-                get_async_client(self.hass, False),
-                user_input[CONF_IP_ADDRESS],
-                user_input[CONF_PORT],
-                auth
+        if supports_basic_auth and (
+            not user_input.get(CONF_USERNAME, False)
+            or not user_input.get(CONF_PASSWORD, False)
+        ):
+            schema |= {
+                vol.Optional(
+                    CONF_USERNAME, default=user_input.get(CONF_USERNAME, vol.UNDEFINED)
+                ): str,
+                vol.Optional(
+                    CONF_PASSWORD, default=user_input.get(CONF_PASSWORD, vol.UNDEFINED)
+                ): str,
+            }
+        elif len(user_input) > 0:
+            unique_id: str = f"{user_input[CONF_IP_ADDRESS]}:{user_input[CONF_PORT]}"
+
+            await self.async_set_unique_id(unique_id)
+            self._abort_if_unique_id_configured()
+
+            code: codes = await async_verify_access(
+                self.hass,
+                user_input.get(CONF_IP_ADDRESS),  # type: ignore
+                user_input.get(CONF_PORT),  # type: ignore
+                user_input.get(CONF_USERNAME, None),
+                user_input.get(CONF_PASSWORD, None),
+                user_input.get(CONF_TIMEOUT, DEFAULT_TIMEOUT),
             )
 
-            try:
-                await client.info()
-            except exceptions.LedFxConnectionError as e:
-                return await self._prepare_error('ip_address.not_matched', e, options_schema)
+            _LOGGER.debug("Verify access code: %s", code)
 
-            return self.async_create_entry(title = '', data = user_input)
+            if codes.is_success(code):
+                return self.async_create_entry(
+                    title=unique_id,
+                    data=clean_flow_user_input(user_input, supports_basic_auth),
+                    options={OPTION_IS_FROM_FLOW: True},
+                )
 
-        return self.async_show_form(step_id = "settings", data_schema = options_schema)
-
-    async def _prepare_error(self, code: str, err, options_schema):
-        _LOGGER.error("Error setting up LedFx API: %r", err)
+            if code == codes.FORBIDDEN:
+                errors["base"] = "request.error"
+            else:
+                errors["base"] = "connection.error"
 
         return self.async_show_form(
-            step_id = 'settings',
-            data_schema = options_schema,
-            errors = {'base': code}
+            step_id="user",
+            data_schema=vol.Schema(
+                schema
+                | {
+                    vol.Required(
+                        CONF_SCAN_INTERVAL,
+                        default=user_input.get(
+                            CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL
+                        ),
+                    ): vol.All(vol.Coerce(int), vol.Range(min=DEFAULT_SCAN_INTERVAL)),
+                    vol.Required(
+                        CONF_TIMEOUT,
+                        default=user_input.get(CONF_TIMEOUT, DEFAULT_TIMEOUT),
+                    ): vol.All(vol.Coerce(int), vol.Range(min=DEFAULT_TIMEOUT)),
+                }
+            ),
+            errors=errors,
+        )
+
+
+class LedFxOptionsFlow(config_entries.OptionsFlow):
+    """Changing options flow."""
+
+    _config_entry: config_entries.ConfigEntry
+
+    def __init__(self, config_entry: config_entries.ConfigEntry) -> None:
+        """Initialize options flow.
+
+        :param config_entry: config_entries.ConfigEntry: Config Entry object
+        """
+
+        self._config_entry = config_entry
+
+    async def async_step_init(self, user_input: ConfigType | None = None) -> FlowResult:
+        """Manage the options.
+
+        :param user_input: ConfigType | None: User data
+        """
+
+        if user_input is None:
+            user_input = {}
+
+        errors = {}
+
+        schema: dict = {
+            vol.Required(
+                CONF_IP_ADDRESS, default=user_input.get(CONF_IP_ADDRESS, vol.UNDEFINED)
+            ): str,
+            vol.Required(
+                CONF_PORT, default=user_input.get(CONF_PORT, vol.UNDEFINED)
+            ): str,
+            vol.Required(
+                CONF_BASIC_AUTH, default=user_input.get(CONF_BASIC_AUTH, False)
+            ): cv.boolean,
+        }
+
+        supports_basic_auth: bool = user_input.get(CONF_BASIC_AUTH, False)
+
+        if supports_basic_auth and (
+            not user_input.get(CONF_USERNAME, False)
+            or not user_input.get(CONF_PASSWORD, False)
+        ):
+            schema |= {
+                vol.Optional(
+                    CONF_USERNAME, default=user_input.get(CONF_USERNAME, vol.UNDEFINED)
+                ): str,
+                vol.Optional(
+                    CONF_PASSWORD, default=user_input.get(CONF_PASSWORD, vol.UNDEFINED)
+                ): str,
+            }
+        elif len(user_input) > 0:
+            unique_id: str = f"{user_input[CONF_IP_ADDRESS]}:{user_input[CONF_PORT]}"
+
+            code: codes = await async_verify_access(
+                self.hass,
+                user_input.get(CONF_IP_ADDRESS),  # type: ignore
+                user_input.get(CONF_PORT),  # type: ignore
+                user_input.get(CONF_USERNAME, None),
+                user_input.get(CONF_PASSWORD, None),
+                user_input.get(CONF_TIMEOUT, DEFAULT_TIMEOUT),
+            )
+
+            _LOGGER.debug("Verify access code: %s", code)
+
+            if codes.is_success(code):
+                await self.async_update_unique_id(unique_id)
+
+                return self.async_create_entry(
+                    title=unique_id,
+                    data=clean_flow_user_input(user_input, supports_basic_auth),
+                )
+
+            if code == codes.FORBIDDEN:
+                errors["base"] = "request.error"
+            else:
+                errors["base"] = "connection.error"
+
+        return self.async_show_form(
+            step_id="init",
+            data_schema=vol.Schema(
+                schema
+                | {
+                    vol.Required(
+                        CONF_SCAN_INTERVAL,
+                        default=user_input.get(
+                            CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL
+                        ),
+                    ): vol.All(vol.Coerce(int), vol.Range(min=DEFAULT_SCAN_INTERVAL)),
+                    vol.Required(
+                        CONF_TIMEOUT,
+                        default=user_input.get(CONF_TIMEOUT, DEFAULT_TIMEOUT),
+                    ): vol.All(vol.Coerce(int), vol.Range(min=DEFAULT_TIMEOUT)),
+                }
+            ),
+            errors=errors,
+        )
+
+    async def async_update_unique_id(self, unique_id: str) -> None:  # pragma: no cover
+        """Async update unique_id
+
+        :param unique_id:
+        """
+
+        if self._config_entry.unique_id == unique_id:
+            return
+
+        for flow in self.hass.config_entries.flow.async_progress(True):
+            if (
+                flow["flow_id"] != self.flow_id
+                and flow["context"].get("unique_id") == unique_id
+            ):
+                self.hass.config_entries.flow.async_abort(flow["flow_id"])
+
+        self.hass.config_entries.async_update_entry(
+            self._config_entry, unique_id=unique_id
         )

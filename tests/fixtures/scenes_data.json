@@ -1,0 +1,44 @@
+{
+  "status": "success",
+  "scenes": {
+    "test": {
+      "devices": {
+        "ambi": {
+          "config": {
+            "background_color": "black",
+            "blur": 0.0,
+            "brightness": 1.0,
+            "flip": false,
+            "gradient_name": "Rainbow",
+            "gradient_repeat": 1,
+            "gradient_roll": 0,
+            "mirror": false,
+            "modulate": false,
+            "modulation_effect": "sine",
+            "modulation_speed": 0.5,
+            "speed": 1.0
+          },
+          "type": "gradient"
+        },
+        "wled": {
+          "config": {
+            "background_color": "black",
+            "blur": 0.0,
+            "brightness": 1.0,
+            "flip": false,
+            "gradient_name": "Rainbow",
+            "gradient_repeat": 1,
+            "gradient_roll": 0,
+            "mirror": false,
+            "modulate": false,
+            "modulation_effect": "sine",
+            "modulation_speed": 0.5,
+            "speed": 1.0
+          },
+          "type": "gradient"
+        }
+      },
+      "name": "test"
+    }
+  }
+}

@@ -1,0 +1,1 @@
+"""LedFx custom integration."""

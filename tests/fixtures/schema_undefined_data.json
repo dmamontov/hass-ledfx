@@ -1,0 +1,3571 @@
+{
+  "devices": {
+    "adalight": {
+      "schema": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "Friendly name for the device"
+          },
+          "max_brightness": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "title": "Max Brightness",
+            "description": "Max brightness for the device",
+            "default": 1.0
+          },
+          "icon_name": {
+            "type": "string",
+            "title": "Icon Name",
+            "description": "https://material-ui.com/components/material-icons/",
+            "default": "SettingsInputComponent"
+          },
+          "center_offset": {
+            "type": "integer",
+            "title": "Center Offset",
+            "description": "Number of pixels from the perceived center of the device",
+            "default": 0
+          },
+          "refresh_rate": {
+            "type": "integer",
+            "title": "Refresh Rate",
+            "description": "Rate that pixels are sent to the device",
+            "default": 60
+          },
+          "force_refresh": {
+            "type": "boolean",
+            "title": "Force Refresh",
+            "description": "Force the device to always refresh",
+            "default": false
+          },
+          "preview_only": {
+            "type": "boolean",
+            "title": "Preview Only",
+            "description": "Preview the pixels without updating the device",
+            "default": false
+          },
+          "com_port": {
+            "type": "string",
+            "enum": [
+              "/dev/ttyAMA0"
+            ],
+            "title": "Com Port",
+            "description": "COM port for Adalight compatible device"
+          },
+          "baudrate": {
+            "type": "integer",
+            "minimum": 115200,
+            "title": "Baudrate",
+            "description": "baudrate",
+            "default": 500000
+          },
+          "pixel_count": {
+            "type": "integer",
+            "minimum": 1,
+            "title": "Pixel Count",
+            "description": "Number of individual pixels"
+          },
+          "color_order": {
+            "type": "string",
+            "enum": [
+              "RGB",
+              "RBG",
+              "GRB",
+              "BRG",
+              "GBR",
+              "BGR"
+            ],
+            "title": "Color Order",
+            "description": "Color order",
+            "default": "RGB"
+          }
+        },
+        "required": [
+          "name",
+          "com_port",
+          "baudrate",
+          "pixel_count",
+          "color_order"
+        ]
+      },
+      "id": "adalight"
+    },
+    "e131": {
+      "schema": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "Friendly name for the device"
+          },
+          "max_brightness": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "title": "Max Brightness",
+            "description": "Max brightness for the device",
+            "default": 1.0
+          },
+          "icon_name": {
+            "type": "string",
+            "title": "Icon Name",
+            "description": "https://material-ui.com/components/material-icons/",
+            "default": "SettingsInputComponent"
+          },
+          "center_offset": {
+            "type": "integer",
+            "title": "Center Offset",
+            "description": "Number of pixels from the perceived center of the device",
+            "default": 0
+          },
+          "refresh_rate": {
+            "type": "integer",
+            "title": "Refresh Rate",
+            "description": "Rate that pixels are sent to the device",
+            "default": 60
+          },
+          "force_refresh": {
+            "type": "boolean",
+            "title": "Force Refresh",
+            "description": "Force the device to always refresh",
+            "default": false
+          },
+          "preview_only": {
+            "type": "boolean",
+            "title": "Preview Only",
+            "description": "Preview the pixels without updating the device",
+            "default": false
+          },
+          "ip_address": {
+            "type": "string",
+            "title": "Ip Address",
+            "description": "Hostname or IP address of the device, or multicast for multicast"
+          },
+          "pixel_count": {
+            "type": "integer",
+            "minimum": 1,
+            "title": "Pixel Count",
+            "description": "Number of individual pixels"
+          },
+          "universe": {
+            "type": "integer",
+            "minimum": 1,
+            "title": "Universe",
+            "description": "DMX universe for the device",
+            "default": 1
+          },
+          "universe_size": {
+            "type": "integer",
+            "minimum": 1,
+            "title": "Universe Size",
+            "description": "Size of each DMX universe. Leave at 510 unless you know what you're doing",
+            "default": 510
+          },
+          "channel_offset": {
+            "type": "integer",
+            "minimum": 0,
+            "title": "Channel Offset",
+            "description": "Channel offset within the DMX universe",
+            "default": 0
+          },
+          "e131_Packet_Priority": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 200,
+            "title": "E131 Packet Priority",
+            "description": "Priority given to the sACN packets for this device",
+            "default": 100
+          }
+        },
+        "required": [
+          "name",
+          "ip_address",
+          "pixel_count"
+        ]
+      },
+      "id": "e131"
+    },
+    "udp": {
+      "schema": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "Friendly name for the device"
+          },
+          "max_brightness": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "title": "Max Brightness",
+            "description": "Max brightness for the device",
+            "default": 1.0
+          },
+          "icon_name": {
+            "type": "string",
+            "title": "Icon Name",
+            "description": "https://material-ui.com/components/material-icons/",
+            "default": "SettingsInputComponent"
+          },
+          "center_offset": {
+            "type": "integer",
+            "title": "Center Offset",
+            "description": "Number of pixels from the perceived center of the device",
+            "default": 0
+          },
+          "refresh_rate": {
+            "type": "integer",
+            "title": "Refresh Rate",
+            "description": "Rate that pixels are sent to the device",
+            "default": 60
+          },
+          "force_refresh": {
+            "type": "boolean",
+            "title": "Force Refresh",
+            "description": "Force the device to always refresh",
+            "default": false
+          },
+          "preview_only": {
+            "type": "boolean",
+            "title": "Preview Only",
+            "description": "Preview the pixels without updating the device",
+            "default": false
+          },
+          "ip_address": {
+            "type": "string",
+            "title": "Ip Address",
+            "description": "Hostname or IP address of the device"
+          },
+          "port": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 65535,
+            "title": "Port",
+            "description": "Port for the UDP device"
+          },
+          "pixel_count": {
+            "type": "integer",
+            "minimum": 1,
+            "title": "Pixel Count",
+            "description": "Number of individual pixels"
+          },
+          "include_indexes": {
+            "type": "boolean",
+            "title": "Include Indexes",
+            "description": "Include the index for every LED",
+            "default": false
+          },
+          "data_prefix": {
+            "type": "string",
+            "title": "Data Prefix",
+            "description": "Data to be appended in hex format"
+          },
+          "data_postfix": {
+            "type": "string",
+            "title": "Data Postfix",
+            "description": "Data to be prepended in hex format"
+          }
+        },
+        "required": [
+          "name",
+          "ip_address",
+          "port",
+          "pixel_count"
+        ]
+      },
+      "id": "udp"
+    }
+  },
+  "effects": {
+    "gradient": {
+      "schema": {
+        "properties": {
+          "test": {
+            "type": "test",
+            "title": "Test",
+            "description": "Test effect"
+          },
+          "blur": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 10,
+            "title": "Blur",
+            "description": "Amount to blur the effect",
+            "default": 0.0
+          },
+          "flip": {
+            "type": "boolean",
+            "title": "Flip",
+            "description": "Flip the effect",
+            "default": false
+          },
+          "mirror": {
+            "type": "boolean",
+            "title": "Mirror",
+            "description": "Mirror the effect",
+            "default": false
+          },
+          "brightness": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "title": "Brightness",
+            "description": "Brightness of strip",
+            "default": 1.0
+          },
+          "background_color": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Background Color",
+            "description": "Apply a background colour",
+            "default": "black"
+          },
+          "modulate": {
+            "type": "boolean",
+            "title": "Modulate",
+            "description": "Brightness modulation",
+            "default": false
+          },
+          "modulation_effect": {
+            "type": "string",
+            "enum": [
+              "sine",
+              "breath"
+            ],
+            "title": "Modulation Effect",
+            "description": "Choose an animation",
+            "default": "sine"
+          },
+          "modulation_speed": {
+            "type": "number",
+            "minimum": 0.01,
+            "maximum": 1,
+            "title": "Modulation Speed",
+            "description": "Animation speed",
+            "default": 0.5
+          },
+          "gradient_name": {
+            "type": "string",
+            "enum": [
+              "Rainbow",
+              "Dancefloor",
+              "Plasma",
+              "Ocean",
+              "Viridis",
+              "Jungle",
+              "Spring",
+              "Winter",
+              "Frost",
+              "Sunset",
+              "Borealis",
+              "Rust",
+              "Christmas",
+              "Winamp"
+            ],
+            "title": "Gradient Name",
+            "description": "Color gradient to display",
+            "default": "Rainbow"
+          },
+          "gradient_roll": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10,
+            "title": "Gradient Roll",
+            "description": "Amount to shift the gradient",
+            "default": 0
+          },
+          "gradient_repeat": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16,
+            "title": "Gradient Repeat",
+            "description": "Repeat the gradient into segments",
+            "default": 1
+          },
+          "speed": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 10,
+            "title": "Speed",
+            "description": "Speed of the effect",
+            "default": 1.0
+          }
+        }
+      },
+      "id": "gradient",
+      "name": "Gradient"
+    },
+    "bands(Reactive)": {
+      "schema": {
+        "properties": {
+          "blur": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 10,
+            "title": "Blur",
+            "description": "Amount to blur the effect",
+            "default": 0.0
+          },
+          "flip": {
+            "type": "boolean",
+            "title": "Flip",
+            "description": "Flip the effect",
+            "default": false
+          },
+          "brightness": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "title": "Brightness",
+            "description": "Brightness of strip",
+            "default": 1.0
+          },
+          "background_color": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Background Color",
+            "description": "Apply a background colour",
+            "default": "black"
+          },
+          "gradient_roll": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10,
+            "title": "Gradient Roll",
+            "description": "Amount to shift the gradient",
+            "default": 0
+          },
+          "gradient_repeat": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16,
+            "title": "Gradient Repeat",
+            "description": "Repeat the gradient into segments",
+            "default": 1
+          },
+          "band_count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16,
+            "title": "Band Count",
+            "description": "Number of bands",
+            "default": 6
+          },
+          "align": {
+            "type": "string",
+            "enum": [
+              "left",
+              "right",
+              "invert",
+              "center"
+            ],
+            "title": "Align",
+            "description": "Alignment of bands",
+            "default": "left"
+          },
+          "gradient_name": {
+            "type": "string",
+            "enum": [
+              "Rainbow",
+              "Dancefloor",
+              "Plasma",
+              "Ocean",
+              "Viridis",
+              "Jungle",
+              "Spring",
+              "Winter",
+              "Frost",
+              "Sunset",
+              "Borealis",
+              "Rust",
+              "Christmas",
+              "Winamp"
+            ],
+            "title": "Gradient Name",
+            "description": "Color gradient to display",
+            "default": "Rainbow"
+          },
+          "mirror": {
+            "type": "boolean",
+            "title": "Mirror",
+            "description": "Mirror the effect",
+            "default": false
+          }
+        }
+      },
+      "id": "bands(Reactive)",
+      "name": "Bands"
+    },
+    "bands_matrix(Reactive)": {
+      "schema": {
+        "properties": {
+          "blur": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 10,
+            "title": "Blur",
+            "description": "Amount to blur the effect",
+            "default": 0.0
+          },
+          "flip": {
+            "type": "boolean",
+            "title": "Flip",
+            "description": "Flip the effect",
+            "default": false
+          },
+          "brightness": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "title": "Brightness",
+            "description": "Brightness of strip",
+            "default": 1.0
+          },
+          "background_color": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Background Color",
+            "description": "Apply a background colour",
+            "default": "black"
+          },
+          "gradient_roll": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10,
+            "title": "Gradient Roll",
+            "description": "Amount to shift the gradient",
+            "default": 0
+          },
+          "gradient_repeat": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16,
+            "title": "Gradient Repeat",
+            "description": "Repeat the gradient into segments",
+            "default": 1
+          },
+          "band_count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16,
+            "title": "Band Count",
+            "description": "Number of bands",
+            "default": 6
+          },
+          "gradient_name": {
+            "type": "string",
+            "enum": [
+              "Rainbow",
+              "Dancefloor",
+              "Plasma",
+              "Ocean",
+              "Viridis",
+              "Jungle",
+              "Spring",
+              "Winter",
+              "Frost",
+              "Sunset",
+              "Borealis",
+              "Rust",
+              "Christmas",
+              "Winamp"
+            ],
+            "title": "Gradient Name",
+            "description": "Color gradient to display",
+            "default": "Rainbow"
+          },
+          "mirror": {
+            "type": "boolean",
+            "title": "Mirror",
+            "description": "Mirror the effect",
+            "default": false
+          },
+          "flip_gradient": {
+            "type": "boolean",
+            "title": "Flip Gradient",
+            "description": "Flip Gradient",
+            "default": false
+          }
+        }
+      },
+      "id": "bands_matrix(Reactive)",
+      "name": "Bands Matrix"
+    },
+    "bar(Reactive)": {
+      "schema": {
+        "properties": {
+          "blur": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 10,
+            "title": "Blur",
+            "description": "Amount to blur the effect",
+            "default": 0.0
+          },
+          "flip": {
+            "type": "boolean",
+            "title": "Flip",
+            "description": "Flip the effect",
+            "default": false
+          },
+          "mirror": {
+            "type": "boolean",
+            "title": "Mirror",
+            "description": "Mirror the effect",
+            "default": false
+          },
+          "brightness": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "title": "Brightness",
+            "description": "Brightness of strip",
+            "default": 1.0
+          },
+          "background_color": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Background Color",
+            "description": "Apply a background colour",
+            "default": "black"
+          },
+          "gradient_roll": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10,
+            "title": "Gradient Roll",
+            "description": "Amount to shift the gradient",
+            "default": 0
+          },
+          "gradient_repeat": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16,
+            "title": "Gradient Repeat",
+            "description": "Repeat the gradient into segments",
+            "default": 1
+          },
+          "gradient_name": {
+            "type": "string",
+            "enum": [
+              "Rainbow",
+              "Dancefloor",
+              "Plasma",
+              "Ocean",
+              "Viridis",
+              "Jungle",
+              "Spring",
+              "Winter",
+              "Frost",
+              "Sunset",
+              "Borealis",
+              "Rust",
+              "Christmas",
+              "Winamp"
+            ],
+            "title": "Gradient Name",
+            "description": "Color scheme to cycle through",
+            "default": "Rainbow"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "bounce",
+              "wipe",
+              "in-out"
+            ],
+            "title": "Mode",
+            "description": "Choose from different animations",
+            "default": "wipe"
+          },
+          "ease_method": {
+            "type": "string",
+            "enum": [
+              "ease_in_out",
+              "ease_in",
+              "ease_out",
+              "linear"
+            ],
+            "title": "Ease Method",
+            "description": "Acceleration profile of bar",
+            "default": "ease_out"
+          },
+          "color_step": {
+            "type": "number",
+            "minimum": 0.0625,
+            "maximum": 0.5,
+            "title": "Color Step",
+            "description": "Amount of color change per beat",
+            "default": 0.125
+          }
+        }
+      },
+      "id": "bar(Reactive)",
+      "name": "Bar"
+    },
+    "blade_power(Reactive)": {
+      "schema": {
+        "properties": {
+          "flip": {
+            "type": "boolean",
+            "title": "Flip",
+            "description": "Flip the effect",
+            "default": false
+          },
+          "brightness": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "title": "Brightness",
+            "description": "Brightness of strip",
+            "default": 1.0
+          },
+          "mirror": {
+            "type": "boolean",
+            "title": "Mirror",
+            "description": "Mirror the effect",
+            "default": false
+          },
+          "blur": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 10,
+            "title": "Blur",
+            "description": "Amount to blur the effect",
+            "default": 2
+          },
+          "multiplier": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "title": "Multiplier",
+            "description": "Make the reactive bar bigger/smaller",
+            "default": 0.5
+          },
+          "background_color": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Background Color",
+            "description": "Color of Background",
+            "default": "orange"
+          },
+          "color": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Color",
+            "description": "Color of bar",
+            "default": "brown"
+          },
+          "frequency_range": {
+            "type": "string",
+            "enum": [
+              "Ultra Low (1-20Hz)",
+              "Sub Bass (20-60Hz)",
+              "Bass (60-250Hz)",
+              "Low Midrange (250-500Hz)",
+              "Midrange (500Hz-2kHz)",
+              "Upper Midrange (2Khz-4kHz)",
+              "High Midrange (4kHz-6kHz)",
+              "High Frequency (6kHz-24kHz)"
+            ],
+            "title": "Frequency Range",
+            "description": "Frequency range for the beat detection",
+            "default": "Bass (60-250Hz)"
+          }
+        }
+      },
+      "id": "blade_power(Reactive)",
+      "name": "Blade Power"
+    },
+    "blocks(Reactive)": {
+      "schema": {
+        "properties": {
+          "blur": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 10,
+            "title": "Blur",
+            "description": "Amount to blur the effect",
+            "default": 0.0
+          },
+          "flip": {
+            "type": "boolean",
+            "title": "Flip",
+            "description": "Flip the effect",
+            "default": false
+          },
+          "mirror": {
+            "type": "boolean",
+            "title": "Mirror",
+            "description": "Mirror the effect",
+            "default": false
+          },
+          "brightness": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "title": "Brightness",
+            "description": "Brightness of strip",
+            "default": 1.0
+          },
+          "background_color": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Background Color",
+            "description": "Apply a background colour",
+            "default": "black"
+          },
+          "gradient_name": {
+            "type": "string",
+            "enum": [
+              "Rainbow",
+              "Dancefloor",
+              "Plasma",
+              "Ocean",
+              "Viridis",
+              "Jungle",
+              "Spring",
+              "Winter",
+              "Frost",
+              "Sunset",
+              "Borealis",
+              "Rust",
+              "Christmas",
+              "Winamp"
+            ],
+            "title": "Gradient Name",
+            "description": "Color gradient to display",
+            "default": "Rainbow"
+          },
+          "gradient_roll": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10,
+            "title": "Gradient Roll",
+            "description": "Amount to shift the gradient",
+            "default": 0
+          },
+          "gradient_repeat": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16,
+            "title": "Gradient Repeat",
+            "description": "Repeat the gradient into segments",
+            "default": 1
+          },
+          "block_count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10,
+            "title": "Block Count",
+            "description": "Number of color blocks",
+            "default": 4
+          }
+        }
+      },
+      "id": "blocks(Reactive)",
+      "name": "Blocks"
+    },
+    "energy(Reactive)": {
+      "schema": {
+        "properties": {
+          "flip": {
+            "type": "boolean",
+            "title": "Flip",
+            "description": "Flip the effect",
+            "default": false
+          },
+          "brightness": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "title": "Brightness",
+            "description": "Brightness of strip",
+            "default": 1.0
+          },
+          "background_color": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Background Color",
+            "description": "Apply a background colour",
+            "default": "black"
+          },
+          "blur": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 10,
+            "title": "Blur",
+            "description": "Amount to blur the effect",
+            "default": 4.0
+          },
+          "mirror": {
+            "type": "boolean",
+            "title": "Mirror",
+            "description": "Mirror the effect",
+            "default": true
+          },
+          "color_cycler": {
+            "type": "boolean",
+            "title": "Color Cycler",
+            "description": "Change colors in time with the beat",
+            "default": false
+          },
+          "color_lows": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Color Lows",
+            "description": "Color of low, bassy sounds",
+            "default": "red"
+          },
+          "color_mids": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Color Mids",
+            "description": "Color of midrange sounds",
+            "default": "green"
+          },
+          "color_high": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Color High",
+            "description": "Color of high sounds",
+            "default": "blue"
+          },
+          "sensitivity": {
+            "type": "number",
+            "minimum": 0.3,
+            "maximum": 0.99,
+            "title": "Sensitivity",
+            "description": "Responsiveness to changes in sound",
+            "default": 0.85
+          },
+          "mixing_mode": {
+            "type": "string",
+            "enum": [
+              "additive",
+              "overlap"
+            ],
+            "title": "Mixing Mode",
+            "description": "Mode of combining each frequencies' colours",
+            "default": "overlap"
+          }
+        }
+      },
+      "id": "energy(Reactive)",
+      "name": "Energy"
+    },
+    "equalizer(reactive)": {
+      "schema": {
+        "properties": {
+          "blur": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 10,
+            "title": "Blur",
+            "description": "Amount to blur the effect",
+            "default": 0.0
+          },
+          "flip": {
+            "type": "boolean",
+            "title": "Flip",
+            "description": "Flip the effect",
+            "default": false
+          },
+          "brightness": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "title": "Brightness",
+            "description": "Brightness of strip",
+            "default": 1.0
+          },
+          "background_color": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Background Color",
+            "description": "Apply a background colour",
+            "default": "black"
+          },
+          "gradient_roll": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10,
+            "title": "Gradient Roll",
+            "description": "Amount to shift the gradient",
+            "default": 0
+          },
+          "align": {
+            "type": "string",
+            "enum": [
+              "left",
+              "right",
+              "invert",
+              "center"
+            ],
+            "title": "Align",
+            "description": "Alignment of bands",
+            "default": "left"
+          },
+          "gradient_name": {
+            "type": "string",
+            "enum": [
+              "Rainbow",
+              "Dancefloor",
+              "Plasma",
+              "Ocean",
+              "Viridis",
+              "Jungle",
+              "Spring",
+              "Winter",
+              "Frost",
+              "Sunset",
+              "Borealis",
+              "Rust",
+              "Christmas",
+              "Winamp"
+            ],
+            "title": "Gradient Name",
+            "description": "Color gradient to display",
+            "default": "Rainbow"
+          },
+          "gradient_repeat": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16,
+            "title": "Gradient Repeat",
+            "description": "Repeat the gradient into segments",
+            "default": 6
+          },
+          "mirror": {
+            "type": "boolean",
+            "title": "Mirror",
+            "description": "Mirror the effect",
+            "default": false
+          }
+        }
+      },
+      "id": "equalizer(reactive)",
+      "name": "Equalizer"
+    },
+    "fade": {
+      "schema": {
+        "properties": {
+          "blur": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 10,
+            "title": "Blur",
+            "description": "Amount to blur the effect",
+            "default": 0.0
+          },
+          "flip": {
+            "type": "boolean",
+            "title": "Flip",
+            "description": "Flip the effect",
+            "default": false
+          },
+          "mirror": {
+            "type": "boolean",
+            "title": "Mirror",
+            "description": "Mirror the effect",
+            "default": false
+          },
+          "brightness": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "title": "Brightness",
+            "description": "Brightness of strip",
+            "default": 1.0
+          },
+          "background_color": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Background Color",
+            "description": "Apply a background colour",
+            "default": "black"
+          },
+          "gradient_name": {
+            "type": "string",
+            "enum": [
+              "Rainbow",
+              "Dancefloor",
+              "Plasma",
+              "Ocean",
+              "Viridis",
+              "Jungle",
+              "Spring",
+              "Winter",
+              "Frost",
+              "Sunset",
+              "Borealis",
+              "Rust",
+              "Christmas",
+              "Winamp"
+            ],
+            "title": "Gradient Name",
+            "description": "Color gradient to display",
+            "default": "Rainbow"
+          },
+          "gradient_roll": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10,
+            "title": "Gradient Roll",
+            "description": "Amount to shift the gradient",
+            "default": 0
+          },
+          "gradient_repeat": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16,
+            "title": "Gradient Repeat",
+            "description": "Repeat the gradient into segments",
+            "default": 1
+          },
+          "speed": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 10,
+            "title": "Speed",
+            "description": "Rate of change of color",
+            "default": 0.5
+          }
+        }
+      },
+      "id": "fade",
+      "name": "Fade"
+    },
+    "magnitude(Reactive)": {
+      "schema": {
+        "properties": {
+          "blur": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 10,
+            "title": "Blur",
+            "description": "Amount to blur the effect",
+            "default": 0.0
+          },
+          "flip": {
+            "type": "boolean",
+            "title": "Flip",
+            "description": "Flip the effect",
+            "default": false
+          },
+          "mirror": {
+            "type": "boolean",
+            "title": "Mirror",
+            "description": "Mirror the effect",
+            "default": false
+          },
+          "brightness": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "title": "Brightness",
+            "description": "Brightness of strip",
+            "default": 1.0
+          },
+          "background_color": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Background Color",
+            "description": "Apply a background colour",
+            "default": "black"
+          },
+          "gradient_name": {
+            "type": "string",
+            "enum": [
+              "Rainbow",
+              "Dancefloor",
+              "Plasma",
+              "Ocean",
+              "Viridis",
+              "Jungle",
+              "Spring",
+              "Winter",
+              "Frost",
+              "Sunset",
+              "Borealis",
+              "Rust",
+              "Christmas",
+              "Winamp"
+            ],
+            "title": "Gradient Name",
+            "description": "Color gradient to display",
+            "default": "Rainbow"
+          },
+          "gradient_roll": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10,
+            "title": "Gradient Roll",
+            "description": "Amount to shift the gradient",
+            "default": 0
+          },
+          "gradient_repeat": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16,
+            "title": "Gradient Repeat",
+            "description": "Repeat the gradient into segments",
+            "default": 1
+          },
+          "frequency_range": {
+            "type": "string",
+            "enum": [
+              "Ultra Low (1-20Hz)",
+              "Sub Bass (20-60Hz)",
+              "Bass (60-250Hz)",
+              "Low Midrange (250-500Hz)",
+              "Midrange (500Hz-2kHz)",
+              "Upper Midrange (2Khz-4kHz)",
+              "High Midrange (4kHz-6kHz)",
+              "High Frequency (6kHz-24kHz)"
+            ],
+            "title": "Frequency Range",
+            "description": "Frequency range for the beat detection",
+            "default": "Bass (60-250Hz)"
+          }
+        }
+      },
+      "id": "magnitude(Reactive)",
+      "name": "Magnitude"
+    },
+    "multiBar(Reactive)": {
+      "schema": {
+        "properties": {
+          "blur": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 10,
+            "title": "Blur",
+            "description": "Amount to blur the effect",
+            "default": 0.0
+          },
+          "flip": {
+            "type": "boolean",
+            "title": "Flip",
+            "description": "Flip the effect",
+            "default": false
+          },
+          "mirror": {
+            "type": "boolean",
+            "title": "Mirror",
+            "description": "Mirror the effect",
+            "default": false
+          },
+          "brightness": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "title": "Brightness",
+            "description": "Brightness of strip",
+            "default": 1.0
+          },
+          "background_color": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Background Color",
+            "description": "Apply a background colour",
+            "default": "black"
+          },
+          "gradient_roll": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10,
+            "title": "Gradient Roll",
+            "description": "Amount to shift the gradient",
+            "default": 0
+          },
+          "gradient_repeat": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16,
+            "title": "Gradient Repeat",
+            "description": "Repeat the gradient into segments",
+            "default": 1
+          },
+          "gradient_name": {
+            "type": "string",
+            "enum": [
+              "Rainbow",
+              "Dancefloor",
+              "Plasma",
+              "Ocean",
+              "Viridis",
+              "Jungle",
+              "Spring",
+              "Winter",
+              "Frost",
+              "Sunset",
+              "Borealis",
+              "Rust",
+              "Christmas",
+              "Winamp"
+            ],
+            "title": "Gradient Name",
+            "description": "Color scheme to cycle through",
+            "default": "Rainbow"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "cascade",
+              "wipe"
+            ],
+            "title": "Mode",
+            "description": "Choose from different animations",
+            "default": "wipe"
+          },
+          "ease_method": {
+            "type": "string",
+            "enum": [
+              "ease_in_out",
+              "ease_in",
+              "ease_out",
+              "linear"
+            ],
+            "title": "Ease Method",
+            "description": "Acceleration profile of bar",
+            "default": "linear"
+          },
+          "color_step": {
+            "type": "number",
+            "minimum": 0.0625,
+            "maximum": 0.5,
+            "title": "Color Step",
+            "description": "Amount of color change per beat",
+            "default": 0.125
+          }
+        }
+      },
+      "id": "multiBar(Reactive)",
+      "name": "Multicolor Bar"
+    },
+    "pitchSpectrum(Reactive)": {
+      "schema": {
+        "properties": {
+          "flip": {
+            "type": "boolean",
+            "title": "Flip",
+            "description": "Flip the effect",
+            "default": false
+          },
+          "brightness": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "title": "Brightness",
+            "description": "Brightness of strip",
+            "default": 1.0
+          },
+          "background_color": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Background Color",
+            "description": "Apply a background colour",
+            "default": "black"
+          },
+          "gradient_name": {
+            "type": "string",
+            "enum": [
+              "Rainbow",
+              "Dancefloor",
+              "Plasma",
+              "Ocean",
+              "Viridis",
+              "Jungle",
+              "Spring",
+              "Winter",
+              "Frost",
+              "Sunset",
+              "Borealis",
+              "Rust",
+              "Christmas",
+              "Winamp"
+            ],
+            "title": "Gradient Name",
+            "description": "Color gradient to display",
+            "default": "Rainbow"
+          },
+          "gradient_roll": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10,
+            "title": "Gradient Roll",
+            "description": "Amount to shift the gradient",
+            "default": 0
+          },
+          "gradient_repeat": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16,
+            "title": "Gradient Repeat",
+            "description": "Repeat the gradient into segments",
+            "default": 1
+          },
+          "blur": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 10,
+            "title": "Blur",
+            "description": "Amount to blur the effect",
+            "default": 1.0
+          },
+          "mirror": {
+            "type": "boolean",
+            "title": "Mirror",
+            "description": "Mirror the effect",
+            "default": true
+          },
+          "fade_rate": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "title": "Fade Rate",
+            "description": "Rate at which notes fade",
+            "default": 0.15
+          },
+          "responsiveness": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "title": "Responsiveness",
+            "description": "Responsiveness to note changes",
+            "default": 0.15
+          }
+        }
+      },
+      "id": "pitchSpectrum(Reactive)",
+      "name": "PitchSpectrum"
+    },
+    "power(Reactive)": {
+      "schema": {
+        "properties": {
+          "flip": {
+            "type": "boolean",
+            "title": "Flip",
+            "description": "Flip the effect",
+            "default": false
+          },
+          "brightness": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "title": "Brightness",
+            "description": "Brightness of strip",
+            "default": 1.0
+          },
+          "background_color": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Background Color",
+            "description": "Apply a background colour",
+            "default": "black"
+          },
+          "gradient_name": {
+            "type": "string",
+            "enum": [
+              "Rainbow",
+              "Dancefloor",
+              "Plasma",
+              "Ocean",
+              "Viridis",
+              "Jungle",
+              "Spring",
+              "Winter",
+              "Frost",
+              "Sunset",
+              "Borealis",
+              "Rust",
+              "Christmas",
+              "Winamp"
+            ],
+            "title": "Gradient Name",
+            "description": "Color gradient to display",
+            "default": "Rainbow"
+          },
+          "gradient_roll": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10,
+            "title": "Gradient Roll",
+            "description": "Amount to shift the gradient",
+            "default": 0
+          },
+          "gradient_repeat": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16,
+            "title": "Gradient Repeat",
+            "description": "Repeat the gradient into segments",
+            "default": 1
+          },
+          "mirror": {
+            "type": "boolean",
+            "title": "Mirror",
+            "description": "Mirror the effect",
+            "default": true
+          },
+          "blur": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 10,
+            "title": "Blur",
+            "description": "Amount to blur the effect",
+            "default": 0.0
+          },
+          "sparks": {
+            "type": "boolean",
+            "title": "Sparks",
+            "description": "Flash on percussive hits",
+            "default": true
+          }
+        }
+      },
+      "id": "power(Reactive)",
+      "name": "Power"
+    },
+    "rain(Reactive)": {
+      "schema": {
+        "properties": {
+          "blur": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 10,
+            "title": "Blur",
+            "description": "Amount to blur the effect",
+            "default": 0.0
+          },
+          "flip": {
+            "type": "boolean",
+            "title": "Flip",
+            "description": "Flip the effect",
+            "default": false
+          },
+          "brightness": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "title": "Brightness",
+            "description": "Brightness of strip",
+            "default": 1.0
+          },
+          "background_color": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Background Color",
+            "description": "Apply a background colour",
+            "default": "black"
+          },
+          "mirror": {
+            "type": "boolean",
+            "title": "Mirror",
+            "description": "Mirror the effect",
+            "default": true
+          },
+          "lows_colour": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Lows Colour",
+            "description": "Colour for low sounds, ie beats",
+            "default": "white"
+          },
+          "mids_colour": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Mids Colour",
+            "description": "Colour for mid sounds, ie vocals",
+            "default": "red"
+          },
+          "high_colour": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "High Colour",
+            "description": "Colour for high sounds, ie hi hat",
+            "default": "blue"
+          },
+          "lows_sensitivity": {
+            "type": "number",
+            "minimum": 0.03,
+            "maximum": 0.3,
+            "title": "Lows Sensitivity",
+            "description": "Sensitivity to low sounds",
+            "default": 0.1
+          },
+          "mids_sensitivity": {
+            "type": "number",
+            "minimum": 0.03,
+            "maximum": 0.3,
+            "title": "Mids Sensitivity",
+            "description": "Sensitivity to mid sounds",
+            "default": 0.05
+          },
+          "high_sensitivity": {
+            "type": "number",
+            "minimum": 0.03,
+            "maximum": 0.3,
+            "title": "High Sensitivity",
+            "description": "Sensitivity to high sounds",
+            "default": 0.1
+          },
+          "raindrop_animation": {
+            "type": "string",
+            "enum": [
+              "droplet_0.npy",
+              "droplet_2.npy",
+              "droplet_1.npy"
+            ],
+            "title": "Raindrop Animation",
+            "description": "Droplet animation style",
+            "default": "droplet_0.npy"
+          }
+        }
+      },
+      "id": "rain(Reactive)",
+      "name": "Rain"
+    },
+    "rainbow": {
+      "schema": {
+        "properties": {
+          "blur": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 10,
+            "title": "Blur",
+            "description": "Amount to blur the effect",
+            "default": 0.0
+          },
+          "flip": {
+            "type": "boolean",
+            "title": "Flip",
+            "description": "Flip the effect",
+            "default": false
+          },
+          "mirror": {
+            "type": "boolean",
+            "title": "Mirror",
+            "description": "Mirror the effect",
+            "default": false
+          },
+          "brightness": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "title": "Brightness",
+            "description": "Brightness of strip",
+            "default": 1.0
+          },
+          "background_color": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Background Color",
+            "description": "Apply a background colour",
+            "default": "black"
+          },
+          "speed": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 10,
+            "title": "Speed",
+            "description": "Speed of the effect",
+            "default": 1.0
+          },
+          "frequency": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 10,
+            "title": "Frequency",
+            "description": "Frequency of the effect curve",
+            "default": 1.0
+          }
+        }
+      },
+      "id": "rainbow",
+      "name": "Rainbow"
+    },
+    "real_strobe(Reactive)": {
+      "schema": {
+        "properties": {
+          "blur": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 10,
+            "title": "Blur",
+            "description": "Amount to blur the effect",
+            "default": 0.0
+          },
+          "flip": {
+            "type": "boolean",
+            "title": "Flip",
+            "description": "Flip the effect",
+            "default": false
+          },
+          "mirror": {
+            "type": "boolean",
+            "title": "Mirror",
+            "description": "Mirror the effect",
+            "default": false
+          },
+          "brightness": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "title": "Brightness",
+            "description": "Brightness of strip",
+            "default": 1.0
+          },
+          "background_color": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Background Color",
+            "description": "Apply a background colour",
+            "default": "black"
+          },
+          "gradient_roll": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10,
+            "title": "Gradient Roll",
+            "description": "Amount to shift the gradient",
+            "default": 0
+          },
+          "gradient_repeat": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16,
+            "title": "Gradient Repeat",
+            "description": "Repeat the gradient into segments",
+            "default": 1
+          },
+          "gradient_name": {
+            "type": "string",
+            "enum": [
+              "Rainbow",
+              "Dancefloor",
+              "Plasma",
+              "Ocean",
+              "Viridis",
+              "Jungle",
+              "Spring",
+              "Winter",
+              "Frost",
+              "Sunset",
+              "Borealis",
+              "Rust",
+              "Christmas",
+              "Winamp"
+            ],
+            "title": "Gradient Name",
+            "description": "Color scheme for bass strobe to cycle through",
+            "default": "Dancefloor"
+          },
+          "color_step": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 0.25,
+            "title": "Color Step",
+            "description": "Amount of color change per bass strobe",
+            "default": 0.0625
+          },
+          "bass_threshold": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "title": "Bass Threshold",
+            "description": "Cutoff for quiet sounds. Higher -> only loud sounds are detected",
+            "default": 0.4
+          },
+          "bass_strobe_decay_rate": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "title": "Bass Strobe Decay Rate",
+            "description": "Bass strobe decay rate. Higher -> decays faster.",
+            "default": 0.5
+          },
+          "strobe_color": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Strobe Color",
+            "description": "Colour for note strobes",
+            "default": "white"
+          },
+          "strobe_width": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000,
+            "title": "Strobe Width",
+            "description": "Note strobe width, in pixels",
+            "default": 10
+          },
+          "strobe_decay_rate": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "title": "Strobe Decay Rate",
+            "description": "Note strobe decay rate. Higher -> decays faster.",
+            "default": 0.5
+          }
+        }
+      },
+      "id": "real_strobe(Reactive)",
+      "name": "Real Strobe"
+    },
+    "scroll(Reactive)": {
+      "schema": {
+        "properties": {
+          "flip": {
+            "type": "boolean",
+            "title": "Flip",
+            "description": "Flip the effect",
+            "default": false
+          },
+          "brightness": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "title": "Brightness",
+            "description": "Brightness of strip",
+            "default": 1.0
+          },
+          "background_color": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Background Color",
+            "description": "Apply a background colour",
+            "default": "black"
+          },
+          "blur": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 10,
+            "title": "Blur",
+            "description": "Amount to blur the effect",
+            "default": 3.0
+          },
+          "mirror": {
+            "type": "boolean",
+            "title": "Mirror",
+            "description": "Mirror the effect",
+            "default": true
+          },
+          "speed": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10,
+            "title": "Speed",
+            "description": "Speed of the effect",
+            "default": 5
+          },
+          "decay": {
+            "type": "number",
+            "minimum": 0.8,
+            "maximum": 1.0,
+            "title": "Decay",
+            "description": "Decay rate of the scroll",
+            "default": 0.97
+          },
+          "threshold": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "title": "Threshold",
+            "description": "Cutoff for quiet sounds. Higher -> only loud sounds are detected",
+            "default": 0.0
+          },
+          "color_lows": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Color Lows",
+            "description": "Color of low, bassy sounds",
+            "default": "red"
+          },
+          "color_mids": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Color Mids",
+            "description": "Color of midrange sounds",
+            "default": "green"
+          },
+          "color_high": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Color High",
+            "description": "Color of high sounds",
+            "default": "blue"
+          }
+        }
+      },
+      "id": "scroll(Reactive)",
+      "name": "Scroll"
+    },
+    "singleColor": {
+      "schema": {
+        "properties": {
+          "blur": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 10,
+            "title": "Blur",
+            "description": "Amount to blur the effect",
+            "default": 0.0
+          },
+          "flip": {
+            "type": "boolean",
+            "title": "Flip",
+            "description": "Flip the effect",
+            "default": false
+          },
+          "mirror": {
+            "type": "boolean",
+            "title": "Mirror",
+            "description": "Mirror the effect",
+            "default": false
+          },
+          "brightness": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "title": "Brightness",
+            "description": "Brightness of strip",
+            "default": 1.0
+          },
+          "background_color": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Background Color",
+            "description": "Apply a background colour",
+            "default": "black"
+          },
+          "modulate": {
+            "type": "boolean",
+            "title": "Modulate",
+            "description": "Brightness modulation",
+            "default": false
+          },
+          "modulation_effect": {
+            "type": "string",
+            "enum": [
+              "sine",
+              "breath"
+            ],
+            "title": "Modulation Effect",
+            "description": "Choose an animation",
+            "default": "sine"
+          },
+          "modulation_speed": {
+            "type": "number",
+            "minimum": 0.01,
+            "maximum": 1,
+            "title": "Modulation Speed",
+            "description": "Animation speed",
+            "default": 0.5
+          },
+          "speed": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 10,
+            "title": "Speed",
+            "description": "Speed of the effect",
+            "default": 1.0
+          },
+          "color": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Color",
+            "description": "Color of strip",
+            "default": "red"
+          }
+        }
+      },
+      "id": "singleColor",
+      "name": "Single Color"
+    },
+    "spectrum(Reactive)": {
+      "schema": {
+        "properties": {
+          "blur": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 10,
+            "title": "Blur",
+            "description": "Amount to blur the effect",
+            "default": 0.0
+          },
+          "flip": {
+            "type": "boolean",
+            "title": "Flip",
+            "description": "Flip the effect",
+            "default": false
+          },
+          "mirror": {
+            "type": "boolean",
+            "title": "Mirror",
+            "description": "Mirror the effect",
+            "default": false
+          },
+          "brightness": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "title": "Brightness",
+            "description": "Brightness of strip",
+            "default": 1.0
+          },
+          "background_color": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Background Color",
+            "description": "Apply a background colour",
+            "default": "black"
+          }
+        }
+      },
+      "id": "spectrum(Reactive)",
+      "name": "Spectrum"
+    },
+    "strobe(Reactive)": {
+      "schema": {
+        "properties": {
+          "blur": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 10,
+            "title": "Blur",
+            "description": "Amount to blur the effect",
+            "default": 0.0
+          },
+          "flip": {
+            "type": "boolean",
+            "title": "Flip",
+            "description": "Flip the effect",
+            "default": false
+          },
+          "mirror": {
+            "type": "boolean",
+            "title": "Mirror",
+            "description": "Mirror the effect",
+            "default": false
+          },
+          "brightness": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "title": "Brightness",
+            "description": "Brightness of strip",
+            "default": 1.0
+          },
+          "background_color": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Background Color",
+            "description": "Apply a background colour",
+            "default": "black"
+          },
+          "color": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Color",
+            "description": "Strobe colour",
+            "default": "white"
+          },
+          "frequency": {
+            "type": "string",
+            "enum": [
+              "1/2 (.-. )",
+              "1/4 (.o. )",
+              "1/8 (\u25c9\u25e1\u25c9 )",
+              "1/16 (\u25c9\ufe4f\u25c9 )",
+              "1/32 (\u2299\u2583\u2299 )"
+            ],
+            "title": "Frequency",
+            "description": "Strobe frequency",
+            "default": "1/16 (\u25c9\ufe4f\u25c9 )"
+          }
+        }
+      },
+      "id": "strobe(Reactive)",
+      "name": "Strobe"
+    },
+    "wavelength(Reactive)": {
+      "schema": {
+        "properties": {
+          "flip": {
+            "type": "boolean",
+            "title": "Flip",
+            "description": "Flip the effect",
+            "default": false
+          },
+          "mirror": {
+            "type": "boolean",
+            "title": "Mirror",
+            "description": "Mirror the effect",
+            "default": false
+          },
+          "brightness": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "title": "Brightness",
+            "description": "Brightness of strip",
+            "default": 1.0
+          },
+          "background_color": {
+            "type": "string",
+            "enum": [
+              "red",
+              "orange-deep",
+              "orange",
+              "yellow",
+              "yellow-acid",
+              "green",
+              "green-forest",
+              "green-spring",
+              "green-teal",
+              "green-turquoise",
+              "green-coral",
+              "cyan",
+              "blue",
+              "blue-light",
+              "blue-navy",
+              "blue-aqua",
+              "purple",
+              "pink",
+              "magenta",
+              "black",
+              "white",
+              "brown",
+              "gold",
+              "hotpink",
+              "lightblue",
+              "lightgreen",
+              "lightpink",
+              "lightyellow",
+              "maroon",
+              "mint",
+              "olive",
+              "peach",
+              "plum",
+              "sepia",
+              "skyblue",
+              "steelblue",
+              "tan",
+              "violetred"
+            ],
+            "title": "Background Color",
+            "description": "Apply a background colour",
+            "default": "black"
+          },
+          "gradient_name": {
+            "type": "string",
+            "enum": [
+              "Rainbow",
+              "Dancefloor",
+              "Plasma",
+              "Ocean",
+              "Viridis",
+              "Jungle",
+              "Spring",
+              "Winter",
+              "Frost",
+              "Sunset",
+              "Borealis",
+              "Rust",
+              "Christmas",
+              "Winamp"
+            ],
+            "title": "Gradient Name",
+            "description": "Color gradient to display",
+            "default": "Rainbow"
+          },
+          "gradient_roll": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10,
+            "title": "Gradient Roll",
+            "description": "Amount to shift the gradient",
+            "default": 0
+          },
+          "gradient_repeat": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16,
+            "title": "Gradient Repeat",
+            "description": "Repeat the gradient into segments",
+            "default": 1
+          },
+          "blur": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 10,
+            "title": "Blur",
+            "description": "Amount to blur the effect",
+            "default": 3.0
+          }
+        }
+      },
+      "id": "wavelength(Reactive)",
+      "name": "Wavelength"
+    }
+  },
+  "integrations": {
+    "qlc": {
+      "schema": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "Name of this integration instance and associated settings",
+            "default": "QLC+"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "description": "Description of this integration",
+            "default": "Web Api Integration for Q Light Controller Plus"
+          },
+          "ip_address": {
+            "type": "string",
+            "title": "Ip Address",
+            "description": "QLC+ ip address",
+            "default": "127.0.0.1"
+          },
+          "port": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 65535,
+            "title": "Port",
+            "description": "QLC+ port",
+            "default": 9999
+          }
+        },
+        "required": [
+          "name",
+          "description",
+          "ip_address",
+          "port"
+        ]
+      },
+      "id": "qlc",
+      "name": "QLC+",
+      "description": "Web Api Integration for Q Light Controller Plus"
+    },
+    "spotify": {
+      "schema": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "Name of this integration instance and associated settings",
+            "default": "Spotify"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "description": "Description of this integration",
+            "default": "Activate scenes with Spotify"
+          }
+        },
+        "required": [
+          "name",
+          "description"
+        ]
+      },
+      "id": "spotify",
+      "name": "Spotify",
+      "description": "Activate scenes with Spotify [BETA]"
+    }
+  }
+}
