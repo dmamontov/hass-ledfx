@@ -239,9 +239,7 @@ class LedFxSelect(LedFxEntity, SelectEntity):
         """
 
         options: dict = self._updater.data.get(self._options_key, {})
-        option_ids: list = [_id for _id, name in options.items() if name == option]
-
-        if option_ids:
+        if option_ids := [_id for _id, name in options.items() if name == option]:
             try:
                 await self._updater.client.set_audio_device(
                     int(option_ids[0]), self._updater.version == Version.V2
