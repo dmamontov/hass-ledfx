@@ -13,6 +13,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from .const import (
     ATTR_DEVICE,
     ATTR_FIELD_EFFECTS,
+    ATTR_FIELD_TYPE,
     ATTR_LIGHT_EFFECT,
     ATTR_LIGHT_EFFECT_CONFIG,
     ATTR_LIGHT_STATE,
@@ -114,6 +115,9 @@ class LedFxNumber(LedFxEntity, NumberEntity):
             if entity.extra
             else [],
         }
+
+        if entity.extra:
+            self._attr_field_type = entity.extra.get(ATTR_FIELD_TYPE)
 
         self._attr_available = bool(
             updater.data.get(ATTR_STATE, False)

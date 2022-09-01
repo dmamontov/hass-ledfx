@@ -71,7 +71,7 @@ async def test_user(hass: HomeAssistant) -> None:
         "custom_components.ledfx.updater.LedFxClient"
     ) as mock_client:
         mock_client.return_value.config = AsyncMock(
-            return_value=json.loads(load_fixture("config_data.json"))
+            return_value=json.loads(load_fixture("config_v2_data.json"))
         )
 
         result_configure = await hass.config_entries.flow.async_configure(
@@ -222,7 +222,7 @@ async def test_user_with_auth(hass: HomeAssistant) -> None:
         "custom_components.ledfx.updater.LedFxClient"
     ) as mock_client:
         mock_client.return_value.config = AsyncMock(
-            return_value=json.loads(load_fixture("config_data.json"))
+            return_value=json.loads(load_fixture("config_v2_data.json"))
         )
 
         result_configure = await hass.config_entries.flow.async_configure(
@@ -280,7 +280,7 @@ async def test_user_with_auth_revert(hass: HomeAssistant) -> None:
         "custom_components.ledfx.updater.LedFxClient"
     ) as mock_client:
         mock_client.return_value.config = AsyncMock(
-            return_value=json.loads(load_fixture("config_data.json"))
+            return_value=json.loads(load_fixture("config_v2_data.json"))
         )
 
         result_configure = await hass.config_entries.flow.async_configure(
@@ -339,7 +339,7 @@ async def test_options_flow(hass: HomeAssistant) -> None:
         "custom_components.ledfx.updater.LedFxClient"
     ) as mock_client:
         mock_client.return_value.config = AsyncMock(
-            return_value=json.loads(load_fixture("config_data.json"))
+            return_value=json.loads(load_fixture("config_v2_data.json"))
         )
 
         await hass.config_entries.async_setup(config_entry.entry_id)
@@ -395,7 +395,7 @@ async def test_options_flow_with_auth(hass: HomeAssistant) -> None:
         "custom_components.ledfx.updater.LedFxClient"
     ) as mock_client:
         mock_client.return_value.config = AsyncMock(
-            return_value=json.loads(load_fixture("config_data.json"))
+            return_value=json.loads(load_fixture("config_v2_data.json"))
         )
 
         await hass.config_entries.async_setup(config_entry.entry_id)

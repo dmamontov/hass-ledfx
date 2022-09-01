@@ -100,15 +100,8 @@ async def test_update_audio_devices(hass: HomeAssistant) -> None:
     ):
         await async_mock_client(mock_client)
 
-        def success() -> dict:
-            return json.loads(load_fixture("info_data.json"))
-
         def error() -> None:
             raise LedFxRequestError
-
-        mock_client.return_value.info = AsyncMock(
-            side_effect=MultipleSideEffect(success, success, success, error)
-        )
 
         def original_device() -> dict:
             return json.loads(load_fixture("audio_devices_data.json"))
@@ -130,15 +123,15 @@ async def test_update_audio_devices(hass: HomeAssistant) -> None:
 
         mock_client.return_value.config = AsyncMock(
             side_effect=MultipleSideEffect(
-                original_config, original_config, changed_config
+                original_config, original_config, changed_config, error
             )
         )
 
-        def success_set(index: int) -> dict:
+        def success_set(index: int, is_virtual: bool = False) -> dict:
             assert index == 5
             return json.loads(load_fixture("set_audio_device_data.json"))
 
-        def error_set(index: int) -> dict:
+        def error_set(index: int, is_virtual: bool = False) -> dict:
             assert index == 3
             raise LedFxRequestError
 
@@ -235,7 +228,9 @@ async def test_effect_property(hass: HomeAssistant) -> None:
     with patch("custom_components.ledfx.updater.LedFxClient") as mock_client:
         await async_mock_client(mock_client)
 
-        def success_effect(device_code: str, effect: str, config: dict) -> dict:
+        def success_effect(
+            device_code: str, effect: str, config: dict, is_virtual: bool = False
+        ) -> dict:
             assert device_code == "wled"
             assert effect == "gradient"
             assert config == {
@@ -255,7 +250,9 @@ async def test_effect_property(hass: HomeAssistant) -> None:
 
             return json.loads(load_fixture("effect_data.json"))
 
-        def error_effect(device_code: str, effect: str, config: dict) -> None:
+        def error_effect(
+            device_code: str, effect: str, config: dict, is_virtual: bool = False
+        ) -> None:
             raise LedFxRequestError
 
         mock_client.return_value.effect = AsyncMock(

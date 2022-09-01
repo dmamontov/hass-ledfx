@@ -9,9 +9,12 @@ from typing import Any
 from homeassistant.components.light import (
     ATTR_BRIGHTNESS,
     ATTR_EFFECT,
+    ATTR_RGBW_COLOR,
     ENTITY_ID_FORMAT,
     SUPPORT_BRIGHTNESS,
+    SUPPORT_COLOR,
     SUPPORT_EFFECT,
+    ColorMode,
     LightEntity,
 )
 from homeassistant.config_entries import ConfigEntry
@@ -22,6 +25,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import (
     ATTR_LIGHT_BRIGHTNESS,
+    ATTR_LIGHT_COLOR,
     ATTR_LIGHT_CONFIG,
     ATTR_LIGHT_CUSTOM_PRESETS,
     ATTR_LIGHT_DEFAULT_PRESETS,
@@ -33,8 +37,8 @@ from .const import (
     SIGNAL_NEW_DEVICE,
 )
 from .entity import LedFxEntity
-from .enum import ActionType, EffectCategory
-from .helper import build_effects, find_effect
+from .enum import ActionType, EffectCategory, Version
+from .helper import build_effects, find_effect, hex_to_rgbw, rgbw_to_hex
 from .updater import (
     LedFxEntityDescription,
     LedFxUpdater,
@@ -112,7 +116,13 @@ class LedFxLight(LedFxEntity, LightEntity):
         self._attr_device_code = entity.description.key
 
         self._attr_device_info = entity.device_info
+
         self._attr_supported_features = SUPPORT_EFFECT | SUPPORT_BRIGHTNESS
+
+        if updater.version == Version.V2:
+            self._attr_supported_features |= SUPPORT_COLOR
+            self._attr_supported_color_modes = {ColorMode.RGBW, ColorMode.ONOFF}
+            self._attr_color_mode = ColorMode.RGBW
 
         self._attr_is_on = updater.data.get(
             f"{self._attr_device_code}_{ATTR_LIGHT_STATE}", False
@@ -121,6 +131,11 @@ class LedFxLight(LedFxEntity, LightEntity):
             updater.data.get(f"{self._attr_device_code}_{ATTR_LIGHT_BRIGHTNESS}", 0),
             255,
         )
+
+        self._attr_rgbw_color = hex_to_rgbw(
+            updater.data.get(f"{self._attr_device_code}_{ATTR_LIGHT_COLOR}", None)
+        )
+
         self._attr_effect_list = build_effects(
             updater.data.get(ATTR_LIGHT_EFFECTS, []),
             updater.data.get(ATTR_LIGHT_DEFAULT_PRESETS, {}),
@@ -147,6 +162,10 @@ class LedFxLight(LedFxEntity, LightEntity):
             ),
             255,
         )
+        color: tuple | None = hex_to_rgbw(
+            self._updater.data.get(f"{self._attr_device_code}_{ATTR_LIGHT_COLOR}", None)
+        )
+
         effect_list = build_effects(
             self._updater.data.get(ATTR_LIGHT_EFFECTS, []),
             self._updater.data.get(ATTR_LIGHT_DEFAULT_PRESETS, {}),
@@ -167,6 +186,7 @@ class LedFxLight(LedFxEntity, LightEntity):
             self._attr_is_on == is_on
             and self._attr_available == is_available
             and self._attr_brightness == brightness
+            and self._attr_rgbw_color == color
             and self._attr_effect == effect
             and self._attr_effect_list == effect_list
             and self._attr_extra_state_attributes == attributes
@@ -176,6 +196,7 @@ class LedFxLight(LedFxEntity, LightEntity):
         self._attr_available = is_available
         self._attr_is_on = is_on
         self._attr_brightness = brightness
+        self._attr_rgbw_color = color  # type: ignore
         self._attr_effect_list = effect_list
         self._attr_effect = effect
         self._attr_extra_state_attributes = attributes
@@ -188,6 +209,7 @@ class LedFxLight(LedFxEntity, LightEntity):
         :param kwargs: Any: Any arguments
         """
 
+        is_virtual: bool = self._updater.version == Version.V2
         preset: str | None = None
         old_effect: str | None = self._attr_effect
         category: EffectCategory = EffectCategory.NONE
@@ -210,10 +232,13 @@ class LedFxLight(LedFxEntity, LightEntity):
                     category.value,
                     self._attr_effect,  # type: ignore
                     preset,  # type: ignore
+                    is_virtual,
                 )
                 if category != EffectCategory.NONE and preset is not None
                 else await self._updater.client.device_on(
-                    self._attr_device_code, self._attr_effect  # type: ignore
+                    self._attr_device_code,  # type: ignore
+                    self._attr_effect,  # type: ignore
+                    is_virtual,
                 )
             )
 
@@ -237,12 +262,15 @@ class LedFxLight(LedFxEntity, LightEntity):
                 if code != ATTR_BRIGHTNESS
             }
 
-        if ATTR_BRIGHTNESS not in kwargs:
-            return
+        if ATTR_BRIGHTNESS in kwargs:
+            await self.async_update_effect(
+                ATTR_BRIGHTNESS, convert_brightness(float(kwargs[ATTR_BRIGHTNESS]))
+            )
 
-        await self.async_update_effect(
-            ATTR_BRIGHTNESS, convert_brightness(float(kwargs[ATTR_BRIGHTNESS]))
-        )
+        if ATTR_RGBW_COLOR in kwargs:
+            await self.async_update_effect(
+                "background_color", rgbw_to_hex(kwargs[ATTR_RGBW_COLOR])
+            )
 
     async def _device_off(self, **kwargs: Any) -> None:
         """Device off action
@@ -250,7 +278,9 @@ class LedFxLight(LedFxEntity, LightEntity):
         :param kwargs: Any: Any arguments
         """
 
-        await self._updater.client.device_off(self._attr_device_code)  # type: ignore
+        await self._updater.client.device_off(
+            self._attr_device_code, self._updater.version == Version.V2  # type: ignore
+        )
 
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn on action
@@ -285,10 +315,18 @@ class LedFxLight(LedFxEntity, LightEntity):
             self._attr_is_on = state == STATE_ON
 
             if ATTR_BRIGHTNESS in kwargs:
+                self._attr_brightness = kwargs[ATTR_BRIGHTNESS]
                 self._updater.data[
                     f"{self._attr_device_code}_{ATTR_LIGHT_BRIGHTNESS}"
-                ] = kwargs[ATTR_BRIGHTNESS]
-                self._attr_brightness = kwargs[ATTR_BRIGHTNESS]
+                ] = self._attr_brightness
+
+            if ATTR_RGBW_COLOR in kwargs:
+                self._attr_rgbw_color = kwargs[ATTR_RGBW_COLOR]
+                self._updater.data[
+                    f"{self._attr_device_code}_{ATTR_LIGHT_COLOR}"
+                ] = rgbw_to_hex(
+                    self._attr_rgbw_color
+                )  # type: ignore
 
             self._attr_extra_state_attributes = {
                 code: value
@@ -300,7 +338,7 @@ class LedFxLight(LedFxEntity, LightEntity):
                 f"{self._attr_device_code}_{ATTR_LIGHT_CONFIG}", {}
             )
 
-            if ATTR_BRIGHTNESS not in kwargs:
+            if ATTR_BRIGHTNESS not in kwargs and ATTR_RGBW_COLOR not in kwargs:
                 self._updater.async_update_listeners()
 
             self.async_write_ha_state()

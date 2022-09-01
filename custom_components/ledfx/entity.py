@@ -1,7 +1,8 @@
-"""MiWifi entity."""
+"""LedFx entity."""
 
 from __future__ import annotations
 
+import copy
 import logging
 from typing import Any
 
@@ -10,12 +11,15 @@ from homeassistant.helpers.entity import EntityDescription
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import (
+    ATTR_FIELD_TYPE,
     ATTR_LIGHT_BRIGHTNESS,
+    ATTR_LIGHT_COLOR,
     ATTR_LIGHT_EFFECT,
     ATTR_LIGHT_EFFECT_CONFIG,
     ATTR_STATE,
     ATTRIBUTION,
 )
+from .enum import Version
 from .helper import generate_entity_id
 from .updater import LedFxUpdater, convert_brightness
 
@@ -27,6 +31,7 @@ class LedFxEntity(CoordinatorEntity):
 
     _attr_attribution: str = ATTRIBUTION
     _attr_device_code: str | None = None
+    _attr_field_type: str | None = None
 
     def __init__(
         self,
@@ -106,8 +111,16 @@ class LedFxEntity(CoordinatorEntity):
                     )
                 )
             }
-            | {code: value}
         )
+
+        if self._updater.version == Version.V2:
+            config |= {
+                "background_color": self._updater.data.get(
+                    f"{self._attr_device_code}_{ATTR_LIGHT_COLOR}"
+                )
+            }
+
+        config |= {code: value}
 
         effect: str | None = self._updater.data.get(
             f"{self._attr_device_code}_{ATTR_LIGHT_EFFECT}"
@@ -117,7 +130,8 @@ class LedFxEntity(CoordinatorEntity):
             await self._updater.client.effect(
                 self._attr_device_code,
                 effect,
-                config,
+                self._convert_config(config, code, value),
+                self._updater.version == Version.V2,
             )
 
             self._updater.data[
@@ -127,3 +141,27 @@ class LedFxEntity(CoordinatorEntity):
             }
 
             self._updater.async_update_listeners()
+
+    def _convert_config(self, config: dict, code: str, value: Any) -> dict:
+        """Convert config
+
+        :param config: dict
+        :param code: str: Code
+        :param value: Any: Value
+        :return dict
+        """
+
+        result: dict = copy.deepcopy(config)
+
+        if (
+            code in self._updater.effect_properties
+            and self._updater.effect_properties[code][ATTR_FIELD_TYPE] == "color"
+        ):  # pragma: no cover
+            if value in self._updater.colors:
+                result[code] = self._updater.colors[value]
+            elif value in self._updater.gradients:
+                result[code] = self._updater.gradients[value]
+            else:
+                del result[code]
+
+        return result

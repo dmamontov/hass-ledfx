@@ -20,6 +20,7 @@ from .const import (
     ATTR_DEVICE,
     ATTR_FIELD_EFFECTS,
     ATTR_FIELD_OPTIONS,
+    ATTR_FIELD_TYPE,
     ATTR_LIGHT_EFFECT,
     ATTR_LIGHT_EFFECT_CONFIG,
     ATTR_LIGHT_STATE,
@@ -31,7 +32,7 @@ from .const import (
     SIGNAL_NEW_SELECT,
 )
 from .entity import LedFxEntity
-from .enum import ActionType
+from .enum import ActionType, Version
 from .exceptions import LedFxError
 from .helper import generate_entity_id
 from .updater import LedFxEntityDescription, LedFxUpdater, async_get_updater
@@ -144,6 +145,10 @@ class LedFxSelect(LedFxEntity, SelectEntity):
             self._attr_options = (
                 entity.extra.get(ATTR_FIELD_OPTIONS, []) if entity.extra else []
             )
+
+            if entity.extra:
+                self._attr_field_type = entity.extra.get(ATTR_FIELD_TYPE)
+
             self._attr_extra_state_attributes = {
                 ATTR_DEVICE: self._attr_device_code,
                 ATTR_FIELD_EFFECTS: entity.extra.get(ATTR_FIELD_EFFECTS, [])
@@ -238,7 +243,9 @@ class LedFxSelect(LedFxEntity, SelectEntity):
 
         if option_ids:
             try:
-                await self._updater.client.set_audio_device(int(option_ids[0]))
+                await self._updater.client.set_audio_device(
+                    int(option_ids[0]), self._updater.version == Version.V2
+                )
 
                 return True
             except LedFxError as _e:

@@ -11,7 +11,7 @@ from typing import Final
 from unittest.mock import AsyncMock, patch
 
 import pytest
-from homeassistant.components.light import ATTR_BRIGHTNESS, ATTR_EFFECT
+from homeassistant.components.light import ATTR_BRIGHTNESS, ATTR_EFFECT, ATTR_RGBW_COLOR
 from homeassistant.components.light import DOMAIN as LIGHT_DOMAIN
 from homeassistant.components.light import ENTITY_ID_FORMAT as LIGHT_ENTITY_ID_FORMAT
 from homeassistant.components.light import SERVICE_TURN_OFF, SERVICE_TURN_ON
@@ -33,82 +33,116 @@ from custom_components.ledfx.const import (
 from custom_components.ledfx.exceptions import LedFxRequestError
 from custom_components.ledfx.helper import generate_entity_id
 from custom_components.ledfx.updater import LedFxUpdater
-from tests.setup import MultipleSideEffect, async_mock_client, async_setup
+from tests.setup import MultipleSideEffect, async_mock_client_2, async_setup
 
 _LOGGER = logging.getLogger(__name__)
 
 EFFECT_LIST: Final = [
-    "bands(Reactive)",
-    "bands_matrix(Reactive)",
-    "bands_matrix(Reactive) - equilizer",
-    "bar(Reactive)",
-    "bar(Reactive) - Rainbow-lr",
-    "bar(Reactive) - bouncing-blues",
-    "bar(Reactive) - passing-by",
-    "bar(Reactive) - plasma-cascade",
-    "bar(Reactive) - smooth-bounce",
-    "blade_power(Reactive)",
-    "blocks(Reactive)",
-    "energy(Reactive)",
-    "energy(Reactive) - clear-sky",
-    "energy(Reactive) - smooth-plasma",
-    "energy(Reactive) - smooth-rainbow",
-    "energy(Reactive) - snappy-blues",
-    "equalizer(reactive)",
+    "bands",
+    "bands - reset",
+    "bands_matrix",
+    "bands_matrix - reset",
+    "bar",
+    "bar - Rainbow-lr",
+    "bar - bouncing-blues",
+    "bar - passing-by",
+    "bar - plasma-cascade",
+    "bar - reset",
+    "bar - smooth-bounce",
+    "bar - reset",
+    "blade_power_plus",
+    "blade_power_plus - ocean-bass",
+    "blade_power_plus - orange-hi-hat",
+    "blade_power_plus - reset",
+    "block_reflections",
+    "block_reflections - reset",
+    "blocks",
+    "blocks - reset",
+    "crawler",
+    "crawler - reset",
+    "energy",
+    "energy - clear-sky",
+    "energy - reset",
+    "energy - smooth-plasma",
+    "energy - smooth-rainbow",
+    "energy - snappy-blues",
+    "energy2",
+    "energy2 - reset",
+    "equalizer",
+    "equalizer - reset",
     "fade",
     "fade - blues",
     "fade - calm-reds",
     "fade - rainbow-cycle",
     "fade - red-to-blue",
+    "fade - reset",
     "fade - sunset",
+    "fire",
+    "fire - reset",
+    "glitch",
+    "glitch - reset",
     "gradient",
     "gradient - Rainbow-roll",
     "gradient - breathing",
     "gradient - falling-blues",
+    "gradient - reset",
     "gradient - rolling-sunset",
     "gradient - spectrum",
     "gradient - twister",
     "gradient - waves",
-    "magnitude(Reactive)",
-    "magnitude(Reactive) - cold-fire",
-    "magnitude(Reactive) - jungle-cascade",
-    "magnitude(Reactive) - lively",
-    "magnitude(Reactive) - rolling-rainbow",
-    "magnitude(Reactive) - warm-bass",
-    "multiBar(Reactive)",
-    "multiBar(Reactive) - Rainbow-oscillation",
-    "multiBar(Reactive) - bright-cascade",
-    "multiBar(Reactive) - falling-blues",
-    "multiBar(Reactive) - red-blue-expanse",
-    "pitchSpectrum(Reactive)",
-    "power(Reactive)",
-    "power(Reactive) - default",
-    "rain(Reactive)",
-    "rain(Reactive) - cold-drops",
-    "rain(Reactive) - meteor-shower",
-    "rain(Reactive) - prismatic",
-    "rain(Reactive) - ripples",
-    "rain(Reactive) - smooth-rwb",
+    "lava_lamp",
+    "lava_lamp - reset",
+    "magnitude",
+    "magnitude - cold-fire",
+    "magnitude - jungle-cascade",
+    "magnitude - lively",
+    "magnitude - reset",
+    "magnitude - rolling-rainbow",
+    "magnitude - warm-bass",
+    "marching",
+    "marching - reset",
+    "melt",
+    "melt - reset",
+    "multiBar",
+    "multiBar - Rainbow-oscillation",
+    "multiBar - bright-cascade",
+    "multiBar - falling-blues",
+    "multiBar - red-blue-expanse",
+    "multiBar - reset",
+    "pitchSpectrum",
+    "pitchSpectrum - reset",
+    "power",
+    "power - reset",
+    "rain",
+    "rain - cold-drops",
+    "rain - meteor-shower",
+    "rain - prismatic",
+    "rain - reset",
+    "rain - ripples",
+    "rain - smooth-rwb",
     "rainbow",
     "rainbow - cascade",
     "rainbow - crawl",
     "rainbow - faded",
     "rainbow - gentle",
+    "rainbow - reset",
     "rainbow - slow-roll",
-    "real_strobe(Reactive)",
-    "real_strobe(Reactive) - bass_only",
-    "real_strobe(Reactive) - dancefloor",
-    "real_strobe(Reactive) - extreme",
-    "real_strobe(Reactive) - glitter",
-    "real_strobe(Reactive) - strobe_only",
-    "scroll(Reactive)",
-    "scroll(Reactive) - cold-crawl",
-    "scroll(Reactive) - dynamic-rgb",
-    "scroll(Reactive) - fast-hits",
-    "scroll(Reactive) - gentle-rgb",
-    "scroll(Reactive) - icicles",
-    "scroll(Reactive) - rays",
-    "scroll(Reactive) - warmth",
+    "real_strobe",
+    "real_strobe - bass_only",
+    "real_strobe - dancefloor",
+    "real_strobe - extreme",
+    "real_strobe - glitter",
+    "real_strobe - reset",
+    "real_strobe - strobe_only",
+    "scroll",
+    "scroll - cold-crawl",
+    "scroll - dynamic-rgb",
+    "scroll - fast-hits",
+    "scroll - gentle-rgb",
+    "scroll - icicles",
+    "scroll - rays",
+    "scroll - reset",
+    "scroll - warmth",
     "singleColor",
     "singleColor - blue",
     "singleColor - cyan",
@@ -118,24 +152,28 @@ EFFECT_LIST: Final = [
     "singleColor - pink",
     "singleColor - red",
     "singleColor - red-waves",
+    "singleColor - reset",
     "singleColor - steel-pulse",
     "singleColor - turquoise-roll",
     "singleColor - yellow",
-    "spectrum(Reactive)",
-    "strobe(Reactive)",
-    "strobe(Reactive) - aggro-red",
-    "strobe(Reactive) - blues-on-the-beat",
-    "strobe(Reactive) - fast-strobe",
-    "strobe(Reactive) - faster-strobe",
-    "strobe(Reactive) - painful",
-    "wavelength(Reactive)",
-    "wavelength(Reactive) - classic",
-    "wavelength(Reactive) - greens",
-    "wavelength(Reactive) - icy",
-    "wavelength(Reactive) - plasma",
-    "wavelength(Reactive) - rolling-blues",
-    "wavelength(Reactive) - rolling-warmth",
-    "wavelength(Reactive) - sunset-sweep",
+    "spectrum",
+    "spectrum - reset",
+    "strobe",
+    "strobe - aggro-red",
+    "strobe - blues-on-the-beat",
+    "strobe - fast-strobe",
+    "strobe - faster-strobe",
+    "strobe - painful",
+    "strobe - reset",
+    "wavelength",
+    "wavelength - classic",
+    "wavelength - greens",
+    "wavelength - icy",
+    "wavelength - plasma",
+    "wavelength - reset",
+    "wavelength - rolling-blues",
+    "wavelength - rolling-warmth",
+    "wavelength - sunset-sweep",
 ]
 
 
@@ -153,10 +191,10 @@ async def test_devices(hass: HomeAssistant) -> None:
     """
 
     with patch("custom_components.ledfx.updater.LedFxClient") as mock_client:
-        await async_mock_client(mock_client)
+        await async_mock_client_2(mock_client)
 
         def success() -> dict:
-            return json.loads(load_fixture("devices_data.json"))
+            return json.loads(load_fixture("devices_v2_data.json"))
 
         def error() -> None:
             raise LedFxRequestError
@@ -178,38 +216,18 @@ async def test_devices(hass: HomeAssistant) -> None:
 
         state: State = hass.states.get(unique_id)
         assert state.state == STATE_ON
-        assert state.name == "Garland #1"
-        assert state.attributes["icon"] == "mdi:string-lights"
+        assert state.name == "WLED"
+        assert state.attributes["icon"] == "mdi:led-strip-variant"
         assert state.attributes["effect_list"] == EFFECT_LIST
-        assert state.attributes["effect"] == "gradient"
-        assert state.attributes["background_color"] == "black"
-        assert state.attributes["modulation_effect"] == "sine"
-        assert state.attributes["gradient_name"] == "Rainbow"
-        assert not state.attributes["mirror"]
-        assert state.attributes["modulation_speed"] == 0.5
-        assert not state.attributes["modulate"]
-        assert state.attributes["gradient_repeat"] == 1
-        assert not state.attributes["flip"]
-        assert state.attributes["gradient_roll"] == 0
-        assert state.attributes["speed"] == 1.0
-        assert state.attributes["blur"] == 0.0
+        assert state.attributes["effect"] == "magnitude"
         assert state.attributes["attribution"] == ATTRIBUTION
 
-        unique_id = _generate_id("garland_2", updater.ip)
+        unique_id = _generate_id("wled-1", updater.ip)
 
         state = hass.states.get(unique_id)
         assert state.state == STATE_OFF
-        assert state.name == "Garland #2"
-        assert state.attributes["icon"] == "mdi:string-lights"
-        assert state.attributes["effect_list"] == EFFECT_LIST
-        assert state.attributes["attribution"] == ATTRIBUTION
-
-        unique_id = _generate_id("ambi", updater.ip)
-
-        state = hass.states.get(unique_id)
-        assert state.state == STATE_OFF
-        assert state.name == "Ambilight"
-        assert state.attributes["icon"] == "mdi:string-lights"
+        assert state.name == "WLED"
+        assert state.attributes["icon"] == "mdi:led-strip-variant"
         assert state.attributes["effect_list"] == EFFECT_LIST
         assert state.attributes["attribution"] == ATTRIBUTION
 
@@ -223,12 +241,7 @@ async def test_devices(hass: HomeAssistant) -> None:
         state = hass.states.get(unique_id)
         assert state.state == STATE_UNAVAILABLE
 
-        unique_id = _generate_id("garland_2", updater.ip)
-
-        state = hass.states.get(unique_id)
-        assert state.state == STATE_UNAVAILABLE
-
-        unique_id = _generate_id("ambi", updater.ip)
+        unique_id = _generate_id("wled-1", updater.ip)
 
         state = hass.states.get(unique_id)
         assert state.state == STATE_UNAVAILABLE
@@ -241,11 +254,11 @@ async def test_devices_without_custom_preset(hass: HomeAssistant) -> None:
     """
 
     with patch("custom_components.ledfx.updater.LedFxClient") as mock_client:
-        await async_mock_client(mock_client)
+        await async_mock_client_2(mock_client)
 
         mock_client.return_value.config = AsyncMock(
             return_value=json.loads(
-                load_fixture("config_empty_custom_presets_data.json")
+                load_fixture("config_empty_custom_presets_v2_data.json")
             )
         )
 
@@ -262,19 +275,13 @@ async def test_devices_without_custom_preset(hass: HomeAssistant) -> None:
 
         state: State = hass.states.get(unique_id)
         assert state.state == STATE_ON
-        assert len(state.attributes["effect_list"]) == len(EFFECT_LIST) - 2
+        assert len(state.attributes["effect_list"]) == len(EFFECT_LIST) - 1
 
-        unique_id = _generate_id("garland_2", updater.ip)
-
-        state = hass.states.get(unique_id)
-        assert state.state == STATE_OFF
-        assert len(state.attributes["effect_list"]) == len(EFFECT_LIST) - 2
-
-        unique_id = _generate_id("ambi", updater.ip)
+        unique_id = _generate_id("wled-1", updater.ip)
 
         state = hass.states.get(unique_id)
         assert state.state == STATE_OFF
-        assert len(state.attributes["effect_list"]) == len(EFFECT_LIST) - 2
+        assert len(state.attributes["effect_list"]) == len(EFFECT_LIST) - 1
 
 
 async def test_new_devices(hass: HomeAssistant) -> None:
@@ -284,16 +291,26 @@ async def test_new_devices(hass: HomeAssistant) -> None:
     """
 
     with patch("custom_components.ledfx.updater.LedFxClient") as mock_client:
-        await async_mock_client(mock_client)
+        await async_mock_client_2(mock_client)
 
         def success() -> dict:
-            return json.loads(load_fixture("devices_data.json"))
+            return json.loads(load_fixture("devices_v2_data.json"))
 
         def success_two() -> dict:
-            return json.loads(load_fixture("devices_changed_data.json"))
+            return json.loads(load_fixture("devices_changed_v2_data.json"))
 
         mock_client.return_value.devices = AsyncMock(
             side_effect=MultipleSideEffect(success, success_two)
+        )
+
+        def v_success() -> dict:
+            return json.loads(load_fixture("virtuals_data.json"))
+
+        def v_success_two() -> dict:
+            return json.loads(load_fixture("virtuals_changed_data.json"))
+
+        mock_client.return_value.virtuals = AsyncMock(
+            side_effect=MultipleSideEffect(v_success, v_success_two)
         )
 
         _, config_entry = await async_setup(hass)
@@ -306,7 +323,7 @@ async def test_new_devices(hass: HomeAssistant) -> None:
 
         assert updater.last_update_success
 
-        unique_id: str = _generate_id("new_device", updater.ip)
+        unique_id: str = _generate_id("wled-2", updater.ip)
         entry: er.RegistryEntry | None = registry.async_get(unique_id)
 
         assert hass.states.get(unique_id) is None
@@ -319,7 +336,7 @@ async def test_new_devices(hass: HomeAssistant) -> None:
 
         state = hass.states.get(unique_id)
         assert state.state == STATE_OFF
-        assert state.name == "New device"
+        assert state.name == "WLED"
         assert state.attributes["attribution"] == ATTRIBUTION
 
 
@@ -330,11 +347,12 @@ async def test_devices_on(hass: HomeAssistant) -> None:
     """
 
     with patch("custom_components.ledfx.updater.LedFxClient") as mock_client:
-        await async_mock_client(mock_client)
+        await async_mock_client_2(mock_client)
 
         def success(device_code: str, effect: str, is_virtual: bool = False) -> dict:
-            assert device_code == "garland-2"
-            assert effect == "bands(Reactive)"
+            assert is_virtual
+            assert device_code == "wled-1"
+            assert effect == "bands"
 
             return json.loads(load_fixture("device_on_data.json"))
 
@@ -345,9 +363,12 @@ async def test_devices_on(hass: HomeAssistant) -> None:
             side_effect=MultipleSideEffect(success, error)
         )
 
-        def success_effect(device_code: str, effect: str, config: dict) -> dict:
-            assert device_code == "garland-2"
-            assert effect == "bands(Reactive)"
+        def success_effect(
+            device_code: str, effect: str, config: dict, is_virtual: bool = False
+        ) -> dict:
+            assert is_virtual
+            assert device_code == "wled-1"
+            assert effect == "bands"
             assert config == {
                 "active": True,
                 "background_color": "black",
@@ -378,7 +399,7 @@ async def test_devices_on(hass: HomeAssistant) -> None:
 
         assert updater.last_update_success
 
-        unique_id = _generate_id("garland_2", updater.ip)
+        unique_id = _generate_id("wled-1", updater.ip)
 
         await hass.services.async_call(
             LIGHT_DOMAIN,
@@ -390,14 +411,7 @@ async def test_devices_on(hass: HomeAssistant) -> None:
 
         state = hass.states.get(unique_id)
         assert state.state == STATE_ON
-        assert state.attributes["effect"] == "bands(Reactive)"
-        assert state.attributes["gradient_repeat"] == 1
-        assert not state.attributes["flip"]
-        assert state.attributes["blur"] == 3.0
-        assert state.attributes["background_color"] == "black"
-        assert state.attributes["gradient_name"] == "Rainbow"
-        assert state.attributes["gradient_roll"] == 0
-        assert not state.attributes["mirror"]
+        assert state.attributes["effect"] == "bands"
 
         with pytest.raises(LedFxRequestError):
             await hass.services.async_call(
@@ -416,10 +430,11 @@ async def test_devices_on_with_effect(hass: HomeAssistant) -> None:
     """
 
     with patch("custom_components.ledfx.updater.LedFxClient") as mock_client:
-        await async_mock_client(mock_client)
+        await async_mock_client_2(mock_client)
 
         def success(device_code: str, effect: str, is_virtual: bool = False) -> dict:
-            assert device_code == "garland-2"
+            assert is_virtual
+            assert device_code == "wled-1"
             assert effect == "wavelength(Reactive)"
 
             return json.loads(load_fixture("device_on_data.json"))
@@ -431,8 +446,11 @@ async def test_devices_on_with_effect(hass: HomeAssistant) -> None:
             side_effect=MultipleSideEffect(success, error)
         )
 
-        def success_effect(device_code: str, effect: str, config: dict) -> dict:
-            assert device_code == "garland-2"
+        def success_effect(
+            device_code: str, effect: str, config: dict, is_virtual: bool = False
+        ) -> dict:
+            assert is_virtual
+            assert device_code == "wled-1"
             assert effect == "wavelength(Reactive)"
             assert config == {
                 "active": True,
@@ -464,7 +482,7 @@ async def test_devices_on_with_effect(hass: HomeAssistant) -> None:
 
         assert updater.last_update_success
 
-        unique_id = _generate_id("garland_2", updater.ip)
+        unique_id = _generate_id("wled-1", updater.ip)
 
         await hass.services.async_call(
             LIGHT_DOMAIN,
@@ -477,13 +495,6 @@ async def test_devices_on_with_effect(hass: HomeAssistant) -> None:
         state = hass.states.get(unique_id)
         assert state.state == STATE_ON
         assert state.attributes["effect"] == "wavelength(Reactive)"
-        assert state.attributes["gradient_repeat"] == 1
-        assert not state.attributes["flip"]
-        assert state.attributes["blur"] == 3.0
-        assert state.attributes["background_color"] == "black"
-        assert state.attributes["gradient_name"] == "Rainbow"
-        assert state.attributes["gradient_roll"] == 0
-        assert not state.attributes["mirror"]
 
         with pytest.raises(LedFxRequestError):
             await hass.services.async_call(
@@ -502,10 +513,11 @@ async def test_devices_on_with_effect_and_brightness(hass: HomeAssistant) -> Non
     """
 
     with patch("custom_components.ledfx.updater.LedFxClient") as mock_client:
-        await async_mock_client(mock_client)
+        await async_mock_client_2(mock_client)
 
         def success(device_code: str, effect: str, is_virtual: bool = False) -> dict:
-            assert device_code == "garland-2"
+            assert is_virtual
+            assert device_code == "wled-1"
             assert effect == "wavelength(Reactive)"
 
             return json.loads(load_fixture("device_on_data.json"))
@@ -517,11 +529,12 @@ async def test_devices_on_with_effect_and_brightness(hass: HomeAssistant) -> Non
         def success_effect(
             device_code: str, effect: str, config: dict, is_virtual: bool = False
         ) -> dict:
-            assert device_code == "garland-2"
+            assert is_virtual
+            assert device_code == "wled-1"
             assert effect == "wavelength(Reactive)"
             assert config == {
                 "active": True,
-                "background_color": "black",
+                "background_color": None,
                 "blur": 3.0,
                 "brightness": 0.5,
                 "flip": False,
@@ -554,7 +567,7 @@ async def test_devices_on_with_effect_and_brightness(hass: HomeAssistant) -> Non
 
         assert updater.last_update_success
 
-        unique_id = _generate_id("garland_2", updater.ip)
+        unique_id = _generate_id("wled-1", updater.ip)
 
         await hass.services.async_call(
             LIGHT_DOMAIN,
@@ -572,13 +585,6 @@ async def test_devices_on_with_effect_and_brightness(hass: HomeAssistant) -> Non
         assert state.state == STATE_ON
         assert state.attributes["brightness"] == 125
         assert state.attributes["effect"] == "wavelength(Reactive)"
-        assert state.attributes["gradient_repeat"] == 1
-        assert not state.attributes["flip"]
-        assert state.attributes["blur"] == 3.0
-        assert state.attributes["background_color"] == "black"
-        assert state.attributes["gradient_name"] == "Rainbow"
-        assert state.attributes["gradient_roll"] == 0
-        assert not state.attributes["mirror"]
 
         with pytest.raises(LedFxRequestError):
             await hass.services.async_call(
@@ -594,6 +600,378 @@ async def test_devices_on_with_effect_and_brightness(hass: HomeAssistant) -> Non
             )
 
 
+async def test_devices_on_with_effect_and_rgbw(hass: HomeAssistant) -> None:
+    """Test devices on with effect and rgbw.
+
+    :param hass: HomeAssistant
+    """
+
+    with patch("custom_components.ledfx.updater.LedFxClient") as mock_client:
+        await async_mock_client_2(mock_client)
+
+        def success(device_code: str, effect: str, is_virtual: bool = False) -> dict:
+            assert is_virtual
+            assert device_code == "wled-1"
+            assert effect == "wavelength(Reactive)"
+
+            return json.loads(load_fixture("device_on_data.json"))
+
+        mock_client.return_value.device_on = AsyncMock(
+            side_effect=MultipleSideEffect(success, success)
+        )
+
+        def success_effect(
+            device_code: str, effect: str, config: dict, is_virtual: bool = False
+        ) -> dict:
+            assert is_virtual
+            assert device_code == "wled-1"
+            assert effect == "wavelength(Reactive)"
+            assert config == {
+                "active": True,
+                "background_color": "#ea7d7e",
+                "blur": 3.0,
+                "brightness": 0.0,
+                "flip": False,
+                "gradient_name": "Rainbow",
+                "gradient_repeat": 1,
+                "gradient_roll": 0,
+                "isProcessing": False,
+                "mirror": False,
+                "name": "Wavelength",
+                "type": "wavelength(Reactive)",
+            }
+
+            return json.loads(load_fixture("effect_data.json"))
+
+        def error_effect(
+            device_code: str, effect: str, config: dict, is_virtual: bool = False
+        ) -> None:
+            raise LedFxRequestError
+
+        mock_client.return_value.effect = AsyncMock(
+            side_effect=MultipleSideEffect(success_effect, error_effect)
+        )
+
+        _, config_entry = await async_setup(hass)
+
+        assert await hass.config_entries.async_setup(config_entry.entry_id)
+        await hass.async_block_till_done()
+
+        updater: LedFxUpdater = hass.data[DOMAIN][config_entry.entry_id][UPDATER]
+
+        assert updater.last_update_success
+
+        unique_id = _generate_id("wled-1", updater.ip)
+
+        await hass.services.async_call(
+            LIGHT_DOMAIN,
+            SERVICE_TURN_ON,
+            {
+                ATTR_ENTITY_ID: [unique_id],
+                ATTR_EFFECT: "wavelength(Reactive)",
+                ATTR_RGBW_COLOR: (234, 125, 126, 0),
+            },
+            blocking=True,
+            limit=None,
+        )
+
+        state = hass.states.get(unique_id)
+        assert state.state == STATE_ON
+        assert state.attributes["effect"] == "wavelength(Reactive)"
+
+        with pytest.raises(LedFxRequestError):
+            await hass.services.async_call(
+                LIGHT_DOMAIN,
+                SERVICE_TURN_ON,
+                {
+                    ATTR_ENTITY_ID: [unique_id],
+                    ATTR_EFFECT: "wavelength(Reactive)",
+                    ATTR_RGBW_COLOR: (234, 125, 126, 0),
+                },
+                blocking=True,
+                limit=None,
+            )
+
+
+async def test_devices_on_with_effect_and_rgbw_white(hass: HomeAssistant) -> None:
+    """Test devices on with effect and rgbw.
+
+    :param hass: HomeAssistant
+    """
+
+    with patch("custom_components.ledfx.updater.LedFxClient") as mock_client:
+        await async_mock_client_2(mock_client)
+
+        def success(device_code: str, effect: str, is_virtual: bool = False) -> dict:
+            assert is_virtual
+            assert device_code == "wled-1"
+            assert effect == "wavelength(Reactive)"
+
+            return json.loads(load_fixture("device_on_data.json"))
+
+        mock_client.return_value.device_on = AsyncMock(
+            side_effect=MultipleSideEffect(success, success)
+        )
+
+        def success_effect(
+            device_code: str, effect: str, config: dict, is_virtual: bool = False
+        ) -> dict:
+            assert is_virtual
+            assert device_code == "wled-1"
+            assert effect == "wavelength(Reactive)"
+            assert config == {
+                "active": True,
+                "background_color": "#ffffff",
+                "blur": 3.0,
+                "brightness": 0.0,
+                "flip": False,
+                "gradient_name": "Rainbow",
+                "gradient_repeat": 1,
+                "gradient_roll": 0,
+                "isProcessing": False,
+                "mirror": False,
+                "name": "Wavelength",
+                "type": "wavelength(Reactive)",
+            }
+
+            return json.loads(load_fixture("effect_data.json"))
+
+        def error_effect(
+            device_code: str, effect: str, config: dict, is_virtual: bool = False
+        ) -> None:
+            raise LedFxRequestError
+
+        mock_client.return_value.effect = AsyncMock(
+            side_effect=MultipleSideEffect(success_effect, error_effect)
+        )
+
+        _, config_entry = await async_setup(hass)
+
+        assert await hass.config_entries.async_setup(config_entry.entry_id)
+        await hass.async_block_till_done()
+
+        updater: LedFxUpdater = hass.data[DOMAIN][config_entry.entry_id][UPDATER]
+
+        assert updater.last_update_success
+
+        unique_id = _generate_id("wled-1", updater.ip)
+
+        await hass.services.async_call(
+            LIGHT_DOMAIN,
+            SERVICE_TURN_ON,
+            {
+                ATTR_ENTITY_ID: [unique_id],
+                ATTR_EFFECT: "wavelength(Reactive)",
+                ATTR_RGBW_COLOR: (0, 0, 0, 255),
+            },
+            blocking=True,
+            limit=None,
+        )
+
+        state = hass.states.get(unique_id)
+        assert state.state == STATE_ON
+        assert state.attributes["effect"] == "wavelength(Reactive)"
+
+        with pytest.raises(LedFxRequestError):
+            await hass.services.async_call(
+                LIGHT_DOMAIN,
+                SERVICE_TURN_ON,
+                {
+                    ATTR_ENTITY_ID: [unique_id],
+                    ATTR_EFFECT: "wavelength(Reactive)",
+                    ATTR_RGBW_COLOR: (0, 0, 0, 255),
+                },
+                blocking=True,
+                limit=None,
+            )
+
+
+async def test_devices_on_with_effect_and_rgbw_white_two(hass: HomeAssistant) -> None:
+    """Test devices on with effect and rgbw.
+
+    :param hass: HomeAssistant
+    """
+
+    with patch("custom_components.ledfx.updater.LedFxClient") as mock_client:
+        await async_mock_client_2(mock_client)
+
+        def success(device_code: str, effect: str, is_virtual: bool = False) -> dict:
+            assert is_virtual
+            assert device_code == "wled-1"
+            assert effect == "wavelength(Reactive)"
+
+            return json.loads(load_fixture("device_on_data.json"))
+
+        mock_client.return_value.device_on = AsyncMock(
+            side_effect=MultipleSideEffect(success, success)
+        )
+
+        def success_effect(
+            device_code: str, effect: str, config: dict, is_virtual: bool = False
+        ) -> dict:
+            assert is_virtual
+            assert device_code == "wled-1"
+            assert effect == "wavelength(Reactive)"
+            assert config == {
+                "active": True,
+                "background_color": "#ffffff",
+                "blur": 3.0,
+                "brightness": 0.0,
+                "flip": False,
+                "gradient_name": "Rainbow",
+                "gradient_repeat": 1,
+                "gradient_roll": 0,
+                "isProcessing": False,
+                "mirror": False,
+                "name": "Wavelength",
+                "type": "wavelength(Reactive)",
+            }
+
+            return json.loads(load_fixture("effect_data.json"))
+
+        def error_effect(
+            device_code: str, effect: str, config: dict, is_virtual: bool = False
+        ) -> None:
+            raise LedFxRequestError
+
+        mock_client.return_value.effect = AsyncMock(
+            side_effect=MultipleSideEffect(success_effect, error_effect)
+        )
+
+        _, config_entry = await async_setup(hass)
+
+        assert await hass.config_entries.async_setup(config_entry.entry_id)
+        await hass.async_block_till_done()
+
+        updater: LedFxUpdater = hass.data[DOMAIN][config_entry.entry_id][UPDATER]
+
+        assert updater.last_update_success
+
+        unique_id = _generate_id("wled-1", updater.ip)
+
+        await hass.services.async_call(
+            LIGHT_DOMAIN,
+            SERVICE_TURN_ON,
+            {
+                ATTR_ENTITY_ID: [unique_id],
+                ATTR_EFFECT: "wavelength(Reactive)",
+                ATTR_RGBW_COLOR: (255, 255, 255, 255),
+            },
+            blocking=True,
+            limit=None,
+        )
+
+        state = hass.states.get(unique_id)
+        assert state.state == STATE_ON
+        assert state.attributes["effect"] == "wavelength(Reactive)"
+
+        with pytest.raises(LedFxRequestError):
+            await hass.services.async_call(
+                LIGHT_DOMAIN,
+                SERVICE_TURN_ON,
+                {
+                    ATTR_ENTITY_ID: [unique_id],
+                    ATTR_EFFECT: "wavelength(Reactive)",
+                    ATTR_RGBW_COLOR: (255, 255, 255, 255),
+                },
+                blocking=True,
+                limit=None,
+            )
+
+
+async def test_devices_on_with_effect_and_rgbw_black(hass: HomeAssistant) -> None:
+    """Test devices on with effect and rgbw.
+
+    :param hass: HomeAssistant
+    """
+
+    with patch("custom_components.ledfx.updater.LedFxClient") as mock_client:
+        await async_mock_client_2(mock_client)
+
+        def success(device_code: str, effect: str, is_virtual: bool = False) -> dict:
+            assert is_virtual
+            assert device_code == "wled-1"
+            assert effect == "wavelength(Reactive)"
+
+            return json.loads(load_fixture("device_on_data.json"))
+
+        mock_client.return_value.device_on = AsyncMock(
+            side_effect=MultipleSideEffect(success, success)
+        )
+
+        def success_effect(
+            device_code: str, effect: str, config: dict, is_virtual: bool = False
+        ) -> dict:
+            assert is_virtual
+            assert device_code == "wled-1"
+            assert effect == "wavelength(Reactive)"
+            assert config == {
+                "active": True,
+                "background_color": "#000000",
+                "blur": 3.0,
+                "brightness": 0.0,
+                "flip": False,
+                "gradient_name": "Rainbow",
+                "gradient_repeat": 1,
+                "gradient_roll": 0,
+                "isProcessing": False,
+                "mirror": False,
+                "name": "Wavelength",
+                "type": "wavelength(Reactive)",
+            }
+
+            return json.loads(load_fixture("effect_data.json"))
+
+        def error_effect(
+            device_code: str, effect: str, config: dict, is_virtual: bool = False
+        ) -> None:
+            raise LedFxRequestError
+
+        mock_client.return_value.effect = AsyncMock(
+            side_effect=MultipleSideEffect(success_effect, error_effect)
+        )
+
+        _, config_entry = await async_setup(hass)
+
+        assert await hass.config_entries.async_setup(config_entry.entry_id)
+        await hass.async_block_till_done()
+
+        updater: LedFxUpdater = hass.data[DOMAIN][config_entry.entry_id][UPDATER]
+
+        assert updater.last_update_success
+
+        unique_id = _generate_id("wled-1", updater.ip)
+
+        await hass.services.async_call(
+            LIGHT_DOMAIN,
+            SERVICE_TURN_ON,
+            {
+                ATTR_ENTITY_ID: [unique_id],
+                ATTR_EFFECT: "wavelength(Reactive)",
+                ATTR_RGBW_COLOR: (0, 0, 0, 0),
+            },
+            blocking=True,
+            limit=None,
+        )
+
+        state = hass.states.get(unique_id)
+        assert state.state == STATE_ON
+        assert state.attributes["effect"] == "wavelength(Reactive)"
+
+        with pytest.raises(LedFxRequestError):
+            await hass.services.async_call(
+                LIGHT_DOMAIN,
+                SERVICE_TURN_ON,
+                {
+                    ATTR_ENTITY_ID: [unique_id],
+                    ATTR_EFFECT: "wavelength(Reactive)",
+                    ATTR_RGBW_COLOR: (0, 0, 0, 0),
+                },
+                blocking=True,
+                limit=None,
+            )
+
+
 async def test_devices_on_with_preset(hass: HomeAssistant) -> None:
     """Test devices on with preset.
 
@@ -601,7 +979,7 @@ async def test_devices_on_with_preset(hass: HomeAssistant) -> None:
     """
 
     with patch("custom_components.ledfx.updater.LedFxClient") as mock_client:
-        await async_mock_client(mock_client)
+        await async_mock_client_2(mock_client)
 
         def success(
             device_code: str,
@@ -610,9 +988,10 @@ async def test_devices_on_with_preset(hass: HomeAssistant) -> None:
             preset: str,
             is_virtual: bool = False,
         ) -> dict:
-            assert device_code == "garland-2"
+            assert is_virtual
+            assert device_code == "wled-1"
             assert category == "default_presets"
-            assert effect == "bar(Reactive)"
+            assert effect == "bar"
             assert preset == "bouncing-blues"
 
             return json.loads(load_fixture("preset_data.json"))
@@ -631,8 +1010,8 @@ async def test_devices_on_with_preset(hass: HomeAssistant) -> None:
         )
 
         def success_effect(device_code: str, effect: str, config: dict) -> dict:
-            assert device_code == "garland-2"
-            assert effect == "bar(Reactive)"
+            assert device_code == "wled-1"
+            assert effect == "bar"
             assert config == {
                 "background_color": "black",
                 "blur": 8.587469069357562,
@@ -659,38 +1038,25 @@ async def test_devices_on_with_preset(hass: HomeAssistant) -> None:
 
         assert updater.last_update_success
 
-        unique_id = _generate_id("garland_2", updater.ip)
+        unique_id = _generate_id("wled-1", updater.ip)
 
         await hass.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_ON,
-            {
-                ATTR_ENTITY_ID: [unique_id],
-                ATTR_EFFECT: "bar(Reactive) - bouncing-blues",
-            },
+            {ATTR_ENTITY_ID: [unique_id], ATTR_EFFECT: "bar - bouncing-blues"},
             blocking=True,
             limit=None,
         )
 
         state = hass.states.get(unique_id)
         assert state.state == STATE_ON
-        assert state.attributes["effect"] == "bar(Reactive)"
-        assert state.attributes["blur"] == 8.587469069357562
-        assert state.attributes["flip"]
-        assert state.attributes["gradient_name"] == "Sunset"
-        assert state.attributes["gradient_roll"] == 4
-        assert not state.attributes["mirror"]
-        assert state.attributes["gradient_repeat"] == 1
-        assert state.attributes["background_color"] == "black"
+        assert state.attributes["effect"] == "bar"
 
         with pytest.raises(LedFxRequestError):
             await hass.services.async_call(
                 LIGHT_DOMAIN,
                 SERVICE_TURN_ON,
-                {
-                    ATTR_ENTITY_ID: [unique_id],
-                    ATTR_EFFECT: "bar(Reactive) - bouncing-blues",
-                },
+                {ATTR_ENTITY_ID: [unique_id], ATTR_EFFECT: "bar - bouncing-blues"},
                 blocking=True,
                 limit=None,
             )
@@ -703,7 +1069,7 @@ async def test_devices_on_with_preset_and_brightness(hass: HomeAssistant) -> Non
     """
 
     with patch("custom_components.ledfx.updater.LedFxClient") as mock_client:
-        await async_mock_client(mock_client)
+        await async_mock_client_2(mock_client)
 
         def success(
             device_code: str,
@@ -712,10 +1078,11 @@ async def test_devices_on_with_preset_and_brightness(hass: HomeAssistant) -> Non
             preset: str,
             is_virtual: bool = False,
         ) -> dict:
-            assert device_code == "garland-2"
-            assert category == "custom_presets"
-            assert effect == "bands_matrix(Reactive)"
-            assert preset == "equilizer"
+            assert is_virtual
+            assert device_code == "wled-1"
+            assert category == "default_presets"
+            assert effect == "bar"
+            assert preset == "bouncing-blues"
 
             return json.loads(load_fixture("preset_data.json"))
 
@@ -726,10 +1093,10 @@ async def test_devices_on_with_preset_and_brightness(hass: HomeAssistant) -> Non
         def success_effect(
             device_code: str, effect: str, config: dict, is_virtual: bool = False
         ) -> dict:
-            assert device_code == "garland-2"
-            assert effect == "bands_matrix(Reactive)"
+            assert device_code == "wled-1"
+            assert effect == "bar"
             assert config == {
-                "background_color": "black",
+                "background_color": None,
                 "blur": 8.587469069357562,
                 "brightness": 0.5,
                 "flip": True,
@@ -759,14 +1126,14 @@ async def test_devices_on_with_preset_and_brightness(hass: HomeAssistant) -> Non
 
         assert updater.last_update_success
 
-        unique_id = _generate_id("garland_2", updater.ip)
+        unique_id = _generate_id("wled-1", updater.ip)
 
         await hass.services.async_call(
             LIGHT_DOMAIN,
             SERVICE_TURN_ON,
             {
                 ATTR_ENTITY_ID: [unique_id],
-                ATTR_EFFECT: "bands_matrix(Reactive) - equilizer",
+                ATTR_EFFECT: "bar - bouncing-blues",
                 ATTR_BRIGHTNESS: 125,
             },
             blocking=True,
@@ -776,14 +1143,7 @@ async def test_devices_on_with_preset_and_brightness(hass: HomeAssistant) -> Non
         state = hass.states.get(unique_id)
         assert state.state == STATE_ON
         assert state.attributes["brightness"] == 125
-        assert state.attributes["effect"] == "bands_matrix(Reactive)"
-        assert state.attributes["blur"] == 8.587469069357562
-        assert state.attributes["flip"]
-        assert state.attributes["gradient_name"] == "Sunset"
-        assert state.attributes["gradient_roll"] == 4
-        assert not state.attributes["mirror"]
-        assert state.attributes["gradient_repeat"] == 1
-        assert state.attributes["background_color"] == "black"
+        assert state.attributes["effect"] == "bar"
 
         with pytest.raises(LedFxRequestError):
             await hass.services.async_call(
@@ -791,7 +1151,7 @@ async def test_devices_on_with_preset_and_brightness(hass: HomeAssistant) -> Non
                 SERVICE_TURN_ON,
                 {
                     ATTR_ENTITY_ID: [unique_id],
-                    ATTR_EFFECT: "bands_matrix(Reactive) - equilizer",
+                    ATTR_EFFECT: "bar - bouncing-blues",
                     ATTR_BRIGHTNESS: 125,
                 },
                 blocking=True,
@@ -806,10 +1166,11 @@ async def test_devices_off(hass: HomeAssistant) -> None:
     """
 
     with patch("custom_components.ledfx.updater.LedFxClient") as mock_client:
-        await async_mock_client(mock_client)
+        await async_mock_client_2(mock_client)
 
         def success(device_code: str, is_virtual: bool = False) -> dict:
-            assert device_code == "garland-2"
+            assert is_virtual
+            assert device_code == "wled"
 
             return json.loads(load_fixture("device_off_data.json"))
 
@@ -829,7 +1190,7 @@ async def test_devices_off(hass: HomeAssistant) -> None:
 
         assert updater.last_update_success
 
-        unique_id = _generate_id("garland_2", updater.ip)
+        unique_id = _generate_id("wled", updater.ip)
 
         await hass.services.async_call(
             LIGHT_DOMAIN,

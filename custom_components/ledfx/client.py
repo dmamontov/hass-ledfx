@@ -76,14 +76,14 @@ class LedFxClient:
         path: str,
         method: Method = Method.GET,
         body: dict | None = None,
-        validate_field: str = "status",
+        validate_field: str | tuple = "status",
     ) -> dict:
         """Request method.
 
         :param path: str: api path
         :param method: Method: api method
         :param body: dict | None: api body
-        :param validate_field: str: validate field
+        :param validate_field: str | tuple: validate field
         :return dict: dict with api data.
         """
 
@@ -122,7 +122,10 @@ class LedFxClient:
 
             raise LedFxRequestError("Request error")
 
-        if validate_field not in _data:  # pragma: no cover
+        if (isinstance(validate_field, str) and validate_field not in _data) or (
+            isinstance(validate_field, tuple)
+            and not any(key for key in validate_field if key in _data)
+        ):  # pragma: no cover
             self._debug("Invalid response received", _url, _data, path)
 
             raise LedFxRequestError("Request error")
@@ -144,6 +147,14 @@ class LedFxClient:
         """
 
         return await self.request("devices")
+
+    async def virtuals(self) -> dict:
+        """virtuals method.
+
+        :return dict: dict with api data.
+        """
+
+        return await self.request("virtuals")
 
     async def scenes(self) -> dict:
         """scenes method.
@@ -175,33 +186,56 @@ class LedFxClient:
         :return dict: dict with api data.
         """
 
-        return await self.request("config", validate_field="config")
+        return await self.request(
+            "config", validate_field=("config", "configuration_version")
+        )
 
-    async def device_on(self, device_code: str, effect: str) -> dict:
+    async def colors(self) -> dict:
+        """colors method.
+
+        :return dict: dict with api data.
+        """
+
+        return await self.request("colors", validate_field="colors")
+
+    async def device_on(
+        self, device_code: str, effect: str, is_virtual: bool = False
+    ) -> dict:
         """devices/effects on method.
 
         :param device_code: str: device code
         :param effect: str: effect code
+        :param is_virtual: bool: Is virtual device
         :return dict: dict with api data.
         """
 
+        prefix: str = "virtuals" if is_virtual else "devices"
+
         return await self.request(
-            f"devices/{device_code}/effects",
+            f"{prefix}/{device_code}/effects",
             Method.POST,
             {"config": {"active": True}, "type": effect},
         )
 
-    async def device_off(self, device_code: str) -> dict:
+    async def device_off(self, device_code: str, is_virtual: bool = False) -> dict:
         """devices/effects off method.
 
         :param device_code: str: device code
+        :param is_virtual: bool: Is virtual device
         :return dict: dict with api data.
         """
 
-        return await self.request(f"devices/{device_code}/effects", Method.DELETE)
+        prefix: str = "virtuals" if is_virtual else "devices"
+
+        return await self.request(f"{prefix}/{device_code}/effects", Method.DELETE)
 
     async def preset(
-        self, device_code: str, category: str, effect: str, preset: str
+        self,
+        device_code: str,
+        category: str,
+        effect: str,
+        preset: str,
+        is_virtual: bool = False,
     ) -> dict:
         """devices/presets on method.
 
@@ -209,36 +243,50 @@ class LedFxClient:
         :param category: str: preset category
         :param effect: str: effect code
         :param preset: str: preset code
+        :param is_virtual: bool: Is virtual device
         :return dict: dict with api data.
         """
 
+        prefix: str = "virtuals" if is_virtual else "devices"
+
         return await self.request(
-            f"devices/{device_code}/presets",
+            f"{prefix}/{device_code}/presets",
             Method.PUT,
             {"category": category, "effect_id": effect, "preset_id": preset},
         )
 
-    async def effect(self, device_code: str, effect: str, config: dict) -> dict:
+    async def effect(
+        self, device_code: str, effect: str, config: dict, is_virtual: bool = False
+    ) -> dict:
         """devices/effects update method.
 
         :param device_code: str: device code
         :param effect: str: effect code
         :param config: dict: effect config
+        :param is_virtual: bool: Is virtual device
         :return dict: dict with api data.
         """
 
+        prefix: str = "virtuals" if is_virtual else "devices"
+
         return await self.request(
-            f"devices/{device_code}/effects",
+            f"{prefix}/{device_code}/effects",
             Method.PUT,
             {"config": config, "type": effect},
         )
 
-    async def set_audio_device(self, index: int) -> dict:
+    async def set_audio_device(self, index: int, is_new: bool = False) -> dict:
         """audio/devices set method.
 
         :param index: int: device index
+        :param is_new: bool: Is new api
         :return dict: dict with api data.
         """
+
+        if is_new:
+            return await self.request(
+                "config", Method.PUT, {"audio": {"audio_device": index}}
+            )
 
         return await self.request("audio/devices", Method.PUT, {"index": index})
 
