@@ -56,6 +56,7 @@ ATTR_STATE_NAME: Final = "State"
 ATTR_DEVICE: Final = "device"
 ATTR_DEVICE_SW_VERSION: Final = "device_sw_version"
 ATTR_FIELD: Final = "field"
+ATTR_FIELD_TYPE: Final = "type"
 ATTR_FIELD_EFFECTS: Final = "effects"
 ATTR_FIELD_OPTIONS: Final = "options"
 
@@ -67,6 +68,7 @@ ATTR_SELECT_AUDIO_INPUT_OPTIONS: Final = "audio_input_options"
 """Light attributes"""
 ATTR_LIGHT_STATE: Final = "state"
 ATTR_LIGHT_BRIGHTNESS: Final = "brightness"
+ATTR_LIGHT_COLOR: Final = "color"
 ATTR_LIGHT_CONFIG: Final = "config"
 ATTR_LIGHT_EFFECT: Final = "effect"
 ATTR_LIGHT_EFFECT_CONFIG: Final = "effect_config"
@@ -79,6 +81,9 @@ SENSOR_ICONS: Final = {
     "fft_size": "mdi:numeric",
     "mic_rate": "mdi:microphone-settings",
     "host_api": "mdi:api",
+    "sample_rate": "mdi:numeric",
+    "min_volume": "mdi:volume-minus",
+    "delay_ms": "mdi:sleep",
 }
 
 SELECT_ICONS: Final = {

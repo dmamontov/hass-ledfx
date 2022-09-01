@@ -100,6 +100,29 @@ async def async_mock_client(mock_client) -> None:
     )
 
 
+async def async_mock_client_2(mock_client) -> None:
+    """Mock"""
+
+    mock_client.return_value.config = AsyncMock(
+        return_value=json.loads(load_fixture("config_v2_data.json"))
+    )
+    mock_client.return_value.colors = AsyncMock(
+        return_value=json.loads(load_fixture("colors_data.json"))
+    )
+    mock_client.return_value.schema = AsyncMock(
+        return_value=json.loads(load_fixture("schema_v2_data.json"))
+    )
+    mock_client.return_value.scenes = AsyncMock(
+        return_value=json.loads(load_fixture("scenes_data.json"))
+    )
+    mock_client.return_value.devices = AsyncMock(
+        return_value=json.loads(load_fixture("devices_v2_data.json"))
+    )
+    mock_client.return_value.virtuals = AsyncMock(
+        return_value=json.loads(load_fixture("virtuals_data.json"))
+    )
+
+
 def get_url(
     path: str,
     query_params: dict | None = None,

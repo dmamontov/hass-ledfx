@@ -53,7 +53,9 @@ async def test_effect_property(hass: HomeAssistant) -> None:
     with patch("custom_components.ledfx.updater.LedFxClient") as mock_client:
         await async_mock_client(mock_client)
 
-        def success_effect(device_code: str, effect: str, config: dict) -> dict:
+        def success_effect(
+            device_code: str, effect: str, config: dict, is_virtual: bool = False
+        ) -> dict:
             assert device_code == "wled"
             assert effect == "gradient"
             assert config == {
@@ -73,7 +75,9 @@ async def test_effect_property(hass: HomeAssistant) -> None:
 
             return json.loads(load_fixture("effect_data.json"))
 
-        def error_effect(device_code: str, effect: str, config: dict) -> None:
+        def error_effect(
+            device_code: str, effect: str, config: dict, is_virtual: bool = False
+        ) -> None:
             raise LedFxRequestError
 
         mock_client.return_value.effect = AsyncMock(

@@ -1,0 +1,1748 @@
+{
+  "port_s": 8443,
+  "scan_on_startup": false,
+  "visualisation_maxlen": 50,
+  "user_gradients": {},
+  "dev_mode": false,
+  "user_presets": {
+    "bar": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      }
+    }
+  },
+  "host": "0.0.0.0",
+  "wled_preferences": {
+    "force_max_brightness": {
+      "setting": false,
+      "user_enabled": false
+    },
+    "realtime_gamma_enabled": {
+      "setting": false,
+      "user_enabled": false
+    },
+    "wled_preferred_mode": {
+      "setting": "UDP",
+      "user_enabled": false
+    },
+    "start_universe_setting": {
+      "setting": 1,
+      "user_enabled": false
+    },
+    "inactivity_timeout": {
+      "setting": 1,
+      "user_enabled": false
+    },
+    "dmx_address_start": {
+      "setting": 1,
+      "user_enabled": false
+    },
+    "realtime_dmx_mode": {
+      "setting": "MultiRGB",
+      "user_enabled": false
+    }
+  },
+  "virtuals": [
+    {
+      "config": {
+        "center_offset": 0,
+        "frequency_max": 15000,
+        "frequency_min": 20,
+        "icon_name": "wled",
+        "mapping": "span",
+        "max_brightness": 1.0,
+        "name": "WLED",
+        "preview_only": false,
+        "transition_mode": "Add",
+        "transition_time": 0.4
+      },
+      "id": "wled",
+      "is_device": "garland-1",
+      "segments": [
+        [
+          "garland-1",
+          0,
+          99,
+          false
+        ]
+      ],
+      "active": false
+    },
+    {
+      "id": "wled-1",
+      "config": {
+        "name": "WLED",
+        "icon_name": "wled",
+        "transition_time": 0.4,
+        "preview_only": false,
+        "mapping": "span",
+        "frequency_max": 15000,
+        "transition_mode": "Add",
+        "center_offset": 0,
+        "frequency_min": 20,
+        "max_brightness": 1.0
+      },
+      "segments": [
+        [
+          "ambient-lighting",
+          0,
+          156,
+          false
+        ]
+      ],
+      "is_device": "ambient-lighting"
+    }
+  ],
+  "devices": [
+    {
+      "config": {
+        "center_offset": 0,
+        "icon_name": "wled",
+        "ip_address": "192.168.31.50",
+        "name": "WLED",
+        "pixel_count": 100,
+        "refresh_rate": 62,
+        "rgbw_led": false,
+        "sync_mode": "UDP",
+        "timeout": 1
+      },
+      "id": "garland-1",
+      "type": "wled"
+    },
+    {
+      "id": "ambient-lighting",
+      "type": "wled",
+      "config": {
+        "icon_name": "wled",
+        "center_offset": 0,
+        "refresh_rate": 62,
+        "sync_mode": "UDP",
+        "timeout": 1,
+        "name": "WLED",
+        "ip_address": "192.168.31.118",
+        "pixel_count": 157,
+        "rgbw_led": false
+      }
+    }
+  ],
+  "global_transitions": true,
+  "port": 8888,
+  "visualisation_fps": 30,
+  "ledfx_presets": {
+    "bar": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      },
+      "bouncing-blues": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 0,
+          "brightness": 1,
+          "color_step": 0.125,
+          "ease_method": "ease_in",
+          "flip": true,
+          "gradient_name": "Winter",
+          "gradient": "linear-gradient(90deg, rgb(0, 199, 140) 0%, rgb(0, 255, 50) 100%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 0,
+          "mirror": true,
+          "mode": "bounce"
+        },
+        "name": "Bouncing Blues"
+      },
+      "passing-by": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 2.8,
+          "brightness": 1,
+          "color_step": 0.3,
+          "ease_method": "linear",
+          "flip": true,
+          "gradient_name": "Borealis",
+          "gradient": "linear-gradient(90deg, rgb(255, 40, 0) 0%, rgb(128, 0, 128) 33%, rgb(0, 199, 140) 66%, rgb(0, 255, 0) 99%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 0,
+          "mirror": false,
+          "mode": "wipe"
+        },
+        "name": "Passing By"
+      },
+      "plasma-cascade": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 0,
+          "brightness": 1,
+          "color_step": 0.125,
+          "ease_method": "ease_out",
+          "flip": true,
+          "gradient_name": "Plasma",
+          "gradient": "linear-gradient(90deg, rgb(0, 0, 255) 0%, rgb(128, 0, 128) 25%, rgb(255, 0, 0) 50%, rgb(255, 40, 0) 75%, rgb(255, 200, 0) 100%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 0,
+          "mirror": true,
+          "mode": "wipe"
+        },
+        "name": "Plasma Cascade"
+      },
+      "smooth-bounce": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 7.9,
+          "brightness": 1,
+          "color_step": 0.18,
+          "ease_method": "ease_in_out",
+          "flip": true,
+          "gradient_name": "Dancefloor",
+          "solid_color": false,
+          "gradient": "linear-gradient(90deg, rgb(255, 0, 0) 0%, rgb(255, 0, 178) 50%, rgb(0, 0, 255) 100%)",
+          "gradient_repeat": 1,
+          "gradient_roll": 3,
+          "mirror": true,
+          "mode": "bounce"
+        },
+        "name": "Smooth Bounce"
+      },
+      "Rainbow-lr": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 0,
+          "brightness": 1,
+          "color_step": 0.125,
+          "ease_method": "ease_out",
+          "flip": false,
+          "gradient_name": "Rainbow",
+          "gradient": "linear-gradient(90deg, rgb(255, 0, 0) 0%, rgb(255, 120, 0) 14%, rgb(255, 200, 0) 28%, rgb(0, 255, 0) 42%, rgb(0, 199, 140) 56%, rgb(0, 0, 255) 70%, rgb(128, 0, 128) 84%, rgb(255, 0, 178) 98%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 0,
+          "mirror": false,
+          "mode": "wipe"
+        },
+        "name": "Rainbow LR"
+      }
+    },
+    "energy": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      },
+      "clear-sky": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 0.5,
+          "brightness": 1,
+          "color_cycler": false,
+          "color_high": "cyan",
+          "color_lows": "yellow",
+          "color_mids": "green",
+          "flip": false,
+          "mirror": true,
+          "mixing_mode": "overlap",
+          "sensitivity": 0.65
+        },
+        "name": "Clear Sky"
+      },
+      "smooth-plasma": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 8.3,
+          "brightness": 1,
+          "color_cycler": false,
+          "color_high": "red",
+          "color_lows": "blue",
+          "color_mids": "pink",
+          "flip": false,
+          "mirror": true,
+          "mixing_mode": "overlap",
+          "sensitivity": 0.4
+        },
+        "name": "Smooth Plasma"
+      },
+      "smooth-rainbow": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "block_count": 4,
+          "blur": 7.9,
+          "brightness": 1,
+          "color_cycler": false,
+          "color_high": "blue",
+          "color_lows": "red",
+          "color_mids": "green",
+          "color_step": 0.18,
+          "ease_method": "ease_in_out",
+          "flip": false,
+          "gradient_name": "Dancefloor",
+          "solid_color": false,
+          "gradient": "linear-gradient(90deg, rgb(255, 0, 0) 0%, rgb(255, 0, 178) 50%, rgb(0, 0, 255) 100%)",
+          "gradient_roll": 3,
+          "mirror": true,
+          "mixing_mode": "overlap",
+          "mode": "bounce",
+          "sensitivity": 0.7
+        },
+        "name": "Smooth Rainbow"
+      },
+      "snappy-blues": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 1.2,
+          "brightness": 1,
+          "color_cycler": false,
+          "color_high": "green",
+          "color_lows": "blue",
+          "color_mids": "blue-aqua",
+          "flip": true,
+          "mirror": true,
+          "mixing_mode": "additive",
+          "sensitivity": 0.9
+        },
+        "name": "Snappy Blues"
+      }
+    },
+    "fade": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      },
+      "blues": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 4.5,
+          "brightness": 1,
+          "flip": true,
+          "gradient_name": "Ocean",
+          "gradient": "linear-gradient(90deg, rgb(0, 255, 255) 0%, rgb(0, 0, 255) 100%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 1,
+          "mirror": false,
+          "speed": 5
+        },
+        "name": "Blues"
+      },
+      "calm-reds": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 4.5,
+          "brightness": 1,
+          "flip": true,
+          "gradient_name": "Rust",
+          "gradient": "linear-gradient(90deg, rgb(255, 40, 0) 0%, rgb(255, 0, 0) 100%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 1,
+          "mirror": false,
+          "speed": 5
+        },
+        "name": "Calm Reds"
+      },
+      "rainbow-cycle": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 4.5,
+          "brightness": 1,
+          "flip": true,
+          "gradient_name": "Rainbow",
+          "gradient": "linear-gradient(90deg, rgb(255, 0, 0) 0%, rgb(255, 120, 0) 14%, rgb(255, 200, 0) 28%, rgb(0, 255, 0) 42%, rgb(0, 199, 140) 56%, rgb(0, 0, 255) 70%, rgb(128, 0, 128) 84%, rgb(255, 0, 178) 98%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 1,
+          "mirror": false,
+          "speed": 5
+        },
+        "name": "Rainbow Cycle"
+      },
+      "red-to-blue": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 4.5,
+          "brightness": 1,
+          "flip": true,
+          "gradient_name": "Dancefloor",
+          "solid_color": false,
+          "gradient": "linear-gradient(90deg, rgb(255, 0, 0) 0%, rgb(255, 0, 178) 50%, rgb(0, 0, 255) 100%)",
+          "gradient_repeat": 1,
+          "gradient_roll": 1,
+          "mirror": false,
+          "speed": 4.9
+        },
+        "name": "Red to Blue"
+      },
+      "sunset": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 4.5,
+          "brightness": 1,
+          "flip": true,
+          "gradient_name": "Sunset",
+          "gradient": "linear-gradient(90deg, rgb(0, 0, 128) 0%, rgb(255, 120, 0) 50%, rgb(255, 0, 0) 100%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 1,
+          "mirror": false,
+          "speed": 5
+        },
+        "name": "Sunset"
+      }
+    },
+    "gradient": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      },
+      "breathing": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 0.41,
+          "brightness": 1,
+          "flip": false,
+          "gradient_name": "Viridis",
+          "gradient": "linear-gradient(90deg, rgb(128, 0, 128) 0%, rgb(0, 0, 255) 25%, rgb(0, 128, 128) 50%, rgb(0, 255, 0) 75%, rgb(255, 200, 0) 100%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 6,
+          "mirror": true,
+          "modulate": true,
+          "modulation_effect": "breath",
+          "modulation_speed": 0.59,
+          "speed": 0.41
+        },
+        "name": "Breathing"
+      },
+      "falling-blues": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 4,
+          "brightness": 1,
+          "flip": true,
+          "gradient_name": "Ocean",
+          "gradient": "linear-gradient(90deg, rgb(0, 255, 255) 0%, rgb(0, 0, 255) 100%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 4,
+          "mirror": true,
+          "modulate": false,
+          "modulation_effect": "breath",
+          "modulation_speed": 0.12,
+          "speed": 2.8
+        },
+        "name": "Falling Blues"
+      },
+      "rolling-sunset": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 8.6,
+          "brightness": 1,
+          "flip": true,
+          "gradient_name": "Sunset",
+          "gradient": "linear-gradient(90deg, rgb(0, 0, 128) 0%, rgb(255, 120, 0) 50%, rgb(255, 0, 0) 100%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 4,
+          "mirror": false,
+          "modulate": false,
+          "modulation_effect": "sine",
+          "modulation_speed": 0.5,
+          "speed": 1
+        },
+        "name": "Rolling Sunset"
+      },
+      "Rainbow-roll": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 0.24,
+          "brightness": 1,
+          "flip": false,
+          "gradient_name": "Rainbow",
+          "gradient": "linear-gradient(90deg, rgb(255, 0, 0) 0%, rgb(255, 120, 0) 14%, rgb(255, 200, 0) 28%, rgb(0, 255, 0) 42%, rgb(0, 199, 140) 56%, rgb(0, 0, 255) 70%, rgb(128, 0, 128) 84%, rgb(255, 0, 178) 98%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 1,
+          "mirror": true,
+          "modulate": true,
+          "modulation_effect": "sine",
+          "modulation_speed": 0.97,
+          "speed": 5.6
+        },
+        "name": "Rainbow Roll"
+      },
+      "spectrum": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 0.24,
+          "brightness": 1,
+          "flip": false,
+          "gradient_name": "Rainbow",
+          "gradient": "linear-gradient(90deg, rgb(255, 0, 0) 0%, rgb(255, 120, 0) 14%, rgb(255, 200, 0) 28%, rgb(0, 255, 0) 42%, rgb(0, 199, 140) 56%, rgb(0, 0, 255) 70%, rgb(128, 0, 128) 84%, rgb(255, 0, 178) 98%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 0,
+          "mirror": false,
+          "modulate": false,
+          "modulation_effect": "sine",
+          "modulation_speed": 0.97,
+          "speed": 5.6
+        },
+        "name": "Spectrum"
+      },
+      "twister": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 9.3,
+          "brightness": 1,
+          "flip": false,
+          "gradient_name": "Viridis",
+          "gradient": "linear-gradient(90deg, rgb(128, 0, 128) 0%, rgb(0, 0, 255) 25%, rgb(0, 128, 128) 50%, rgb(0, 255, 0) 75%, rgb(255, 200, 0) 100%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 7,
+          "mirror": false,
+          "modulate": true,
+          "modulation_effect": "breath",
+          "modulation_speed": 0.34,
+          "speed": 6.7
+        },
+        "name": "Twister"
+      },
+      "waves": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 6.2,
+          "brightness": 1,
+          "flip": false,
+          "gradient_name": "Spring",
+          "gradient": "linear-gradient(90deg, rgb(255, 0, 178) 0%, rgb(255, 40, 0) 50%, rgb(255, 200, 0) 100%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 3,
+          "mirror": true,
+          "modulate": true,
+          "modulation_effect": "sine",
+          "modulation_speed": 0.52,
+          "speed": 6.4
+        },
+        "name": "Waves"
+      }
+    },
+    "magnitude": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      },
+      "cold-fire": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 1.3,
+          "brightness": 1,
+          "flip": false,
+          "frequency_range": "Bass",
+          "gradient_name": "Frost",
+          "gradient": "linear-gradient(90deg, rgb(0, 0, 255) 0%, rgb(0, 255, 255) 33%, rgb(128, 0, 128) 66%, rgb(255, 0, 178) 99%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 5,
+          "mirror": true
+        },
+        "name": "Cold Fire"
+      },
+      "jungle-cascade": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 8.4,
+          "brightness": 1,
+          "flip": true,
+          "frequency_range": "Bass",
+          "gradient_name": "Jungle",
+          "gradient": "linear-gradient(90deg, rgb(0, 255, 0) 0%, rgb(34, 139, 34) 50%, rgb(255, 120, 0) 100%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 4,
+          "mirror": true
+        },
+        "name": "Jungle Cascade"
+      },
+      "lively": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 2.3,
+          "brightness": 1,
+          "flip": true,
+          "frequency_range": "Bass",
+          "gradient_name": "Viridis",
+          "gradient": "linear-gradient(90deg, rgb(128, 0, 128) 0%, rgb(0, 0, 255) 25%, rgb(0, 128, 128) 50%, rgb(0, 255, 0) 75%, rgb(255, 200, 0) 100%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 7,
+          "mirror": true
+        },
+        "name": "Lively"
+      },
+      "rolling-rainbow": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 5.4,
+          "brightness": 1,
+          "flip": false,
+          "frequency_range": "Bass",
+          "gradient_name": "Borealis",
+          "gradient": "linear-gradient(90deg, rgb(255, 40, 0) 0%, rgb(128, 0, 128) 33%, rgb(0, 199, 140) 66%, rgb(0, 255, 0) 99%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 5,
+          "mirror": false
+        },
+        "name": "Rolling Rainbow"
+      },
+      "warm-bass": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 8.5,
+          "brightness": 1,
+          "flip": false,
+          "frequency_range": "Bass",
+          "gradient_name": "Winamp",
+          "gradient": "linear-gradient(90deg, rgb(0, 255, 0) 0%, rgb(255, 200, 0) 25%, rgb(255, 120, 0) 50%, rgb(255, 40, 0) 75%, rgb(255, 0, 0) 100%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 1,
+          "mirror": false
+        },
+        "name": "Warm Bass"
+      }
+    },
+    "multiBar": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      },
+      "bright-cascade": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 3.8,
+          "brightness": 1,
+          "color_step": 0.41,
+          "ease_method": "linear",
+          "flip": true,
+          "gradient_name": "Borealis",
+          "gradient": "linear-gradient(90deg, rgb(255, 40, 0) 0%, rgb(128, 0, 128) 33%, rgb(0, 199, 140) 66%, rgb(0, 255, 0) 99%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 7,
+          "mirror": true,
+          "mode": "cascade"
+        },
+        "name": "Bright Cascade"
+      },
+      "falling-blues": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 9.1,
+          "brightness": 1,
+          "color_step": 0.2,
+          "ease_method": "ease_in",
+          "flip": false,
+          "gradient_name": "Ocean",
+          "gradient": "linear-gradient(90deg, rgb(0, 255, 255) 0%, rgb(0, 0, 255) 100%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 0,
+          "mirror": false,
+          "mode": "cascade"
+        },
+        "name": "Falling Blues"
+      },
+      "red-blue-expanse": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 3.8,
+          "brightness": 1,
+          "color_step": 0.41,
+          "ease_method": "ease_out",
+          "flip": false,
+          "gradient_name": "Dancefloor",
+          "solid_color": false,
+          "gradient": "linear-gradient(90deg, rgb(255, 0, 0) 0%, rgb(255, 0, 178) 50%, rgb(0, 0, 255) 100%)",
+          "gradient_repeat": 1,
+          "gradient_roll": 7,
+          "mirror": true,
+          "mode": "cascade"
+        },
+        "name": "Red Blue Expanse"
+      },
+      "Rainbow-oscillation": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 0,
+          "brightness": 1,
+          "color_step": 0.125,
+          "ease_method": "ease_in_out",
+          "flip": false,
+          "gradient_name": "Rainbow",
+          "gradient": "linear-gradient(90deg, rgb(255, 0, 0) 0%, rgb(255, 120, 0) 14%, rgb(255, 200, 0) 28%, rgb(0, 255, 0) 42%, rgb(0, 199, 140) 56%, rgb(0, 0, 255) 70%, rgb(128, 0, 128) 84%, rgb(255, 0, 178) 98%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 0,
+          "mirror": false,
+          "mode": "wipe"
+        },
+        "name": "Rainbow Oscillation"
+      }
+    },
+    "rain": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      },
+      "cold-drops": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 1.0,
+          "brightness": 1.0,
+          "flip": false,
+          "high_color": "pink",
+          "high_sensitivity": 0.1,
+          "lows_color": "white",
+          "lows_sensitivity": 0.1,
+          "mids_color": "cyan",
+          "mids_sensitivity": 0.05,
+          "mirror": true,
+          "raindrop_animation": "Laser"
+        },
+        "name": "Cold Drops"
+      },
+      "meteor-shower": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 2.3,
+          "brightness": 1,
+          "flip": false,
+          "high_color": "yellow",
+          "high_sensitivity": 0.1,
+          "lows_color": "red",
+          "lows_sensitivity": 0.1,
+          "mids_color": "orange",
+          "mids_sensitivity": 0.05,
+          "mirror": false,
+          "raindrop_animation": "Blob"
+        },
+        "name": "Meteor Shower"
+      },
+      "prismatic": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 4.9,
+          "brightness": 1,
+          "flip": false,
+          "high_color": "pink",
+          "high_sensitivity": 0.1,
+          "lows_color": "orange",
+          "lows_sensitivity": 0.1,
+          "mids_color": "green",
+          "mids_sensitivity": 0.05,
+          "mirror": true,
+          "raindrop_animation": "Laser"
+        },
+        "name": "Prismatic"
+      },
+      "ripples": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 0.8,
+          "brightness": 1,
+          "flip": false,
+          "high_color": "cyan",
+          "high_sensitivity": 0.1,
+          "lows_color": "orange-deep",
+          "lows_sensitivity": 0.1,
+          "mids_color": "yellow-acid",
+          "mids_sensitivity": 0.05,
+          "mirror": true,
+          "raindrop_animation": "Ripple"
+        },
+        "name": "Ripples"
+      },
+      "smooth-rwb": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 9.8,
+          "brightness": 1,
+          "fade_rate": 0.7,
+          "flip": false,
+          "gradient_name": "Dancefloor",
+          "solid_color": false,
+          "gradient": "linear-gradient(90deg, rgb(255, 0, 0) 0%, rgb(255, 0, 178) 50%, rgb(0, 0, 255) 100%)",
+          "gradient_roll": 8,
+          "high_color": "blue",
+          "high_sensitivity": 0.1,
+          "lows_color": "white",
+          "lows_sensitivity": 0.1,
+          "mids_color": "red",
+          "mids_sensitivity": 0.05,
+          "mirror": false,
+          "raindrop_animation": "Ripple",
+          "responsiveness": 0.88
+        },
+        "name": "Smooth RWB"
+      }
+    },
+    "rainbow": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      },
+      "cascade": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 7.7,
+          "brightness": 1,
+          "flip": false,
+          "frequency": 0.32,
+          "mirror": true,
+          "speed": 0.3
+        },
+        "name": "Cascade"
+      },
+      "crawl": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 2.3,
+          "brightness": 1,
+          "flip": true,
+          "frequency": 3.6,
+          "mirror": false,
+          "speed": 3.5
+        },
+        "name": "Crawl"
+      },
+      "faded": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 6.4,
+          "brightness": 1,
+          "flip": true,
+          "frequency": 5.9,
+          "mirror": false,
+          "speed": 9.7
+        },
+        "name": "Faded"
+      },
+      "gentle": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 7.7,
+          "brightness": 1,
+          "flip": true,
+          "frequency": 1.9,
+          "mirror": true,
+          "speed": 3.3
+        },
+        "name": "Gentle"
+      },
+      "slow-roll": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 0,
+          "brightness": 1,
+          "flip": true,
+          "frequency": 4.4,
+          "mirror": true,
+          "speed": 1.1
+        },
+        "name": "Slow Roll"
+      }
+    },
+    "scroll": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      },
+      "cold-crawl": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 1,
+          "brightness": 1,
+          "color_high": "cyan",
+          "color_lows": "pink",
+          "color_mids": "lightpink",
+          "decay": 1,
+          "flip": false,
+          "mirror": true,
+          "speed": 1,
+          "threshold": 1
+        },
+        "name": "Cold Crawl"
+      },
+      "dynamic-rgb": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 3,
+          "brightness": 1,
+          "color_high": "blue",
+          "color_lows": "red",
+          "color_mids": "green",
+          "decay": 0.97,
+          "flip": false,
+          "mirror": true,
+          "speed": 5,
+          "threshold": 0
+        },
+        "name": "Dynamic RGB"
+      },
+      "fast-hits": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 0.2,
+          "brightness": 1,
+          "color_high": "orange",
+          "color_lows": "green-spring",
+          "color_mids": "plum",
+          "decay": 0.9,
+          "flip": false,
+          "mirror": true,
+          "speed": 6,
+          "threshold": 0.6
+        },
+        "name": "Fast Hits"
+      },
+      "gentle-rgb": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 7,
+          "brightness": 1,
+          "color_high": "blue",
+          "color_lows": "red",
+          "color_mids": "green",
+          "decay": 0.97,
+          "flip": false,
+          "frequency": 1.9,
+          "mirror": true,
+          "speed": 3,
+          "threshold": 0
+        },
+        "name": "Gentle RGB"
+      },
+      "icicles": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 1,
+          "brightness": 1,
+          "color_high": "green-coral",
+          "color_lows": "lightblue",
+          "color_mids": "cyan",
+          "decay": 0.97,
+          "flip": true,
+          "mirror": false,
+          "speed": 2,
+          "threshold": 0.0215
+        },
+        "name": "Icicles"
+      },
+      "rays": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 0,
+          "brightness": 1,
+          "color_high": "cyan",
+          "color_lows": "orange-deep",
+          "color_mids": "yellow",
+          "decay": 1,
+          "flip": false,
+          "mirror": true,
+          "speed": 5,
+          "threshold": 0.7
+        },
+        "name": "Rays"
+      },
+      "warmth": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 8.1,
+          "brightness": 1,
+          "color_high": "green-coral",
+          "color_lows": "red",
+          "color_mids": "orange",
+          "decay": 0.97,
+          "flip": false,
+          "mirror": true,
+          "speed": 8,
+          "threshold": 0.55
+        },
+        "name": "Warmth"
+      }
+    },
+    "singleColor": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      },
+      "blue": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 0,
+          "brightness": 1,
+          "color": "blue",
+          "decay": 1,
+          "flip": false,
+          "mirror": true,
+          "modulate": false,
+          "modulation_effect": "sine",
+          "modulation_speed": 0.5,
+          "speed": 5,
+          "threshold": 0.7
+        },
+        "name": "Blue"
+      },
+      "cyan": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 0,
+          "brightness": 1,
+          "color": "cyan",
+          "decay": 1,
+          "flip": false,
+          "mirror": true,
+          "modulate": false,
+          "modulation_effect": "sine",
+          "modulation_speed": 0.5,
+          "speed": 5,
+          "threshold": 0.7
+        },
+        "name": "Cyan"
+      },
+      "green": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 0,
+          "brightness": 1,
+          "color": "green",
+          "decay": 1,
+          "flip": false,
+          "mirror": true,
+          "modulate": false,
+          "modulation_effect": "sine",
+          "modulation_speed": 0.5,
+          "speed": 5,
+          "threshold": 0.7
+        },
+        "name": "Green"
+      },
+      "magenta": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 0,
+          "brightness": 1,
+          "color": "magenta",
+          "decay": 1,
+          "flip": false,
+          "mirror": true,
+          "modulate": false,
+          "modulation_effect": "sine",
+          "modulation_speed": 0.5,
+          "speed": 5,
+          "threshold": 0.7
+        },
+        "name": "Magenta"
+      },
+      "orange": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 0,
+          "brightness": 1,
+          "color": "orange-deep",
+          "decay": 1,
+          "flip": false,
+          "mirror": true,
+          "modulate": false,
+          "modulation_effect": "sine",
+          "modulation_speed": 0.5,
+          "speed": 5,
+          "threshold": 0.7
+        },
+        "name": "Orange"
+      },
+      "pink": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 0,
+          "brightness": 1,
+          "color": "pink",
+          "decay": 1,
+          "flip": false,
+          "mirror": true,
+          "modulate": false,
+          "modulation_effect": "sine",
+          "modulation_speed": 0.5,
+          "speed": 5,
+          "threshold": 0.7
+        },
+        "name": "Pink"
+      },
+      "red": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 0,
+          "brightness": 1,
+          "color": "red",
+          "decay": 1,
+          "flip": false,
+          "mirror": true,
+          "modulate": false,
+          "modulation_effect": "sine",
+          "modulation_speed": 0.5,
+          "speed": 5,
+          "threshold": 0.7
+        },
+        "name": "Red"
+      },
+      "red-waves": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 6.2,
+          "brightness": 1,
+          "color": "red",
+          "flip": false,
+          "mirror": true,
+          "modulate": true,
+          "modulation_effect": "sine",
+          "modulation_speed": 0.76,
+          "speed": 0.62
+        },
+        "name": "Red Waves"
+      },
+      "steel-pulse": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 6.2,
+          "brightness": 1,
+          "color": "steelblue",
+          "flip": false,
+          "mirror": true,
+          "modulate": true,
+          "modulation_effect": "breath",
+          "modulation_speed": 0.75,
+          "speed": 0.62
+        },
+        "name": "Steel Pulse"
+      },
+      "turquoise-roll": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 6.2,
+          "brightness": 1,
+          "color": "green-turquoise",
+          "flip": false,
+          "mirror": false,
+          "modulate": true,
+          "modulation_effect": "sine",
+          "modulation_speed": 0.76,
+          "speed": 0.62
+        },
+        "name": "Turquoise Roll"
+      },
+      "yellow": {
+        "config": {
+          "background_brightness": 1.0,
+          "background_color": "black",
+          "blur": 0,
+          "brightness": 1,
+          "color": "yellow",
+          "decay": 1,
+          "flip": false,
+          "mirror": true,
+          "modulate": false,
+          "modulation_effect": "sine",
+          "modulation_speed": 0.5,
+          "speed": 5,
+          "threshold": 0.7
+        },
+        "name": "Yellow"
+      }
+    },
+    "strobe": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      },
+      "aggro-red": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "beat_decay": 2,
+          "blur": 6.2,
+          "brightness": 1,
+          "color": "red",
+          "flip": false,
+          "frequency": "1/4 (.o. )",
+          "gradient_name": "Rainbow",
+          "gradient": "linear-gradient(90deg, rgb(255, 0, 0) 0%, rgb(255, 120, 0) 14%, rgb(255, 200, 0) 28%, rgb(0, 255, 0) 42%, rgb(0, 199, 140) 56%, rgb(0, 0, 255) 70%, rgb(128, 0, 128) 84%, rgb(255, 0, 178) 98%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 0,
+          "mirror": false,
+          "modulate": true,
+          "modulation_effect": "sine",
+          "modulation_speed": 0.76,
+          "single_color": true,
+          "speed": 0.62,
+          "strobe_decay": 1.5,
+          "strobe_frequency": "1/2 (.-. )"
+        },
+        "name": "Aggro Red"
+      },
+      "blues-on-the-beat": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "beat_decay": 2,
+          "blur": 6.2,
+          "brightness": 1,
+          "color": "blue",
+          "flip": false,
+          "frequency": "1/2 (.-. )",
+          "gradient_name": "Rainbow",
+          "gradient": "linear-gradient(90deg, rgb(255, 0, 0) 0%, rgb(255, 120, 0) 14%, rgb(255, 200, 0) 28%, rgb(0, 255, 0) 42%, rgb(0, 199, 140) 56%, rgb(0, 0, 255) 70%, rgb(128, 0, 128) 84%, rgb(255, 0, 178) 98%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 0,
+          "mirror": false,
+          "modulate": true,
+          "modulation_effect": "sine",
+          "modulation_speed": 0.76,
+          "single_color": true,
+          "speed": 0.62,
+          "strobe_decay": 1.5,
+          "strobe_frequency": "1/2 (.-. )"
+        },
+        "name": "Blues on the Beat"
+      },
+      "fast-strobe": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "beat_decay": 2,
+          "blur": 2.6,
+          "brightness": 1,
+          "color": "white",
+          "flip": true,
+          "frequency": "1/4 (.o. )",
+          "gradient_name": "Rainbow",
+          "gradient": "linear-gradient(90deg, rgb(255, 0, 0) 0%, rgb(255, 120, 0) 14%, rgb(255, 200, 0) 28%, rgb(0, 255, 0) 42%, rgb(0, 199, 140) 56%, rgb(0, 0, 255) 70%, rgb(128, 0, 128) 84%, rgb(255, 0, 178) 98%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 0,
+          "modulate": false,
+          "modulation_effect": "sine",
+          "modulation_speed": 0.76,
+          "mirror": false,
+          "single_color": false,
+          "strobe_decay": 1.5,
+          "strobe_frequency": "1/2 (.-. )"
+        },
+        "name": "Fast Strobe"
+      },
+      "faster-strobe": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "beat_decay": 2,
+          "blur": 2.6,
+          "brightness": 1,
+          "color": "white",
+          "flip": true,
+          "frequency": "1/16 (\u25c9\ufe4f\u25c9 )",
+          "gradient_name": "Rainbow",
+          "gradient": "linear-gradient(90deg, rgb(255, 0, 0) 0%, rgb(255, 120, 0) 14%, rgb(255, 200, 0) 28%, rgb(0, 255, 0) 42%, rgb(0, 199, 140) 56%, rgb(0, 0, 255) 70%, rgb(128, 0, 128) 84%, rgb(255, 0, 178) 98%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 0,
+          "mirror": false,
+          "single_color": false,
+          "strobe_decay": 1.5,
+          "strobe_frequency": "1/2 (.-. )"
+        },
+        "name": "Faster Strobe"
+      },
+      "painful": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "beat_decay": 2,
+          "blur": 2.6,
+          "brightness": 1,
+          "color": "white",
+          "flip": true,
+          "frequency": "1/32 (\u2299\u2583\u2299 )",
+          "gradient_name": "Rainbow",
+          "gradient": "linear-gradient(90deg, rgb(255, 0, 0) 0%, rgb(255, 120, 0) 14%, rgb(255, 200, 0) 28%, rgb(0, 255, 0) 42%, rgb(0, 199, 140) 56%, rgb(0, 0, 255) 70%, rgb(128, 0, 128) 84%, rgb(255, 0, 178) 98%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 0,
+          "mirror": false,
+          "single_color": false,
+          "strobe_decay": 1.5,
+          "strobe_frequency": "1/2 (.-. )"
+        },
+        "name": "Painful"
+      }
+    },
+    "wavelength": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      },
+      "classic": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 3,
+          "brightness": 1,
+          "flip": false,
+          "gradient_name": "Rainbow",
+          "gradient": "linear-gradient(90deg, rgb(255, 0, 0) 0%, rgb(255, 120, 0) 14%, rgb(255, 200, 0) 28%, rgb(0, 255, 0) 42%, rgb(0, 199, 140) 56%, rgb(0, 0, 255) 70%, rgb(128, 0, 128) 84%, rgb(255, 0, 178) 98%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 0,
+          "mirror": false
+        },
+        "name": "Classic"
+      },
+      "greens": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 5.1,
+          "brightness": 1,
+          "flip": false,
+          "gradient_name": "Winter",
+          "gradient": "linear-gradient(90deg, rgb(0, 199, 140) 0%, rgb(0, 255, 50) 100%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 1,
+          "mirror": true
+        },
+        "name": "Greens"
+      },
+      "icy": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 5.7,
+          "brightness": 1,
+          "flip": false,
+          "gradient_name": "Frost",
+          "gradient": "linear-gradient(90deg, rgb(0, 0, 255) 0%, rgb(0, 255, 255) 33%, rgb(128, 0, 128) 66%, rgb(255, 0, 178) 99%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 1,
+          "mirror": false
+        },
+        "name": "Icy"
+      },
+      "plasma": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 1.8,
+          "brightness": 1,
+          "flip": false,
+          "gradient_name": "Plasma",
+          "gradient": "linear-gradient(90deg, rgb(0, 0, 255) 0%, rgb(128, 0, 128) 25%, rgb(255, 0, 0) 50%, rgb(255, 40, 0) 75%, rgb(255, 200, 0) 100%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 6,
+          "mirror": true
+        },
+        "name": "Plasma"
+      },
+      "rolling-blues": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 1,
+          "brightness": 1,
+          "flip": false,
+          "gradient_name": "Dancefloor",
+          "solid_color": false,
+          "gradient": "linear-gradient(90deg, rgb(255, 0, 0) 0%, rgb(255, 0, 178) 50%, rgb(0, 0, 255) 100%)",
+          "gradient_repeat": 1,
+          "gradient_roll": 3,
+          "mirror": true
+        },
+        "name": "rolling blues"
+      },
+      "rolling-warmth": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 5.9,
+          "brightness": 1,
+          "flip": false,
+          "gradient_name": "Sunset",
+          "gradient": "linear-gradient(90deg, rgb(0, 0, 128) 0%, rgb(255, 120, 0) 50%, rgb(255, 0, 0) 100%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 7,
+          "mirror": true
+        },
+        "name": "Rolling Warmth"
+      },
+      "sunset-sweep": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "blur": 8.6,
+          "brightness": 1,
+          "flip": true,
+          "gradient_name": "Sunset",
+          "gradient": "linear-gradient(90deg, rgb(0, 0, 128) 0%, rgb(255, 120, 0) 50%, rgb(255, 0, 0) 100%)",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 4,
+          "mirror": false
+        },
+        "name": "Sunset Sweep"
+      }
+    },
+    "real_strobe": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      },
+      "dancefloor": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "bass_strobe_decay_rate": 0.7,
+          "bass_threshold": 0.4,
+          "blur": 0,
+          "brightness": 1,
+          "color_step": 0.0625,
+          "flip": false,
+          "gradient_name": "Dancefloor",
+          "solid_color": false,
+          "gradient": "linear-gradient(90deg, rgb(255, 0, 0) 0%, rgb(255, 0, 178) 50%, rgb(0, 0, 255) 100%)",
+          "gradient_repeat": 1,
+          "gradient_roll": 0,
+          "mirror": false,
+          "strobe_color": "white",
+          "strobe_decay_rate": 0.85,
+          "strobe_width": 50
+        },
+        "name": "Dance floor"
+      },
+      "strobe_only": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "bass_strobe_decay_rate": 0.7,
+          "bass_threshold": 1,
+          "blur": 0,
+          "brightness": 1,
+          "color_step": 0.0625,
+          "flip": false,
+          "gradient_name": "Dancefloor",
+          "solid_color": false,
+          "gradient": "linear-gradient(90deg, rgb(255, 0, 0) 0%, rgb(255, 0, 178) 50%, rgb(0, 0, 255) 100%)",
+          "gradient_repeat": 1,
+          "gradient_roll": 0,
+          "mirror": false,
+          "strobe_color": "white",
+          "strobe_decay_rate": 0.85,
+          "strobe_width": 50
+        },
+        "name": "Strobe only"
+      },
+      "bass_only": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "bass_strobe_decay_rate": 0.7,
+          "bass_threshold": 0.4,
+          "blur": 0,
+          "brightness": 1,
+          "color_step": 0.0625,
+          "flip": false,
+          "gradient_name": "Dancefloor",
+          "solid_color": false,
+          "gradient": "linear-gradient(90deg, rgb(255, 0, 0) 0%, rgb(255, 0, 178) 50%, rgb(0, 0, 255) 100%)",
+          "gradient_repeat": 1,
+          "gradient_roll": 0,
+          "mirror": false,
+          "strobe_color": "black",
+          "strobe_decay_rate": 0.85,
+          "strobe_width": 0
+        },
+        "name": "Bass only"
+      },
+      "extreme": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "bass_strobe_decay_rate": 1,
+          "bass_threshold": 0.45,
+          "blur": 0,
+          "brightness": 1,
+          "color_step": 0.0625,
+          "flip": false,
+          "gradient_name": "Dancefloor",
+          "solid_color": false,
+          "gradient": "linear-gradient(90deg, rgb(255, 0, 0) 0%, rgb(255, 0, 178) 50%, rgb(0, 0, 255) 100%)",
+          "gradient_repeat": 1,
+          "gradient_roll": 0,
+          "mirror": false,
+          "strobe_color": "white",
+          "strobe_decay_rate": 1,
+          "strobe_width": 50
+        },
+        "name": "Extreme"
+      },
+      "glitter": {
+        "config": {
+          "background_brightness": 1,
+          "background_color": "black",
+          "bass_strobe_decay_rate": 0.01,
+          "bass_threshold": 0,
+          "blur": 0,
+          "brightness": 1,
+          "color_step": 0.015,
+          "flip": false,
+          "gradient_name": "Dancefloor",
+          "solid_color": false,
+          "gradient": "linear-gradient(90deg, rgb(255, 0, 0) 0%, rgb(255, 0, 178) 50%, rgb(0, 0, 255) 100%)",
+          "gradient_repeat": 1,
+          "gradient_roll": 0,
+          "mirror": true,
+          "strobe_color": "white",
+          "strobe_decay_rate": 0.5,
+          "strobe_width": 50
+        },
+        "name": "Glitter"
+      }
+    },
+    "blade_power_plus": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      },
+      "orange-hi-hat": {
+        "config": {
+          "background_brightness": 0.3,
+          "background_color": "orange",
+          "blur": 2,
+          "brightness": 1,
+          "color": "cyan",
+          "color_correction": true,
+          "flip": false,
+          "frequency_range": "High",
+          "gradient": "linear-gradient(90deg, #ff00b2 0.00%,#ff2800 50.00%,#ffc800 100.00%)",
+          "gradient_repeat": 1,
+          "gradient_roll": 0,
+          "invert_roll": false,
+          "mirror": true,
+          "multiplier": 1,
+          "solid_color": false
+        },
+        "name": "Orange HiHat"
+      },
+      "ocean-bass": {
+        "config": {
+          "background_brightness": 0.44,
+          "background_color": "blue",
+          "blur": 2,
+          "brightness": 1,
+          "color": "cyan",
+          "color_correction": true,
+          "flip": false,
+          "frequency_range": "Lows (beat+bass)",
+          "gradient": "linear-gradient(90deg, rgb(0, 255, 255) 0%, rgb(0, 0, 255) 100%)",
+          "gradient_name": "Ocean",
+          "solid_color": false,
+          "gradient_repeat": 1,
+          "gradient_roll": 0,
+          "invert_roll": false,
+          "mirror": false,
+          "multiplier": 0.5
+        },
+        "name": "Ocean Bass"
+      }
+    },
+    "bands": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      }
+    },
+    "bands_matrix": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      }
+    },
+    "block_reflections": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      }
+    },
+    "crawler": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      }
+    },
+    "blocks": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      }
+    },
+    "energy2": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      }
+    },
+    "equalizer": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      }
+    },
+    "fire": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      }
+    },
+    "glitch": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      }
+    },
+    "hue_fix_demo": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      }
+    },
+    "lava_lamp": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      }
+    },
+    "marching": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      }
+    },
+    "melt": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      }
+    },
+    "pitchSpectrum": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      }
+    },
+    "power": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      }
+    },
+    "spectrum": {
+      "reset": {
+        "config": {},
+        "name": "Reset"
+      }
+    }
+  },
+  "integrations": [],
+  "user_colors": {},
+  "audio": {
+    "audio_device": 7,
+    "sample_rate": 60,
+    "fft_size": 4096,
+    "min_volume": 0.2,
+    "delay_ms": 0,
+    "mic_rate": 44100
+  },
+  "configuration_version": "2.1.0",
+  "scenes": {},
+  "melbanks": {
+    "min_frequency": 20,
+    "max_frequencies": [
+      350,
+      2000,
+      15000
+    ]
+  }
+}

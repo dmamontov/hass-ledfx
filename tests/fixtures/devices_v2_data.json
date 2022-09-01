@@ -1,0 +1,45 @@
+{
+  "status": "success",
+  "devices": {
+    "garland-1": {
+      "config": {
+        "center_offset": 0,
+        "icon_name": "wled",
+        "ip_address": "192.168.31.50",
+        "name": "WLED",
+        "pixel_count": 100,
+        "refresh_rate": 62,
+        "rgbw_led": false,
+        "sync_mode": "UDP",
+        "timeout": 1
+      },
+      "id": "garland-1",
+      "type": "wled",
+      "online": true,
+      "virtuals": [
+        "wled"
+      ],
+      "active_virtuals": [
+        "wled"
+      ]
+    },
+    "ambient-lighting": {
+      "config": {
+        "icon_name": "wled",
+        "center_offset": 0,
+        "refresh_rate": 62,
+        "sync_mode": "UDP",
+        "timeout": 1,
+        "name": "WLED",
+        "ip_address": "192.168.31.118",
+        "pixel_count": 157,
+        "rgbw_led": false
+      },
+      "id": "ambient-lighting",
+      "type": "wled",
+      "online": true,
+      "virtuals": [],
+      "active_virtuals": []
+    }
+  }
+}
