@@ -45,6 +45,7 @@ def auto_enable_custom_integrations(enable_custom_integrations):
     yield
 
 
+@pytest.mark.asyncio
 async def test_init(hass: HomeAssistant) -> None:
     """Test init.
 
@@ -79,6 +80,7 @@ async def test_init(hass: HomeAssistant) -> None:
         ]
 
 
+@pytest.mark.asyncio
 async def test_update_audio_devices(hass: HomeAssistant) -> None:
     """Test update audio_devices.
 
@@ -193,6 +195,7 @@ async def test_update_audio_devices(hass: HomeAssistant) -> None:
         assert state.state == STATE_UNAVAILABLE
 
 
+@pytest.mark.asyncio
 async def test_effect_property(hass: HomeAssistant) -> None:
     """Test effect property.
 

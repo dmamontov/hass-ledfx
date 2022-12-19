@@ -43,6 +43,7 @@ def auto_enable_custom_integrations(enable_custom_integrations):
     yield
 
 
+@pytest.mark.asyncio
 async def test_scenes(hass: HomeAssistant) -> None:
     """Test scenes.
 
@@ -122,6 +123,7 @@ async def test_scenes(hass: HomeAssistant) -> None:
         assert state.state == STATE_UNAVAILABLE
 
 
+@pytest.mark.asyncio
 async def test_new_scene(hass: HomeAssistant) -> None:
     """Test new scene.
 

@@ -43,6 +43,7 @@ def auto_enable_custom_integrations(enable_custom_integrations):
     yield
 
 
+@pytest.mark.asyncio
 async def test_effect_property(hass: HomeAssistant) -> None:
     """Test effect property.
 
@@ -177,6 +178,7 @@ async def test_effect_property(hass: HomeAssistant) -> None:
             )
 
 
+@pytest.mark.asyncio
 async def test_new_effect_property(hass: HomeAssistant) -> None:
     """Test new effect property.
 
@@ -280,6 +282,7 @@ async def test_new_effect_property(hass: HomeAssistant) -> None:
         assert state.attributes["attribution"] == ATTRIBUTION
 
 
+@pytest.mark.asyncio
 async def test_effect_incorrect_property(hass: HomeAssistant) -> None:
     """Test effect incorrect property.
 
@@ -325,6 +328,7 @@ async def test_effect_incorrect_property(hass: HomeAssistant) -> None:
         assert state.attributes["attribution"] == ATTRIBUTION
 
 
+@pytest.mark.asyncio
 async def test_effect_property_disabled_light(hass: HomeAssistant) -> None:
     """Test effect property disabled light.
 

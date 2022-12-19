@@ -41,6 +41,7 @@ def auto_enable_custom_integrations(enable_custom_integrations):
     yield
 
 
+@pytest.mark.asyncio
 async def test_update_device_sensors_v2(hass: HomeAssistant) -> None:
     """Test update device sensors v2.
 
@@ -129,6 +130,7 @@ async def test_update_device_sensors_v2(hass: HomeAssistant) -> None:
         assert state.state == STATE_UNAVAILABLE
 
 
+@pytest.mark.asyncio
 async def test_update_new_sensors_v2(hass: HomeAssistant) -> None:
     """Test update new sensors.
 

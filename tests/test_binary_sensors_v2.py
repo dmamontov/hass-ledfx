@@ -45,6 +45,7 @@ def auto_enable_custom_integrations(enable_custom_integrations):
     yield
 
 
+@pytest.mark.asyncio
 async def test_init(hass: HomeAssistant) -> None:
     """Test init.
 
@@ -72,6 +73,7 @@ async def test_init(hass: HomeAssistant) -> None:
         assert state.attributes["attribution"] == ATTRIBUTION
 
 
+@pytest.mark.asyncio
 async def test_update_state(hass: HomeAssistant) -> None:
     """Test update state.
 
