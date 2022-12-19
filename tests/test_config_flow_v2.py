@@ -49,6 +49,7 @@ def auto_enable_custom_integrations(enable_custom_integrations):
     yield
 
 
+@pytest.mark.asyncio
 async def test_user(hass: HomeAssistant) -> None:
     """Test user config.
 
@@ -92,6 +93,7 @@ async def test_user(hass: HomeAssistant) -> None:
     assert len(mock_async_setup_entry.mock_calls) == 1
 
 
+@pytest.mark.asyncio
 async def test_user_with_request_error(hass: HomeAssistant) -> None:
     """Test user config.
 
@@ -129,6 +131,7 @@ async def test_user_with_request_error(hass: HomeAssistant) -> None:
     assert len(mock_async_setup_entry.mock_calls) == 0
 
 
+@pytest.mark.asyncio
 async def test_user_with_connection_error(hass: HomeAssistant) -> None:
     """Test user config.
 
@@ -166,6 +169,7 @@ async def test_user_with_connection_error(hass: HomeAssistant) -> None:
     assert len(mock_async_setup_entry.mock_calls) == 0
 
 
+@pytest.mark.asyncio
 async def test_user_with_auth_show_form(hass: HomeAssistant) -> None:
     """Test user config.
 
@@ -200,6 +204,7 @@ async def test_user_with_auth_show_form(hass: HomeAssistant) -> None:
     assert len(mock_async_setup_entry.mock_calls) == 0
 
 
+@pytest.mark.asyncio
 async def test_user_with_auth(hass: HomeAssistant) -> None:
     """Test user config.
 
@@ -258,6 +263,7 @@ async def test_user_with_auth(hass: HomeAssistant) -> None:
     assert len(mock_async_setup_entry.mock_calls) == 1
 
 
+@pytest.mark.asyncio
 async def test_user_with_auth_revert(hass: HomeAssistant) -> None:
     """Test user config.
 
@@ -317,6 +323,7 @@ async def test_user_with_auth_revert(hass: HomeAssistant) -> None:
     assert len(mock_async_setup_entry.mock_calls) == 1
 
 
+@pytest.mark.asyncio
 async def test_options_flow(hass: HomeAssistant) -> None:
     """Test options flow.
 
@@ -373,6 +380,7 @@ async def test_options_flow(hass: HomeAssistant) -> None:
     assert len(mock_async_setup_entry.mock_calls) == 1
 
 
+@pytest.mark.asyncio
 async def test_options_flow_with_auth(hass: HomeAssistant) -> None:
     """Test options flow.
 
@@ -444,6 +452,7 @@ async def test_options_flow_with_auth(hass: HomeAssistant) -> None:
     assert len(mock_async_setup_entry.mock_calls) == 1
 
 
+@pytest.mark.asyncio
 async def test_options_flow_request_error(hass: HomeAssistant) -> None:
     """Test options flow.
 
@@ -488,6 +497,7 @@ async def test_options_flow_request_error(hass: HomeAssistant) -> None:
     assert len(mock_async_setup_entry.mock_calls) == 1
 
 
+@pytest.mark.asyncio
 async def test_options_flow_connection_error(hass: HomeAssistant) -> None:
     """Test options flow.
 

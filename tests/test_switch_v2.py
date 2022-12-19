@@ -43,6 +43,7 @@ def auto_enable_custom_integrations(enable_custom_integrations):
     yield
 
 
+@pytest.mark.asyncio
 async def test_effect_property(hass: HomeAssistant) -> None:
     """Test effect property.
 

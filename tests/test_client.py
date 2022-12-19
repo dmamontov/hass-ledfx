@@ -7,6 +7,7 @@ from __future__ import annotations
 import json
 import logging
 
+import pytest
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.httpx_client import get_async_client
 from httpx import Request
@@ -20,6 +21,7 @@ from tests.setup import MOCK_DEVICE, MOCK_IP_ADDRESS, MOCK_PORT, get_url
 _LOGGER = logging.getLogger(__name__)
 
 
+@pytest.mark.asyncio
 async def test_info(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """info test"""
 
@@ -37,6 +39,7 @@ async def test_info(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     assert request.method == Method.GET
 
 
+@pytest.mark.asyncio
 async def test_devices(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """devices test"""
 
@@ -54,6 +57,7 @@ async def test_devices(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     assert request.method == Method.GET
 
 
+@pytest.mark.asyncio
 async def test_scenes(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """scenes test"""
 
@@ -71,6 +75,7 @@ async def test_scenes(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     assert request.method == Method.GET
 
 
+@pytest.mark.asyncio
 async def test_audio_devices(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """audio devices test"""
 
@@ -92,6 +97,7 @@ async def test_audio_devices(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None
     assert request.method == Method.GET
 
 
+@pytest.mark.asyncio
 async def test_schema(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """schema test"""
 
@@ -109,6 +115,7 @@ async def test_schema(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     assert request.method == Method.GET
 
 
+@pytest.mark.asyncio
 async def test_config(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """config test"""
 
@@ -126,6 +133,7 @@ async def test_config(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     assert request.method == Method.GET
 
 
+@pytest.mark.asyncio
 async def test_device_on(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """device on test"""
 
@@ -151,6 +159,7 @@ async def test_device_on(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     assert request.method == Method.POST
 
 
+@pytest.mark.asyncio
 async def test_device_off(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """device off test"""
 
@@ -172,6 +181,7 @@ async def test_device_off(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     assert request.method == Method.DELETE
 
 
+@pytest.mark.asyncio
 async def test_preset(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """preset test"""
 
@@ -195,6 +205,7 @@ async def test_preset(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     assert request.method == Method.PUT
 
 
+@pytest.mark.asyncio
 async def test_effect(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """effect test"""
 
@@ -229,6 +240,7 @@ async def test_effect(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     assert request.method == Method.PUT
 
 
+@pytest.mark.asyncio
 async def test_set_audio_device(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """set_audio_device test"""
 
@@ -251,6 +263,7 @@ async def test_set_audio_device(hass: HomeAssistant, httpx_mock: HTTPXMock) -> N
     assert request.method == Method.PUT
 
 
+@pytest.mark.asyncio
 async def test_run_scene(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """run_scene test"""
 

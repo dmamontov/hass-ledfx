@@ -184,6 +184,7 @@ def auto_enable_custom_integrations(enable_custom_integrations):
     yield
 
 
+@pytest.mark.asyncio
 async def test_devices(hass: HomeAssistant) -> None:
     """Test devices.
 
@@ -247,6 +248,7 @@ async def test_devices(hass: HomeAssistant) -> None:
         assert state.state == STATE_UNAVAILABLE
 
 
+@pytest.mark.asyncio
 async def test_devices_without_custom_preset(hass: HomeAssistant) -> None:
     """Test devices without custom preset.
 
@@ -284,6 +286,7 @@ async def test_devices_without_custom_preset(hass: HomeAssistant) -> None:
         assert len(state.attributes["effect_list"]) == len(EFFECT_LIST) - 1
 
 
+@pytest.mark.asyncio
 async def test_new_devices(hass: HomeAssistant) -> None:
     """Test new_devices.
 
@@ -340,6 +343,7 @@ async def test_new_devices(hass: HomeAssistant) -> None:
         assert state.attributes["attribution"] == ATTRIBUTION
 
 
+@pytest.mark.asyncio
 async def test_devices_on(hass: HomeAssistant) -> None:
     """Test devices on.
 
@@ -423,6 +427,7 @@ async def test_devices_on(hass: HomeAssistant) -> None:
             )
 
 
+@pytest.mark.asyncio
 async def test_devices_on_with_effect(hass: HomeAssistant) -> None:
     """Test devices on with effect.
 
@@ -506,6 +511,7 @@ async def test_devices_on_with_effect(hass: HomeAssistant) -> None:
             )
 
 
+@pytest.mark.asyncio
 async def test_devices_on_with_effect_and_brightness(hass: HomeAssistant) -> None:
     """Test devices on with effect and brightness.
 
@@ -600,6 +606,7 @@ async def test_devices_on_with_effect_and_brightness(hass: HomeAssistant) -> Non
             )
 
 
+@pytest.mark.asyncio
 async def test_devices_on_with_effect_and_rgbw(hass: HomeAssistant) -> None:
     """Test devices on with effect and rgbw.
 
@@ -693,6 +700,7 @@ async def test_devices_on_with_effect_and_rgbw(hass: HomeAssistant) -> None:
             )
 
 
+@pytest.mark.asyncio
 async def test_devices_on_with_effect_and_rgbw_white(hass: HomeAssistant) -> None:
     """Test devices on with effect and rgbw.
 
@@ -786,6 +794,7 @@ async def test_devices_on_with_effect_and_rgbw_white(hass: HomeAssistant) -> Non
             )
 
 
+@pytest.mark.asyncio
 async def test_devices_on_with_effect_and_rgbw_white_two(hass: HomeAssistant) -> None:
     """Test devices on with effect and rgbw.
 
@@ -879,6 +888,7 @@ async def test_devices_on_with_effect_and_rgbw_white_two(hass: HomeAssistant) ->
             )
 
 
+@pytest.mark.asyncio
 async def test_devices_on_with_effect_and_rgbw_black(hass: HomeAssistant) -> None:
     """Test devices on with effect and rgbw.
 
@@ -972,6 +982,7 @@ async def test_devices_on_with_effect_and_rgbw_black(hass: HomeAssistant) -> Non
             )
 
 
+@pytest.mark.asyncio
 async def test_devices_on_with_preset(hass: HomeAssistant) -> None:
     """Test devices on with preset.
 
@@ -1062,6 +1073,7 @@ async def test_devices_on_with_preset(hass: HomeAssistant) -> None:
             )
 
 
+@pytest.mark.asyncio
 async def test_devices_on_with_preset_and_brightness(hass: HomeAssistant) -> None:
     """Test devices on with preset and brightness.
 
@@ -1159,6 +1171,7 @@ async def test_devices_on_with_preset_and_brightness(hass: HomeAssistant) -> Non
             )
 
 
+@pytest.mark.asyncio
 async def test_devices_off(hass: HomeAssistant) -> None:
     """Test devices off.
 

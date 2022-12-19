@@ -26,6 +26,7 @@ def auto_enable_custom_integrations(enable_custom_integrations):
     yield
 
 
+@pytest.mark.asyncio
 async def test_updater_schedule(hass: HomeAssistant) -> None:
     """Test updater schedule.
 
@@ -42,6 +43,7 @@ async def test_updater_schedule(hass: HomeAssistant) -> None:
     assert updater._unsub_refresh is not None
 
 
+@pytest.mark.asyncio
 async def test_updater_incorrect_effect_field(hass: HomeAssistant) -> None:
     """Test updater incorrect effect field.
 
@@ -66,6 +68,7 @@ async def test_updater_incorrect_effect_field(hass: HomeAssistant) -> None:
         assert "test" not in updater.effect_properties
 
 
+@pytest.mark.asyncio
 async def test_updater_incorrect_config(hass: HomeAssistant) -> None:
     """Test updater incorrect config.
 
@@ -90,6 +93,7 @@ async def test_updater_incorrect_config(hass: HomeAssistant) -> None:
         assert ATTR_SELECT_AUDIO_INPUT not in updater.data
 
 
+@pytest.mark.asyncio
 async def test_updater_get_updater(hass: HomeAssistant) -> None:
     """Test updater get updater.
 
