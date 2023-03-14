@@ -90,6 +90,7 @@ async def async_setup_entry(
     )
 
 
+# pylint: disable=too-many-ancestors
 class LedFxLight(LedFxEntity, LightEntity):
     """LedFx light entry."""
 

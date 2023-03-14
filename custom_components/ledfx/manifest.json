@@ -1,13 +1,17 @@
 {
   "domain": "ledfx",
   "name": "LedFx",
-  "version": "2.1.0",
-  "documentation": "https://github.com/dmamontov/hass-ledfx/wiki",
-  "issue_tracker": "https://github.com/dmamontov/hass-ledfx/issues",
+  "codeowners": [
+    "@dmamontov"
+  ],
   "config_flow": true,
-  "requirements": [],
-  "dependencies": ["http"],
-  "codeowners": ["@dmamontov"],
+  "dependencies": [
+    "http"
+  ],
+  "documentation": "https://github.com/dmamontov/hass-ledfx/wiki",
   "iot_class": "local_polling",
-  "quality_scale": "platinum"
+  "issue_tracker": "https://github.com/dmamontov/hass-ledfx/issues",
+  "quality_scale": "platinum",
+  "requirements": [],
+  "version": "3.0.0"
 }
