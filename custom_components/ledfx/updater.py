@@ -211,6 +211,9 @@ class LedFxUpdater(DataUpdateCoordinator):
 
         self.data[ATTR_STATE] = codes.is_success(self.code)
 
+        v_response: dict = await self.client.virtuals()
+        self.data["paused"] = v_response["paused"]
+
         return self.data
 
     @cached_property

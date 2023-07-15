@@ -289,6 +289,12 @@ class LedFxClient:
             )
 
         return await self.request("audio/devices", Method.PUT, {"index": index})
+    
+    async def toggle_play_pause(self) -> None:
+        """toggle play/pause method.
+        """
+
+        return await self.request("virtuals", Method.PUT)
 
     async def run_scene(self, scene_id: str) -> dict:
         """scenes run method.
