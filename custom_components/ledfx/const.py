@@ -19,6 +19,7 @@ PLATFORMS: Final = [
     Platform.SWITCH,
     Platform.NUMBER,
     Platform.SELECT,
+    Platform.MEDIA_PLAYER,
 ]
 
 """Diagnostic const"""
